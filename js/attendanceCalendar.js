@@ -41,7 +41,7 @@ $(document).ready(function () {
     /***********************************************************************/
     /******** Loop for Checking multiple Log In SET UP on every 1 SEC ******/
     /***********************************************************************/
-    setInterval(ajaxCall, 1000); //1000 ms = 1 second
+    setInterval(ajaxCall, 2000); //2000 ms = 2 second
     function ajaxCall() {
         var returndata;
         $.ajax({
@@ -110,7 +110,7 @@ $(document).ready(function () {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month'
+            right: ''
         },
         droppable: true,
         allDaySlot: false,
