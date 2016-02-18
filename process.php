@@ -12,10 +12,10 @@ if($type == 'session_check'){
     if(session_id() != $userRow['Session_ID']){    
         session_destroy();
         unset($_SESSION['user']);
-        echo json_encode(array('status'=>'success'));
+        echo 'success';
     }
     else{
-        echo json_encode(array('status'=>'failed'));                   
+        echo 'failed';
     }
 }
 if($type == 'duplicity_ceck'){
