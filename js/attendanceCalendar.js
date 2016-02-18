@@ -245,8 +245,6 @@ $(document).ready(function () {
             });
 
 
-            console.log('Teste interval ',check_interval_time.responseText);
-
             if (permissions == 'brigadnik') {
 
                 if (check_logIn_logOut.responseText != 0) {
@@ -406,6 +404,7 @@ $(document).ready(function () {
         $('#calendar').fullCalendar('removeEvents');
         getFreshEvents();
         $('#calendar').fullCalendar('rerenderEvents');
+        location.reload;
     }
     /**********************************************/
     /*************** DELETE EVENTS*****************/
