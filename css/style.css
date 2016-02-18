@@ -1,0 +1,33 @@
+
+#external-events .fc-event {
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+#external-events p input {
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+#calendar {
+
+
+}
+
+#morning-change{
+    width: 100%;
+    margin: 0 auto;
+}
+
+#night-change{
+    margin: 0 auto;
+    width: 100%;
+}
+
+#morning-change .fc-event{
+    background-color: darkorange;
+}
+#night-change .fc-event{
+    background-color: black;
+}
+
