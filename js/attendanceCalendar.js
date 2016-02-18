@@ -348,8 +348,11 @@ $(document).ready(function () {
             data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&zone=' + zone + '&capacity=' + capacity + '&logged_in=' + 0 + '&color=' + event.color,
             type: 'POST',
             dataType: 'json',
-            done: function (response) {
+            success: function (response) {
                 return response;
+            },
+            error: function(e){
+                    console.log(e.responseText);
             }
 
         });
@@ -366,7 +369,10 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                     return response;
-                }
+                },
+             error: function(e){
+                    console.log(e.responseText);
+            }
         });
 
         refreshEvents();
@@ -395,10 +401,14 @@ $(document).ready(function () {
                 success: function (response) {
                     return response;
                 },
+                error: function(e){
+                    console.log(e.responseText);
+            }
 
             });
 
-            refreshEvents();
+
         }
+        refreshEvents();
     }
 });

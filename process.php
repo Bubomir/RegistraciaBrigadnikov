@@ -97,6 +97,7 @@ if($type == 'check_log_in_log_out'){
     $count = mysqli_num_rows($result);
     echo $count;
 }
+
 if($type == 'change_number_of_logged_in'){
 	$event_id = $_POST['event_id'];
 	$logIn_logOut = $_POST['logIn_logOut'];
