@@ -255,8 +255,7 @@ $(document).ready(function () {
                                 loggedInUpdate(event, email, -1); // -1 == log out from event
                             }
                         }
-                    }
-                    else{
+                    } else {
                         alert("Nemozno sa odhlasit v tejto lehote");
                     }
                 }
