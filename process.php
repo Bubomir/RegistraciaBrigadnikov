@@ -97,6 +97,17 @@ if($type == 'check_log_in_log_out'){
     $count = mysqli_num_rows($result);
     echo $count;
 }
+if($type == 'check_interval_time'){
+    $event_id = $_POST['event_id'];
+    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID='$event_id'");
+    $fetch = mysqli_fetch_array($query);
+    $e_start_date = $fetch['Start_Date'];
+
+    $click_time = new DateTime($e_start_date);
+    $current_time = new DateTime(date('c'));
+    $interval_time = $current_time->diff($click_time);
+    echo ((int)($interval_time->format('%a')));
+}
 
 if($type == 'change_number_of_logged_in'){
 	$event_id = $_POST['event_id'];

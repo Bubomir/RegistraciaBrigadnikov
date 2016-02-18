@@ -53,7 +53,7 @@ $(document).ready(function () {
 
                 if (returndata == '{"status":"success"}') {
                     alert("boli ste odpojeny");
-                    console.log('win');
+
                     window.location.replace("index.php");
 
                 }
@@ -224,7 +224,7 @@ $(document).ready(function () {
                 }
             }).responseText;
 
-            var checl_logIn_logOut = $.ajax({
+            var check_logIn_logOut = $.ajax({
                 type: 'POST', // Send post data
                 url: 'process.php',
                 data: 'type=check_log_in_log_out&event_id=' + event.id + '&email=' + email,
@@ -234,16 +234,35 @@ $(document).ready(function () {
                 }
             });
 
-            console.log(permissions);
+            var check_interval_time = $.ajax({
+                type: 'POST', // Send post data
+                url: 'process.php',
+                data: 'type=check_interval_time&event_id=' + event.id,
+                async: false,
+                done: function (response) {
+                    return response;
+                }
+            });
+
+
+            console.log('Teste interval ',check_interval_time.responseText);
+
             if (permissions == 'brigadnik') {
-                if (checl_logIn_logOut.responseText != 0) {
-                    if (event.title.search(" Brigádnici:") == 0) {
-                        var confirmDialog = confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
-                        if (confirmDialog == true) {
-                            loggedInUpdate(event, email, -1); // -1 == log out from event
+
+                if (check_logIn_logOut.responseText != 0) {
+                    if(check_interval_time.responseText>5){
+                        if (event.title.search(" Brigádnici:") == 0) {
+                            var confirmDialog = confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
+                            if (confirmDialog == true) {
+                                loggedInUpdate(event, email, -1); // -1 == log out from event
+                            }
                         }
                     }
+                    else{
+                        alert("Nemozno sa odhlasit v tejto lehote");
+                    }
                 }
+
                 else {
                     if (event.title.search(" Brigádnici:") == 0) {
                         var confirmDialog = confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
@@ -382,6 +401,8 @@ $(document).ready(function () {
     /***************REFRESH EVENTS *******************/
     /*************************************************/
     function refreshEvents() {
+
+        console.log('Render');
         $('#calendar').fullCalendar('removeEvents');
         getFreshEvents();
         $('#calendar').fullCalendar('rerenderEvents');
@@ -403,11 +424,8 @@ $(document).ready(function () {
                 },
                 error: function(e){
                     console.log(e.responseText);
-            }
-
+                }
             });
-
-
         }
         refreshEvents();
     }
