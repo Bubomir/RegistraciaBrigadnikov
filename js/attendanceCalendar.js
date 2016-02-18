@@ -41,26 +41,28 @@ $(document).ready(function () {
     /***********************************************************************/
     /******** Loop for Checking multiple Log In SET UP on every 1 SEC ******/
     /***********************************************************************/
-    setInterval(ajaxCall, 1000); //1000 ms = 1 second
+    setInterval(ajaxCall, 2000); //2000 ms = 2 second
     function ajaxCall() {
-        var returndata;
-        $.ajax({
+
+        var returndata = $.ajax({
             url: 'process.php',
             type: 'POST',
             data: 'type=session_check',
             success: function (data) {
-                returndata = data;
+                return  data;
 
-                if (returndata == '{"status":"success"}') {
-                    alert("boli ste odpojeny");
-
-                    window.location.replace("index.php");
-
-                }
             }
         });
+
+        if (returndata.resoponseText == 'success') {
+            alert("boli ste odpojeny");
+            window.location.replace("index.php");
+
+        }
+
     }
     var zone = "01:00"; //TIME ZONE FOR MIDLE OF EUROPE
+    var json_events;
     $.ajax({
         url: 'process.php',
         type: 'POST', // Send post data
@@ -110,7 +112,7 @@ $(document).ready(function () {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month'
+            right: ''
         },
         droppable: true,
         allDaySlot: false,
@@ -123,10 +125,10 @@ $(document).ready(function () {
 
         eventReceive: function (event) {
 
-            var now = moment(defNow);
-            var click_time = moment(event.start.format() + '+' + zone);
+            var now = moment(defNow),
+                click_time = moment(event.start.format() + '+' + zone),
+                duplicity_bool;
 
-            var duplicity_bool;
             duplicity_bool = $.ajax({
                 url: 'process.php',
                 type: 'POST',
