@@ -55,18 +55,14 @@ if($type == 'new'){
             $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In, Color) VALUES('".$fetch['Email']."','$start_date','$end_date','$capacity','$logged_in','$color')");
             $lastid = mysqli_insert_id($db);
                 
-            if($insert){
-                echo json_encode(array('status'=>'success','write to database'+'eventid'=>$lastid));
-            }
-            else{
-                echo json_encode(array('status'=>'failed','write to database'));
-            }
-        }
-        else{
-            echo json_encode(array('status'=>'failed','email equal'));
-        }
-	}
 
+
+        }
+
+	}
+    if($insert){
+        echo 'success';
+     }
 
 }
 if($type == 'changeCapacity')

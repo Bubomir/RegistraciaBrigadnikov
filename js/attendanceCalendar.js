@@ -343,42 +343,33 @@ $(document).ready(function () {
 
     function eventAdd(event, capacity) {
 
-        $.ajax({
+        var return_response = $.ajax({
             url: 'process.php',
             data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&zone=' + zone + '&capacity=' + capacity + '&logged_in=' + 0 + '&color=' + event.color,
             type: 'POST',
             dataType: 'json',
-            success: function (response) {
-                    if (response.status == 'success') {
-                        refreshEvents();
-                    }
-                },
-                error: function (e) {
-                    alert('Error processing your request: ' + e.responseText);
-                }
+            done: function (response) {
+                return response;
+            }
 
         });
+       refreshEvents();
 
     }
 
     function loggedInUpdate(event, email, logIn_logOut) {
 
-        $.ajax({
+         var return_response = $.ajax({
             url: 'process.php',
             data: 'type=change_number_of_logged_in&email=' + email + '&logIn_logOut=' + logIn_logOut + '&event_id=' + event.id,
             type: 'POST',
             dataType: 'json',
             success: function (response) {
-                    if (response.status == 'success') {
-                        refreshEvents();
-                    }
-                },
-            error: function (e) {
-                    alert('Error processing your request: ' + e.responseText);
-            }
-
+                    return response;
+                }
         });
 
+        refreshEvents();
     }
 
     /*************************************************/
@@ -396,20 +387,18 @@ $(document).ready(function () {
     function deleteEvent(event) {
         var con = confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
         if (con == true) {
-            $.ajax({
+            var return_response = $.ajax({
                 url: 'process.php',
                 data: 'type=remove&event_id=' + event.id,
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status == 'success') {
-                        refreshEvents();
-                    }
+                    return response;
                 },
-                error: function (e) {
-                    alert('Error processing your request: ' + e.responseText);
-                }
+
             });
+
+            refreshEvents();
         }
     }
 });
