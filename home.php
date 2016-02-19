@@ -456,7 +456,7 @@
                         $('.alert-success').hide().slideDown(500);
                         $('#registration_form').trigger('reset');
                     } else {
-
+                        $('.alert').hide().slideDown(500);
                     }
                     // stop the form from submitting the normal way and refreshing the page
                     event.preventDefault();
