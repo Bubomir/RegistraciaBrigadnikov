@@ -17,6 +17,7 @@
         unset($_SESSION['user']);
         header("Location: index.php");
     }
+
 ?>
     <!doctype html>
     <html class="no-js" lang="en">
