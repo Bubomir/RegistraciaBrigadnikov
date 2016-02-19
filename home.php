@@ -9,8 +9,6 @@
          header("Location: index.php");
     }
 
-
-
     //Registration
     if(isset($_POST['btn-signup'])){
         $first_name = mysqli_real_escape_string($db,$_POST['first_name']);
@@ -18,7 +16,7 @@
         $email =  mysqli_real_escape_string($db,$_POST['email']);
         $permission = mysqli_real_escape_string($db,$_POST['permissions']);
         $tempPass = md5(rand(1000, 1000000));
-              $result_email = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Email = '$email' ");
+        $result_email = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Email = '$email' ");
         if(mysqli_num_rows($result_email) == 0){
 
             if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions) VALUES('$first_name','$surname','$tempPass','$email','$permission')")){
