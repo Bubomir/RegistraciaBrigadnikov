@@ -27,17 +27,16 @@
                 $code = md5(rand(1000, 1000000));
 
                 $to = $db_email;
-                $subject = "Password Reset";
-                $body = "
-                This is an automate email. Please DO NOT REPLY to this email.
-                
-                Click the ling below or paste it into your brosers:
-                http://localhost/resetPass.php?code=$code&email=$email
-                ";  
+                $subject = "Resetování hesla";
+                $body = "Zde kliknite nebo vložte tento link do vášeho prohlížeče pro resetování hesla: <br>
+                http://vtstudentplanner.cz/resetPass.php?code=$code&email=$email
+                ";
+                $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
                 
                 mysqli_query($db,"UPDATE $table_employees SET Reset_Password='$code' WHERE Email='$email' ");
                 
-                mail($to, $subject, $body);
+                mail($to, $subject, $body, $headers);
+
                 $alert_message = 'Link pro resetování hesla byl poslán k vám na e-mail.';
                 include ('template/alert_message_success.php');
             }
