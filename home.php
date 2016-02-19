@@ -9,6 +9,7 @@
          header("Location: index.php");
     }
 
+
     //Registration
     if(isset($_POST['btn-signup'])){
         $first_name = mysqli_real_escape_string($db,$_POST['first_name']);
@@ -45,7 +46,6 @@
             echo 'email already exists';
         }
     }
-
 
 
     mysqli_close($db);
@@ -119,12 +119,12 @@
                                 <div class="row">
 
                                     <div class="large-12 medium-12 small-12 columns text-center">
-                                                <div class="logo-morning">
-                                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                        <div class="logo-morning">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                <g>
+                                                    <g id="_x34__10_">
                                                         <g>
-                                                            <g id="_x34__10_">
-                                                                <g>
-                                                                    <path d="M106.447,346.801c18.931-93.044,100.837-163.2,199.553-163.2s180.621,70.135,199.553,163.2h42.942
+                                                            <path d="M106.447,346.801c18.931-93.044,100.837-163.2,199.553-163.2s180.621,70.135,199.553,163.2h42.942
                                                                      c-15.688-115.077-118.137-204-242.495-204s-226.807,88.924-242.475,204H106.447z M61.2,192.046c7.976,7.977,20.89,7.977,28.845,0
                                                                      c7.977-7.976,7.977-20.889,0-28.845L61.2,134.355c-7.977-7.977-20.89-7.977-28.846,0s-7.977,20.89,0,28.846L61.2,192.046z
                                                                      M550.8,192.046l28.846-28.845c7.977-7.977,7.977-20.89,0-28.846s-20.89-7.977-28.846,0l-28.846,28.846
@@ -135,17 +135,17 @@
                                                                      c11.261,0,20.4-9.139,20.4-20.398C530.4,559.939,521.261,550.801,510,550.801z M571.2,469.201H40.8
                                                                      c-11.261,0-20.4,9.139-20.4,20.398c0,11.262,9.139,20.4,20.4,20.4h530.4c11.261,0,20.399-9.139,20.399-20.4
                                                                      C591.6,478.34,582.461,469.201,571.2,469.201z" />
-                                                                </g>
-                                                            </g>
                                                         </g>
-                                                    </svg>
-                                                </div>
-                                            </div>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                    </div>
 
-                                            <div class="large-12 medium-12 small-12 columns text-center">
-                                                <div id="morning-change">
-                                                    Ranní změny
-                                                    <?php
+                                    <div class="large-12 medium-12 small-12 columns text-center">
+                                        <div id="morning-change">
+                                            Ranní změny
+                                            <?php
                                              include 'dbconnect.php';
                                              $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
                                              while ($row = mysqli_fetch_assoc($result)){
@@ -159,8 +159,8 @@
                                              }
 
                                          ?>
-                                                </div>
-                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="large-12 medium-12 small-12 columns">
                                         <div class="logo-change">
@@ -181,10 +181,11 @@
                                     </div>
 
 
-                                    <div class="large-12 medium-12 small-12 columns text-center">                                                   <div class="logo-night">
-                                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="47.612px" height="47.612px" viewBox="0 0 47.612 47.612" style="enable-background:new 0 0 47.612 47.612;" xml:space="preserve">
-                                                        <g>
-                                                            <path d="M14.626,23.917c-0.817-1.69-1.288-3.58-1.288-5.58c0-5.596,3.517-10.375,8.564-12.151
+                                    <div class="large-12 medium-12 small-12 columns text-center">
+                                        <div class="logo-night">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="47.612px" height="47.612px" viewBox="0 0 47.612 47.612" style="enable-background:new 0 0 47.612 47.612;" xml:space="preserve">
+                                                <g>
+                                                    <path d="M14.626,23.917c-0.817-1.69-1.288-3.58-1.288-5.58c0-5.596,3.517-10.375,8.564-12.151
                                                     c-1.017,1.756-1.557,3.755-1.557,5.847c0,6.479,5.271,11.748,11.749,11.748c2.365,0,4.635-0.703,6.549-1.994
                                                     c-0.201,0.741-0.473,1.451-0.795,2.131h2.547c0.623-1.602,1-3.33,1.052-5.153c0.014-0.501-0.293-0.958-0.765-1.133
                                                     c-0.469-0.173-1-0.033-1.317,0.356c-1.796,2.188-4.445,3.444-7.271,3.444c-5.184,0-9.397-4.217-9.397-9.398
@@ -194,15 +195,15 @@
                                                     M46.491,34.753H1.121C0.501,34.753,0,35.279,0,35.929c0,0.646,0.501,1.175,1.121,1.175h45.37c0.618,0,1.121-0.527,1.121-1.175
                                                     C47.612,35.279,47.109,34.753,46.491,34.753z M46.491,42.096H1.121C0.501,42.096,0,42.621,0,43.271
                                                     c0,0.646,0.501,1.175,1.121,1.175h45.37c0.618,0,1.121-0.527,1.121-1.175C47.612,42.622,47.109,42.096,46.491,42.096z" />
-                                                        </g>
-                                                    </svg>
-                                                </div>
-                                            </div>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                    </div>
 
-                                            <div class="large-12 medium-12 small-12 columns text-center">
-                                                <div id="night-change">
-                                                    Noční změny
-                                                    <?php
+                                    <div class="large-12 medium-12 small-12 columns text-center">
+                                        <div id="night-change">
+                                            Noční změny
+                                            <?php
                                                 include 'dbconnect.php';
                                                 $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
                                                 while ($row = mysqli_fetch_assoc($result)){
@@ -218,15 +219,15 @@
                                                 }
 
                                             ?>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                             </div>
+
+
+
+                        </div>
+                    </div>
 
                     <?php }?>
                         <?php if($userRow['Permissions'] == 'supervizor' || $userRow['Permissions'] == 'admin'){?>
@@ -261,7 +262,7 @@
                 </div>
             </div>
             <div class="panel custom">
-                <form method="post" action="">
+                <form method="post" id="registration_form">
                     <div class="row collapse">
                         <div class="small-10 medium-10 large-10 columns">
                             <input type="text" onblur="if (this.placeholder == '') {this.placeholder = 'Jméno';}" onfocus="this.placeholder = '';" placeholder="Jméno" name="first_name" required/>
@@ -322,38 +323,78 @@
                         </span>
                         </div>
                     </div>
-                        <div class="row large-up-3 medium-up-3 small-up-3 text-center">
-                            <div class="column">
-                                <p>Správca</p>
-                                <div class="switch">
-                                    <input class="switch-input" id="exampleSwitch" type="radio" name="permissions" value="admin" required>
-                                    <label class="switch-paddle" for="exampleSwitch">
-                                        <span class="show-for-sr">Správca</span>
-                                    </label>
-                                </div>
+                    <div class="row large-up-3 medium-up-3 small-up-3 text-center">
+                        <div class="column">
+                            <p>Správca</p>
+                            <div class="switch">
+                                <input class="switch-input" id="exampleSwitch" type="radio" name="permissions" value="admin" required>
+                                <label class="switch-paddle" for="exampleSwitch">
+                                    <span class="show-for-sr">Správca</span>
+                                </label>
                             </div>
-                            <div class="column">
-                                <p>Supervízor</p>
-                                <div class="switch">
-                                    <input class="switch-input" id="exampleSwitch2" type="radio" name="permissions" value="supervizor" required>
-                                    <label class="switch-paddle" for="exampleSwitch2">
-                                        <span class="show-for-sr">Supervízor</span>
-                                    </label>
-                                </div>
+                        </div>
+                        <div class="column">
+                            <p>Supervízor</p>
+                            <div class="switch">
+                                <input class="switch-input" id="exampleSwitch2" type="radio" name="permissions" value="supervizor" required>
+                                <label class="switch-paddle" for="exampleSwitch2">
+                                    <span class="show-for-sr">Supervízor</span>
+                                </label>
                             </div>
-                            <div class="columns">
-                                <p>Brigádnik</p>
-                                <div class="switch">
-                                    <input class="switch-input" id="exampleSwitch3" type="radio" name="permissions" value="brigadnik" required>
-                                    <label class="switch-paddle" for="exampleSwitch3">
-                                        <span class="show-for-sr">Brigádnik</span>
-                                    </label>
+                        </div>
+                        <div class="columns">
+                            <p>Brigádnik</p>
+                            <div class="switch">
+                                <input class="switch-input" id="exampleSwitch3" type="radio" name="permissions" value="brigadnik" required>
+                                <label class="switch-paddle" for="exampleSwitch3">
+                                    <span class="show-for-sr">Brigádnik</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-free-space">
+                        <div class="alert-success">
+                            <div class="row">
+                                <div class="large-12 columns large-centered text-center">
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                                        <g>
+                                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                                                <path d="M88.04,30.319L75.124,17.401c-0.454-0.453-1.067-0.709-1.71-0.709c-0.642,0-1.256,0.256-1.709,0.709L37.392,51.714
+	               l-9.094-9.093c-0.945-0.944-2.474-0.944-3.419,0L11.96,55.539c-0.453,0.453-0.709,1.068-0.709,1.709c0,0.641,0.256,1.256,0.709,1.71
+	               L35.607,82.6c0.453,0.453,1.067,0.708,1.709,0.708c0.029,0,0.055-0.016,0.083-0.016c0.024,0,0.05,0.014,0.075,0.014
+	               c0.621,0,1.236-0.236,1.709-0.708L88.04,33.738C88.985,32.794,88.985,31.264,88.04,30.319z" />
+                                            </svg>
+                                    </svg>
+                                    <div class="alert-message">
+                                        Registrace byla úspěšná.
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="alert-free-space">
+                        <div class="alert">
+                            <div class="row">
+                                <div class="large-12 columns large-centered text-center">
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                                        <g>
+                                            <path d="M91.17,81.374l0.006-0.004l-0.139-0.24c-0.068-0.128-0.134-0.257-0.216-0.375l-37.69-65.283
+		   c-0.611-1.109-1.776-1.87-3.133-1.87c-1.47,0-2.731,0.887-3.285,2.153l-0.004-0.002L9.312,80.529l0.036,0.021
+		   c-0.505,0.618-0.82,1.397-0.82,2.257c0,1.982,1.607,3.59,3.588,3.59h0h75.767v0c1.982,0,3.589-1.607,3.589-3.589
+		   C91.472,82.297,91.362,81.814,91.17,81.374z M50.035,79.617c-2.874,0-5.201-2.257-5.201-5.13c0-2.874,2.326-5.2,5.201-5.2
+		   c2.803,0,5.13,2.325,5.13,5.2C55.166,77.36,52.838,79.617,50.035,79.617z M55.165,34.25v28.299h-0.002
+		   c0,0.005,0.002,0.01,0.002,0.016c0,1.173-0.95,2.094-2.094,2.094c-0.005,0-0.009-0.001-0.014-0.001v0.001h-6.093
+		   c-1.174,0-2.123-0.921-2.123-2.094c0-0.005,0.002-0.01,0.002-0.016h-0.002V34.326c-0.001-0.026-0.008-0.051-0.008-0.077
+		   c0-1.117,0.865-1.996,1.935-2.078v-0.016h6.288v0.001c1.149,0.007,2.074,0.897,2.103,2.039h0.005v0.053V34.25
+		   C55.166,34.25,55.165,34.25,55.165,34.25z" />
+                                        </g>
+                                    </svg>
+                                    <div class="alert-message">
+                                        Registrace nebyla úspěšná!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        </div>
+                    </div>
                     <div class="space-top">
                         <div class="row">
                             <div class="large-6 large-push-6  medium-12 small-12 columns">
@@ -382,7 +423,50 @@
         <script src="js/foundation.js"></script>
         <script src="js/app.js"></script>
         <script src="js/clearForm.js"></script>
+        <script>
+            $(document).ready(function () {
 
+                $('.alert-success').hide();
+                $('.alert').hide();
+                $('#registration_form').submit(function (event) {
+
+                    var formData = {
+                        'first_name': $('input[name=first_name]').val(),
+                        'surname': $('input[name=surname]').val(),
+                        'email': $('input[name=email]').val(),
+                        'permissions': $('input[name=permissions]:checked').val()
+                    }
+
+                    //console.log('test',formData);
+
+                    // process the form
+                    $isRegistered = $.ajax({
+                        type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                        url: 'registration.php', // the url where we want to POST
+                        data: formData, // our data object
+                        async: false,
+                        done: function (response) {
+                            return response;
+                        }
+                    }).responseText;
+
+                    console.log($isRegistered);
+
+                    if ($isRegistered == true) {
+                        $('.alert-success').hide().slideDown(500);
+                        $('#registration_form').trigger('reset');
+                    } else {
+
+                    }
+                    // stop the form from submitting the normal way and refreshing the page
+                    event.preventDefault();
+
+                })
+
+
+
+            });
+        </script>
 
         <script src='js/calendar/moment.min.js'></script>
         <script src='js/jquery.min.js'></script>
