@@ -94,8 +94,8 @@
     $sql_calendar = 'CREATE TABLE IF NOT EXISTS '.$table_calendar.'(
         ID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         p_Email VARCHAR(255) NOT NULL,                                   
-        Start_Date VARCHAR(50) NOT NULL,
-        End_Date VARCHAR(50) NOT NULL,
+        Start_Date TIMESTAMP NOT NULL,
+        End_Date TIMESTAMP NOT NULL,
         Capacity INT(5) NULL,
         Logged_In INT(5) NULL,
         Color VARCHAR(50),

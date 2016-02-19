@@ -27,9 +27,7 @@ $(document).ready(function () {
     /**********************************************/
 
     //Define variables
-    var return_response,
-        zone = "01:00"; //TIME ZONE FOR MIDLE OF EUROPE
-
+    var return_response;
 
     function getFreshEvents() {
 
@@ -37,18 +35,21 @@ $(document).ready(function () {
             start_month,
             end_month;
 
-        start_month =  moment($('#calendar').fullCalendar('getView').start._d).format();
-        end_month = moment($('#calendar').fullCalendar('getView').end._d).format();
+        start_month = moment($('#calendar').fullCalendar('getView').start._d).format('YYYY-MM-DD HH:mm:ss');
+        end_month = moment($('#calendar').fullCalendar('getView').end._d).format('YYYY-MM-DD HH:mm:ss');
 
-        $.ajax({
+       return_response = $.ajax({
             url: 'process.php',
             type: 'POST', // Send post data
             data: 'type=fetch&start_month='+start_month+'&end_month='+end_month,
             async: false,
             success: function (s) {
                 freshevents = s;
+                return s;
             }
         });
+        console.log('tes', start_month);
+        console.log('--tes', return_response.responseText);
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
@@ -92,7 +93,7 @@ $(document).ready(function () {
 
         var return_response = $.ajax({
             url: 'process.php',
-            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&zone=' + zone + '&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
+            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() +'&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
             type: 'POST',
             dataType: 'json',
             success: function (response) {
@@ -106,13 +107,6 @@ $(document).ready(function () {
         refreshEvents();
     }
 
-    function getMonthArray(){
-        var start = $('#calendar').fullCalendar('getView').start._d;
-        var end = $('#calendar').fullCalendar('getView').end._d;
-
-        console.log('test start', moment(start).format());
-        console.log('test end', moment(end).format());
-    }
 
     /**********************************************/
     /*********** Log In Log Out EVENTS *************/
@@ -225,13 +219,13 @@ $(document).ready(function () {
                 duplicity_bool;
 
             now = moment(new Date()).format();
-            click_time = moment(event.start.format() + '+' + zone);
+            click_time = moment(event.start.format());
 
 
             duplicity_bool = $.ajax({
                 url: 'process.php',
                 type: 'POST',
-                data: 'type=duplicity_ceck&startDate=' + event.start.format() + '&zone=' + zone + '&emailHash=' + event.description,
+                data: 'type=duplicity_ceck&startDate=' + event.start.format() + '&emailHash=' + event.description,
                 async: false,
                 done: function (response) {
                     return response;

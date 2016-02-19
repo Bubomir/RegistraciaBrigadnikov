@@ -18,7 +18,7 @@ if($type == 'session_check'){
     }
 }
 if($type == 'duplicity_ceck'){
-    $start_date = $_POST['startDate'].'+'.$_POST['zone'];
+    $start_date = $_POST['startDate'];
     $email_hash = $_POST['emailHash'];
     $e_email;
     $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='supervizor'");
@@ -40,7 +40,7 @@ if($type == 'duplicity_ceck'){
 
 if($type == 'new'){
 	
-    $start_date = $_POST['start_date'].'+'.$_POST['zone'];
+    $start_date = $_POST['start_date'];
     $end_date = date('c', strtotime($start_date." + 12 Hours"));
 	$email = $_POST['email'];
     $capacity = $_POST['capacity'];
