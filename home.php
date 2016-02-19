@@ -10,6 +10,7 @@
     }
 
 
+
     //Registration
     if(isset($_POST['btn-signup'])){
         $first_name = mysqli_real_escape_string($db,$_POST['first_name']);
@@ -22,24 +23,25 @@
 
             if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions) VALUES('$first_name','$surname','$tempPass','$email','$permission')")){
 
-            //Parameters for sending mail
-            //nastavit registracny email uzivatelov/brigadnikov
-            $to = $email;
-            $subject = 'Registracia brigadnika';
-            $message = "Prihlasovacie udaje:
-                            Prihlasovaci email: $email
+                //Parameters for sending mail
+                //nastavit registracny email uzivatelov/brigadnikov
+                $to = $email;
+                $subject = 'Registracia brigadnika';
+                $message = "Prihlasovacie udaje:
+                                Prihlasovaci email: $email
 
-                        Kliknite tu pre vytvorenia vasho hesla a dokoncenie registrácie
-                        http://localhost/createPass.php?tempPass=$tempPass&email=$email";
+                            Kliknite tu pre vytvorenia vasho hesla a dokoncenie registrácie
+                            http://localhost/createPass.php?tempPass=$tempPass&email=$email";
 
-            $headers = 'From: vtstudentplanner.cz'."\r\n" .
-                'Reply-To: ' . $to . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-            mail($to, $subject, $message, $headers);
-            echo 'succesfully registered';
-            } else{
-                echo 'error while registering you';
-            }
+                $headers = 'From: vtstudentplanner.cz'."\r\n" .
+                    'Reply-To: ' . $to . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+                mail($to, $subject, $message, $headers);
+                echo 'succesfully registered';
+                }
+            else{
+                    echo 'error while registering you';
+                }
         }
         else{
             echo 'email already exists';
@@ -117,9 +119,8 @@
                         <div class="panel">
                             <div id="external-events">
                                 <div class="row">
-                                    <div class="large-12 medium-12 small-12 columns">
-                                        <div class="row collapse">
-                                            <div class="large-3 medium-12 small-12 columns text-center">
+
+                                    <div class="large-12 medium-12 small-12 columns text-center">
                                                 <div class="logo-morning">
                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
                                                         <g>
@@ -142,9 +143,10 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <div class="large-9 medium-12 small-12 columns text-center">
-                                                <h5>Ranní změny</h5>
+
+                                            <div class="large-12 medium-12 small-12 columns text-center">
                                                 <div id="morning-change">
+                                                    Ranní změny
                                                     <?php
                                              include 'dbconnect.php';
                                              $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
@@ -161,11 +163,7 @@
                                          ?>
                                                 </div>
                                             </div>
-                                        </div>
 
-
-
-                                    </div>
                                     <div class="large-12 medium-12 small-12 columns">
                                         <div class="logo-change">
                                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -183,10 +181,9 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <div class="large-12 medium-12 small-12 columns ">
-                                        <div class="row collapse">
-                                            <div class="large-3 medium-12 small-12 columns text-center">
-                                                <div class="logo-night">
+
+
+                                    <div class="large-12 medium-12 small-12 columns text-center">                                                   <div class="logo-night">
                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="47.612px" height="47.612px" viewBox="0 0 47.612 47.612" style="enable-background:new 0 0 47.612 47.612;" xml:space="preserve">
                                                         <g>
                                                             <path d="M14.626,23.917c-0.817-1.69-1.288-3.58-1.288-5.58c0-5.596,3.517-10.375,8.564-12.151
@@ -203,9 +200,10 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <div class="large-9 medium-12 small-12 columns">
-                                                <h5 class="text-center">Noční změny</h5>
+
+                                            <div class="large-12 medium-12 small-12 columns text-center">
                                                 <div id="night-change">
+                                                    Noční změny
                                                     <?php
                                                 include 'dbconnect.php';
                                                 $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
@@ -226,10 +224,12 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
                                 </div>
                             </div>
-                        </div>
-                    </div>
+
                     <?php }?>
                         <?php if($userRow['Permissions'] == 'supervizor' || $userRow['Permissions'] == 'admin'){?>
                             <div class="large-10 medium-10 small-12 columns">
@@ -263,7 +263,7 @@
                 </div>
             </div>
             <div class="panel custom">
-                <form method="post">
+                <form method="post" action="">
                     <div class="row collapse">
                         <div class="small-10 medium-10 large-10 columns">
                             <input type="text" onblur="if (this.placeholder == '') {this.placeholder = 'Jméno';}" onfocus="this.placeholder = '';" placeholder="Jméno" name="first_name" required/>
@@ -324,7 +324,6 @@
                         </span>
                         </div>
                     </div>
-                    <div class="space-top">
                         <div class="row large-up-3 medium-up-3 small-up-3 text-center">
                             <div class="column">
                                 <p>Správca</p>
@@ -354,7 +353,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="alert-free-space">
+
+                        </div>
                     <div class="space-top">
                         <div class="row">
                             <div class="large-6 large-push-6  medium-12 small-12 columns">
