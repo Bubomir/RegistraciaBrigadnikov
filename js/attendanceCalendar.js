@@ -182,15 +182,15 @@ $(document).ready(function () {
     /*************** Data for mouse cursor possion *******/
     /****************************************************/
     /*
-    	var currentMousePos = {
-    	    x: -1,
-    	    y: -1
-    	};
-    		jQuery(document).on("mousemove", function (event) {
-            currentMousePos.x = event.pageX;
-            currentMousePos.y = event.pageY;
-        });
-    */
+    var currentMousePos = {
+        x: -1,
+        y: -1
+    };
+    	jQuery(document).on("mousemove", function (event) {
+           currentMousePos.x = event.pageX;
+           currentMousePos.y = event.pageY;
+       });
+
     /* initialize the external events
     -----------------------------------------------------------------*/
     $('#external-events .fc-event ').each(function () {
@@ -372,12 +372,10 @@ $(document).ready(function () {
                         if (confirmDialog === true) {
                             loggedInUpdate(event, email, -1); // -1 == log out from event
                         }
-                    }
-                    else {
+                    } else {
                         window.alert("Nemozno sa odhlasit v tejto lehote");
                     }
-                }
-                else {
+                } else {
                     if (event.title.search(" Brigádnici:") === 0) {
                         confirmDialog = window.confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
                         if (confirmDialog === true) {
@@ -411,13 +409,11 @@ $(document).ready(function () {
                             window.alert("Najskor treba odhlasit brigadnika/ov");
                         }
                         refreshEvents();
-                    }
-                    else {
+                    } else {
                         window.alert("Zle zadane cislo");
                         refreshEvents();
                     }
-                }
-                else {
+                } else {
                     deleteEvent(event);
                 }
             }
@@ -440,7 +436,7 @@ $(document).ready(function () {
     /***********Test If Cursor is Over the Calendar DIV*********/
     /***********************************************************/
     /*
-    	function isElemOverDiv() {
+    function isElemOverDiv() {
             var trashEl = jQuery('#trash');
             var ofs = trashEl.offset();
             var x1 = ofs.left;
