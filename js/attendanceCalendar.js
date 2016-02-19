@@ -27,23 +27,28 @@ $(document).ready(function () {
     /**********************************************/
 
     //Define variables
-    var json_events,
-        return_response,
+    var return_response,
         zone = "01:00"; //TIME ZONE FOR MIDLE OF EUROPE
 
 
     function getFreshEvents() {
-        var freshevents;
+
+        var freshevents,
+            start_month,
+            end_month;
+
+        start_month =  moment($('#calendar').fullCalendar('getView').start._d).format();
+        end_month = moment($('#calendar').fullCalendar('getView').end._d).format();
+
         $.ajax({
             url: 'process.php',
             type: 'POST', // Send post data
-            data: 'type=fetch',
+            data: 'type=fetch&start_month='+start_month+'&end_month='+end_month,
             async: false,
             success: function (s) {
                 freshevents = s;
             }
         });
-
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
@@ -101,16 +106,12 @@ $(document).ready(function () {
         refreshEvents();
     }
 
-    function test(){
-        $('#calendar').fullCalendar('getView').start._d;
+    function getMonthArray(){
+        var start = $('#calendar').fullCalendar('getView').start._d;
+        var end = $('#calendar').fullCalendar('getView').end._d;
 
-        $('calender').fullCalendar('getView').intervalEnd;
-        //var dateFormat = require('UTC');
-         var start = new Date().toISOString();
-       // var test = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-
-        console.log('test start', start);
-        console.log('-------test start', moment(start,'M/D/YYYY h:mma'));
+        console.log('test start', moment(start).format());
+        console.log('test end', moment(end).format());
     }
 
     /**********************************************/
@@ -152,23 +153,12 @@ $(document).ready(function () {
         if (returndata.responseText === 'success') {
             window.alert("boli ste odpojeny");
             window.location.replace("index.php");
-
         }
 
     }
 
     setInterval(ajaxCall, 2000); //2000 ms = 2 second
 
-
-    $.ajax({
-        url: 'process.php',
-        type: 'POST', // Send post data
-        data: 'type=fetch',
-        async: false,
-        success: function (s) {
-            json_events = s;
-        }
-    });
     /*****************************************************/
     /*************** Data for mouse cursor possion *******/
     /****************************************************/
@@ -204,7 +194,6 @@ $(document).ready(function () {
     -----------------------------------------------------------------*/
 
     $('#calendar').fullCalendar({
-        events: JSON.parse(json_events),
         utc: true,
         header: {
             left: 'prev,next today',
@@ -215,6 +204,14 @@ $(document).ready(function () {
         allDaySlot: false,
         defaultTimedEventDuration: '12:00:00',
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
+
+        /**********************************************/
+        /*************** Render EVENTS*****************/
+        /**********************************************/
+
+        events: function(){
+             refreshEvents();
+         },
 
         /**********************************************/
         /*************** ADD EVENTS********************/
@@ -277,7 +274,6 @@ $(document).ready(function () {
         /**********************************************/
 
         eventClick: function (event, jsEvent, view) {
-            test();
             //Define variables
             var permissions,
                 email,

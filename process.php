@@ -1,8 +1,7 @@
 <?php
 include_once 'dbconnect.php';
 $type = $_POST['type'];
-    
-    
+
 if($type == 'session_check'){
     session_start();
     
@@ -216,8 +215,11 @@ if($type == 'remove')
 	else
 		echo json_encode(array('status'=>'failed'));
 }
-if($type == 'fetch')
-{
+if($type == 'fetch'){
+
+    $start_month = $_POST['start_month'];
+    $end_month = $_POST['end_month'];
+
 	$events = array();
 	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email");
 
