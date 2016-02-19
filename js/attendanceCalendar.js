@@ -138,6 +138,7 @@ $(document).ready(function () {
             url: 'process.php',
             type: 'POST',
             data: 'type=session_check',
+            async: false,
             success: function (data) {
                 return data;
 
@@ -147,11 +148,12 @@ $(document).ready(function () {
         if (returndata.responseText === 'success') {
             window.alert("boli ste odpojeny");
             window.location.replace("index.php");
+            return 'success';
         }
 
     }
 
-    setInterval(ajaxCall, 2000); //2000 ms = 2 second
+   // setInterval(ajaxCall, 2000); //2000 ms = 2 second
 
     /*****************************************************/
     /*************** Data for mouse cursor possion *******/
@@ -204,7 +206,9 @@ $(document).ready(function () {
         /**********************************************/
 
         events: function(){
-             refreshEvents();
+             if(ajaxCall()!=='success'){
+                refreshEvents();
+             }
          },
 
         /**********************************************/
@@ -212,29 +216,136 @@ $(document).ready(function () {
         /**********************************************/
 
         eventReceive: function (event) {
-            //Define variables
-            var now,
-                worker_capacity,
-                click_time,
-                duplicity_bool;
+            if(ajaxCall()!=='success'){
+                //Define variables
+                var now,
+                    worker_capacity,
+                    click_time,
+                    duplicity_bool;
 
-            now = moment(new Date()).format();
-            click_time = moment(event.start.format());
+                now = moment(new Date()).format();
+                click_time = moment(event.start.format());
 
 
-            duplicity_bool = $.ajax({
-                url: 'process.php',
-                type: 'POST',
-                data: 'type=duplicity_ceck&startDate=' + event.start.format() + '&emailHash=' + event.description,
-                async: false,
-                done: function (response) {
-                    return response;
+                duplicity_bool = $.ajax({
+                    url: 'process.php',
+                    type: 'POST',
+                    data: 'type=duplicity_ceck&startDate=' + event.start.format() + '&emailHash=' + event.description,
+                    async: false,
+                    done: function (response) {
+                        return response;
+                    }
+                });
+
+                if (duplicity_bool.responseText === 'failed') {
+                    if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
+                        if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
+                            //vstup pre kapacitu brigadnikov a pretypovanie string na INT
+                            worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
+                                buttons: {
+                                    Ok: true,
+                                    Cancel: false
+                                }
+                            }), 10); //10 RADIX parameter
+                            //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
+                            if (!isNaN(worker_capacity) && worker_capacity > 0) {
+                                eventAdd(event, worker_capacity);
+                            } else {
+                                window.alert("Zle zadane cislo");
+                                refreshEvents();
+                            }
+                        } else {
+                            eventAdd(event, null);
+                        }
+                    } else {
+                        window.alert("Nemozno pridat smenu");
+                        refreshEvents();
+                    }
+                } else {
+                    window.alert("Duplicitny zapis");
+                    refreshEvents();
                 }
-            });
+            }
+        },
 
-            if (duplicity_bool.responseText === 'failed') {
-                if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
-                    if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
+        /**********************************************/
+        /*************** CLICK EVENTS******************/
+        /**********************************************/
+
+        eventClick: function (event, jsEvent, view) {
+
+            if(ajaxCall()!=='success'){
+                //Define variables
+                var permissions,
+                    email,
+                    check_logIn_logOut,
+                    check_interval_time,
+                    confirmDialog,
+                    varning_resposne,
+                    worker_capacity;
+
+                permissions = $.ajax({
+                    type: 'POST',
+                    url: 'process.php',
+                    data: 'type=get_loggedPermissions',
+                    async: false,
+                    done: function (response) {
+                        return response;
+                    }
+                }).responseText;
+
+
+                email = $.ajax({
+                    type: 'POST',
+                    url: 'process.php',
+                    data: 'type=get_loggedEmail',
+                    async: false,
+                    done: function (response) {
+                        return response;
+                    }
+                }).responseText;
+
+                check_logIn_logOut = $.ajax({
+                    type: 'POST', // Send post data
+                    url: 'process.php',
+                    data: 'type=check_log_in_log_out&event_id=' + event.id + '&email=' + email,
+                    async: false,
+                    done: function (response) {
+                        return response;
+                    }
+                });
+
+                check_interval_time = $.ajax({
+                    type: 'POST', // Send post data
+                    url: 'process.php',
+                    data: 'type=check_interval_time&event_id=' + event.id,
+                    async: false,
+                    done: function (response) {
+                        return response;
+                    }
+                });
+
+                if (permissions === 'brigadnik') {
+                    if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
+                        if (check_interval_time.responseText > 5) {
+                            confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
+                            if (confirmDialog === true) {
+                                loggedInUpdate(event, email, -1); // -1 == log out from event
+                            }
+                        } else {
+                            window.alert("Nemozno sa odhlasit v tejto lehote");
+                        }
+                    } else {
+                        if (event.title.search(" Brigádnici:") === 0) {
+                            confirmDialog = window.confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
+                            if (confirmDialog === true) {
+                                loggedInUpdate(event, email, 1); // 1 == log in on event
+                            }
+                        }
+                    }
+                }
+                if (permissions === 'admin' || permissions === 'supervizor') {
+                    if (event.title.search(" Brigádnici:") === 0) {
                         //vstup pre kapacitu brigadnikov a pretypovanie string na INT
                         worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
                             buttons: {
@@ -243,131 +354,28 @@ $(document).ready(function () {
                             }
                         }), 10); //10 RADIX parameter
                         //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
-                        if (!isNaN(worker_capacity) && worker_capacity > 0) {
-                            eventAdd(event, worker_capacity);
+                        if (!isNaN(worker_capacity) && worker_capacity > -1) {
+
+                            varning_resposne = $.ajax({
+                                url: 'process.php',
+                                type: 'POST',
+                                data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
+                                async: false,
+                                done: function (response) {
+                                    return response;
+                                }
+                            });
+                            if (varning_resposne.responseText === 'failed') {
+                                window.alert("Najskor treba odhlasit brigadnika/ov");
+                            }
+                            refreshEvents();
                         } else {
                             window.alert("Zle zadane cislo");
                             refreshEvents();
                         }
                     } else {
-                        eventAdd(event, null);
+                        deleteEvent(event);
                     }
-                } else {
-                    window.alert("Nemozno pridat smenu");
-                    refreshEvents();
-                }
-            } else {
-                window.alert("Duplicitny zapis");
-                refreshEvents();
-            }
-
-        },
-
-        /**********************************************/
-        /*************** CLICK EVENTS******************/
-        /**********************************************/
-
-        eventClick: function (event, jsEvent, view) {
-            //Define variables
-            var permissions,
-                email,
-                check_logIn_logOut,
-                check_interval_time,
-                confirmDialog,
-                varning_resposne,
-                worker_capacity;
-
-            permissions = $.ajax({
-                type: 'POST',
-                url: 'process.php',
-                data: 'type=get_loggedPermissions',
-                async: false,
-                done: function (response) {
-                    return response;
-                }
-            }).responseText;
-
-
-            email = $.ajax({
-                type: 'POST',
-                url: 'process.php',
-                data: 'type=get_loggedEmail',
-                async: false,
-                done: function (response) {
-                    return response;
-                }
-            }).responseText;
-
-            check_logIn_logOut = $.ajax({
-                type: 'POST', // Send post data
-                url: 'process.php',
-                data: 'type=check_log_in_log_out&event_id=' + event.id + '&email=' + email,
-                async: false,
-                done: function (response) {
-                    return response;
-                }
-            });
-
-            check_interval_time = $.ajax({
-                type: 'POST', // Send post data
-                url: 'process.php',
-                data: 'type=check_interval_time&event_id=' + event.id,
-                async: false,
-                done: function (response) {
-                    return response;
-                }
-            });
-
-            if (permissions === 'brigadnik') {
-                if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
-                    if (check_interval_time.responseText > 5) {
-                        confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
-                        if (confirmDialog === true) {
-                            loggedInUpdate(event, email, -1); // -1 == log out from event
-                        }
-                    } else {
-                        window.alert("Nemozno sa odhlasit v tejto lehote");
-                    }
-                } else {
-                    if (event.title.search(" Brigádnici:") === 0) {
-                        confirmDialog = window.confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
-                        if (confirmDialog === true) {
-                            loggedInUpdate(event, email, 1); // 1 == log in on event
-                        }
-                    }
-                }
-            }
-            if (permissions === 'admin' || permissions === 'supervizor') {
-                if (event.title.search(" Brigádnici:") === 0) {
-                    //vstup pre kapacitu brigadnikov a pretypovanie string na INT
-                    worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
-                        buttons: {
-                            Ok: true,
-                            Cancel: false
-                        }
-                    }), 10); //10 RADIX parameter
-                    //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
-                    if (!isNaN(worker_capacity) && worker_capacity > -1) {
-
-                        varning_resposne = $.ajax({
-                            url: 'process.php',
-                            type: 'POST',
-                            data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
-                            async: false,
-                            done: function (response) {
-                                return response;
-                            }
-                        });
-                        if (varning_resposne.responseText === 'failed') {
-                            window.alert("Najskor treba odhlasit brigadnika/ov");
-                        }
-                        refreshEvents();
-                    } else {
-                        window.alert("Zle zadane cislo");
-                        refreshEvents();
-                    }
-                } else {
-                    deleteEvent(event);
                 }
             }
         }
