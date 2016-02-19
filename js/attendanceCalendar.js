@@ -4,6 +4,7 @@ var defDate = $.ajax({
     data: 'type=get_default_date',
     async: false,
     done: function (response) {
+        "use strict";
         return response;
     }
 });
@@ -14,6 +15,7 @@ var defNow = $.ajax({
     data: 'type=get_now',
     async: false,
     done: function (response) {
+        "use strict";
         return response;
     }
 });
@@ -24,6 +26,7 @@ var loggedEmail = $.ajax({
     data: 'type=get_loggedEmail',
     async: false,
     done: function (response) {
+        "use strict";
         return response;
     }
 });
@@ -34,35 +37,136 @@ var loggedPermissions = $.ajax({
     data: 'type=get_loggedPermissions',
     async: false,
     done: function (response) {
+        "use strict";
         return response;
     }
 });
 $(document).ready(function () {
-    /***********************************************************************/
-    /******** Loop for Checking multiple Log In SET UP on every 1 SEC ******/
-    /***********************************************************************/
-    setInterval(ajaxCall, 2000); //2000 ms = 2 second
-    function ajaxCall() {
+    "use strict";
+    /**********************************************/
+    /*************** RENDER EVENTS*****************/
+    /**********************************************/
 
+    //Define variables
+    var freshevents,
+        json_events,
+        return_response,
+        zone = "01:00"; //TIME ZONE FOR MIDLE OF EUROPE
+
+
+    function getFreshEvents() {
+        $.ajax({
+            url: 'process.php',
+            type: 'POST', // Send post data
+            data: 'type=fetch',
+            async: false,
+            success: function (s) {
+                freshevents = s;
+            }
+        });
+
+        $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
+    }
+    /*************************************************/
+    /***************REFRESH EVENTS *******************/
+    /*************************************************/
+    function refreshEvents() {
+        $('#calendar').fullCalendar('removeEvents');
+        getFreshEvents();
+        $('#calendar').fullCalendar('rerenderEvents');
+    }
+    /**********************************************/
+    /*************** DELETE EVENTS*****************/
+    /**********************************************/
+
+    function deleteEvent(event) {
+
+        var con = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
+        if (con === true) {
+            return_response = $.ajax({
+                url: 'process.php',
+                data: 'type=remove&event_id=' + event.id,
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    return response;
+                },
+                error: function (e) {
+                    window.console.log(e.responseText);
+                }
+            });
+        }
+        refreshEvents();
+    }
+    /**********************************************/
+    /*************** ADD EVENTS********************/
+    /**********************************************/
+
+    function eventAdd(event, capacity) {
+
+        var return_response = $.ajax({
+            url: 'process.php',
+            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&zone=' + zone + '&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                return response;
+            },
+            error: function (e) {
+                window.console.log(e.responseText);
+            }
+
+        });
+        refreshEvents();
+    }
+
+    /**********************************************/
+    /*********** Log In Log Out EVENTS *************/
+    /**********************************************/
+    function loggedInUpdate(event, email, logIn_logOut) {
+        var return_response;
+        return_response = $.ajax({
+            url: 'process.php',
+            data: 'type=change_number_of_logged_in&email=' + email + '&logIn_logOut=' + logIn_logOut + '&event_id=' + event.id,
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                return response;
+            },
+            error: function (e) {
+                window.console.log(e.responseText);
+            }
+        });
+
+        refreshEvents();
+    }
+
+
+    /***********************************************************************/
+    /******** Loop for Checking multiple Log In SET UP on every 2 SEC ******/
+    /***********************************************************************/
+    function ajaxCall() {
         var returndata = $.ajax({
             url: 'process.php',
             type: 'POST',
             data: 'type=session_check',
             success: function (data) {
-                return  data;
+                return data;
 
             }
         });
 
-        if (returndata.resoponseText == 'success') {
-            alert("boli ste odpojeny");
+        if (returndata.resoponseText === 'success') {
+            window.alert("boli ste odpojeny");
             window.location.replace("index.php");
 
         }
 
     }
-    var zone = "01:00"; //TIME ZONE FOR MIDLE OF EUROPE
-    var json_events;
+
+    setInterval(ajaxCall, 2000); //2000 ms = 2 second
+
+
     $.ajax({
         url: 'process.php',
         type: 'POST', // Send post data
@@ -112,7 +216,7 @@ $(document).ready(function () {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: ''
+            right: false
         },
         droppable: true,
         allDaySlot: false,
@@ -124,10 +228,15 @@ $(document).ready(function () {
         /**********************************************/
 
         eventReceive: function (event) {
-
-            var now = moment(defNow),
-                click_time = moment(event.start.format() + '+' + zone),
+            //Define variables
+            var now,
+                worker_capacity,
+                click_time,
                 duplicity_bool;
+
+            now = moment(defNow);
+            click_time = moment(event.start.format() + '+' + zone);
+
 
             duplicity_bool = $.ajax({
                 url: 'process.php',
@@ -141,32 +250,32 @@ $(document).ready(function () {
 
 
 
-            if (duplicity_bool.responseText == 'failed') {
+            if (duplicity_bool.responseText === 'failed') {
                 if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
-                    if (event.title == 'Brigádnici R' || event.title == 'Brigádnici N') {
+                    if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
                         //vstup pre kapacitu brigadnikov a pretypovanie string na INT
-                        var worker_capacity = parseInt(prompt('počet brigádnikov:', "", {
+                        worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
                             buttons: {
                                 Ok: true,
                                 Cancel: false
                             }
-                        }));
+                        }), 10); //10 RADIX parameter
                         //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
                         if (!isNaN(worker_capacity) && worker_capacity > 0) {
                             eventAdd(event, worker_capacity);
                         } else {
-                            alert("Zle zadane cislo");
+                            window.alert("Zle zadane cislo");
                             refreshEvents();
                         }
                     } else {
                         eventAdd(event, null);
                     }
                 } else {
-                    alert("Nemozno pridat smenu");
+                    window.alert("Nemozno pridat smenu");
                     refreshEvents();
                 }
             } else {
-                alert("Duplicitny zapis");
+                window.alert("Duplicitny zapis");
                 refreshEvents();
             }
 
@@ -204,8 +313,16 @@ $(document).ready(function () {
         /**********************************************/
 
         eventClick: function (event, jsEvent, view) {
-            //Only brigadier accounts may click on brigadier button.
-            var permissions = $.ajax({
+            //Define variables
+            var permissions,
+                email,
+                check_logIn_logOut,
+                check_interval_time,
+                confirmDialog,
+                varning_resposne,
+                worker_capacity;
+
+            permissions = $.ajax({
                 type: 'POST',
                 url: 'process.php',
                 data: 'type=get_loggedPermissions',
@@ -216,7 +333,7 @@ $(document).ready(function () {
             }).responseText;
 
 
-            var email = $.ajax({
+            email = $.ajax({
                 type: 'POST',
                 url: 'process.php',
                 data: 'type=get_loggedEmail',
@@ -226,7 +343,7 @@ $(document).ready(function () {
                 }
             }).responseText;
 
-            var check_logIn_logOut = $.ajax({
+            check_logIn_logOut = $.ajax({
                 type: 'POST', // Send post data
                 url: 'process.php',
                 data: 'type=check_log_in_log_out&event_id=' + event.id + '&email=' + email,
@@ -236,7 +353,7 @@ $(document).ready(function () {
                 }
             });
 
-            var check_interval_time = $.ajax({
+            check_interval_time = $.ajax({
                 type: 'POST', // Send post data
                 url: 'process.php',
                 data: 'type=check_interval_time&event_id=' + event.id,
@@ -247,43 +364,40 @@ $(document).ready(function () {
             });
 
 
-            if (permissions == 'brigadnik') {
-
-                if (check_logIn_logOut.responseText != 0) {
-                    if(check_interval_time.responseText>5){
-                        if (event.title.search(" Brigádnici:") == 0) {
-                            var confirmDialog = confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
-                            if (confirmDialog == true) {
-                                loggedInUpdate(event, email, -1); // -1 == log out from event
-                            }
+            if (permissions === 'brigadnik') {
+                if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
+                    if (check_interval_time.responseText > 5) {
+                        confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
+                        if (confirmDialog === true) {
+                            loggedInUpdate(event, email, -1); // -1 == log out from event
                         }
-                    } else {
-                        alert("Nemozno sa odhlasit v tejto lehote");
+                    }
+                    else {
+                        window.alert("Nemozno sa odhlasit v tejto lehote");
                     }
                 }
-
                 else {
-                    if (event.title.search(" Brigádnici:") == 0) {
-                        var confirmDialog = confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
-                        if (confirmDialog == true) {
+                    if (event.title.search(" Brigádnici:") === 0) {
+                        confirmDialog = window.confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
+                        if (confirmDialog === true) {
                             loggedInUpdate(event, email, 1); // 1 == log in on event
                         }
                     }
                 }
             }
-            if (permissions == 'admin' || permissions == 'supervizor') {
-                if (event.title.search(" Brigádnici:") == 0) {
+            if (permissions === 'admin' || permissions === 'supervizor') {
+                if (event.title.search(" Brigádnici:") === 0) {
                     //vstup pre kapacitu brigadnikov a pretypovanie string na INT
-                    var worker_capacity = parseInt(prompt('počet brigádnikov:', "", {
+                    worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
                         buttons: {
                             Ok: true,
                             Cancel: false
                         }
-                    }));
+                    }), 10); //10 RADIX parameter
                     //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
                     if (!isNaN(worker_capacity) && worker_capacity > -1) {
 
-                        var varning_resposne = $.ajax({
+                        varning_resposne = $.ajax({
                             url: 'process.php',
                             type: 'POST',
                             data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
@@ -292,15 +406,17 @@ $(document).ready(function () {
                                 return response;
                             }
                         });
-                        if (varning_resposne.responseText == 'failed') {
-                            alert("Najskor treba odhlasit brigadnika/ov");
+                        if (varning_resposne.responseText === 'failed') {
+                            window.alert("Najskor treba odhlasit brigadnika/ov");
                         }
                         refreshEvents();
-                    } else {
-                        alert("Zle zadane cislo");
+                    }
+                    else {
+                        window.alert("Zle zadane cislo");
                         refreshEvents();
                     }
-                } else {
+                }
+                else {
                     deleteEvent(event);
                 }
 
@@ -319,23 +435,7 @@ $(document).ready(function () {
 
     });
 
-    /**********************************************/
-    /*************** RENDER EVENTS*****************/
-    /**********************************************/
 
-    function getFreshEvents() {
-        $.ajax({
-            url: 'process.php',
-            type: 'POST', // Send post data
-            data: 'type=fetch',
-            async: false,
-            success: function (s) {
-                freshevents = s;
-            }
-        });
-
-        $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
-    }
 
     /***********************************************************/
     /***********Test If Cursor is Over the Calendar DIV*********/
@@ -355,78 +455,9 @@ $(document).ready(function () {
             return false;
         }
     */
-    /**********************************************/
-    /*************** ADD EVENTS********************/
-    /**********************************************/
 
-    function eventAdd(event, capacity) {
 
-        var return_response = $.ajax({
-            url: 'process.php',
-            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&zone=' + zone + '&capacity=' + capacity + '&logged_in=' + 0 + '&color=' + event.color,
-            type: 'POST',
-            dataType: 'json',
-            success: function (response) {
-                return response;
-            },
-            error: function(e){
-                    console.log(e.responseText);
-            }
 
-        });
-       refreshEvents();
 
-    }
 
-    function loggedInUpdate(event, email, logIn_logOut) {
-
-         var return_response = $.ajax({
-            url: 'process.php',
-            data: 'type=change_number_of_logged_in&email=' + email + '&logIn_logOut=' + logIn_logOut + '&event_id=' + event.id,
-            type: 'POST',
-            dataType: 'json',
-            success: function (response) {
-                    return response;
-                },
-             error: function(e){
-                    console.log(e.responseText);
-            }
-        });
-
-        refreshEvents();
-    }
-
-    /*************************************************/
-    /***************REFRESH EVENTS *******************/
-    /*************************************************/
-    function refreshEvents() {
-
-        console.log('Render');
-        $('#calendar').fullCalendar('removeEvents');
-        getFreshEvents();
-        $('#calendar').fullCalendar('rerenderEvents');
-        location.reload;
-    }
-    /**********************************************/
-    /*************** DELETE EVENTS*****************/
-    /**********************************************/
-
-    function deleteEvent(event) {
-        var con = confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
-        if (con == true) {
-            var return_response = $.ajax({
-                url: 'process.php',
-                data: 'type=remove&event_id=' + event.id,
-                type: 'POST',
-                dataType: 'json',
-                success: function (response) {
-                    return response;
-                },
-                error: function(e){
-                    console.log(e.responseText);
-                }
-            });
-        }
-        refreshEvents();
-    }
 });
