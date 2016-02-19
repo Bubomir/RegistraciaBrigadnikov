@@ -401,7 +401,7 @@
                                 <button type="submit" name="btn-signup" class="success button register custom">Registrovat</button>
                             </div>
                             <div class="large-6 large-pull-6  medium-12 small-12 columns">
-                                <button class="button custom" data-close onClick="clearForm()">Zavriet</button>
+                                <button class="button custom" onclick="clearForm()" data-close name="btn-close">Zavriet</button>
                             </div>
                         </div>
                     </div>
@@ -462,9 +462,6 @@
                     event.preventDefault();
 
                 })
-
-
-
             });
         </script>
 
