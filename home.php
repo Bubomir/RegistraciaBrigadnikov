@@ -8,16 +8,7 @@
     if(!isset($_SESSION['user'])){
          header("Location: index.php");
     }
-
     mysqli_close($db);
-    
-    //Logout
-    if(isset($_POST['logout'])){
-        session_destroy();
-        unset($_SESSION['user']);
-        header("Location: index.php");
-    }
-
 ?>
     <!doctype html>
     <html class="no-js" lang="en">
@@ -61,7 +52,7 @@
                             <div class="large-2 medium-3 small-12 medium-push-3 large-push-2 columns text-right">
 
 
-                                <form method="post">
+                                <form action="logout.php" method="post">
                                     <button type="submit" class="button custom-main expand" name="logout">Odhlásit</button>
                                 </form>
                             </div>

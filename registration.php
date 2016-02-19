@@ -1,15 +1,15 @@
 <?php
-    session_start();  
+    session_start();
 
     include_once 'dbconnect.php';
 
     if(!isset($_SESSION['user'])){
         header("Location: index.php");
     }
-    
+
     $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
-    
+
     if(isset($_POST['btn-signup'])){
 
         $first_name = mysqli_real_escape_string($db,$_POST['firstname']);
@@ -18,8 +18,8 @@
         $email =  mysqli_real_escape_string($db,$_POST['email']);
         $permission = mysqli_real_escape_string($db,$_POST['permission']);
         $tempPass = md5(rand(1000, 1000000));
-        
-        
+
+
         if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions) VALUES('$first_name','$surname','$tempPass','$email','$permission')")){ ?>
 
     <script>
@@ -32,12 +32,12 @@
         $to = $email;
         $subject = 'Registracia brigadnika';
         $message = "Prihlasovacie udaje:
-                        Prihlasovaci email: $email 
-                        
+                        Prihlasovaci email: $email
+
                     Kliknite tu pre vytvorenia vasho hesla a dokoncenie registrácie
                     http://localhost/createPass.php?tempPass=$tempPass&email=$email";
-        
-        
+
+
         $headers = 'From: vtstudentplanner.cz'."\r\n" .
             'Reply-To: ' . $to . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
@@ -58,7 +58,7 @@
 
         <?php
         }
-                
+
          mysqli_close($db);
     }
 ?>
@@ -111,7 +111,7 @@
                                                     break;
                                                 default:
                                                     break;
-                                                    
+
                                             }
                                         ?>
 
