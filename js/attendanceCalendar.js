@@ -48,13 +48,13 @@ $(document).ready(function () {
     /**********************************************/
 
     //Define variables
-    var freshevents,
-        json_events,
+    var json_events,
         return_response,
         zone = "01:00"; //TIME ZONE FOR MIDLE OF EUROPE
 
 
     function getFreshEvents() {
+        var freshevents;
         $.ajax({
             url: 'process.php',
             type: 'POST', // Send post data
@@ -73,7 +73,9 @@ $(document).ready(function () {
     function refreshEvents() {
         $('#calendar').fullCalendar('removeEvents');
         getFreshEvents();
+        $('#calendar').fullCalendar('updateEvents');
         $('#calendar').fullCalendar('rerenderEvents');
+
     }
     /**********************************************/
     /*************** DELETE EVENTS*****************/
@@ -363,7 +365,6 @@ $(document).ready(function () {
                 }
             });
 
-
             if (permissions === 'brigadnik') {
                 if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
                     if (check_interval_time.responseText > 5) {
@@ -419,9 +420,7 @@ $(document).ready(function () {
                 else {
                     deleteEvent(event);
                 }
-
             }
-
         }
 
         /*eventResize: function(event, delta, revertFunc) {
