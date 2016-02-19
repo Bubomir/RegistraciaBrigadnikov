@@ -38,18 +38,17 @@ $(document).ready(function () {
         start_month = moment($('#calendar').fullCalendar('getView').start._d).format('YYYY-MM-DD HH:mm:ss');
         end_month = moment($('#calendar').fullCalendar('getView').end._d).format('YYYY-MM-DD HH:mm:ss');
 
-       return_response = $.ajax({
+        return_response = $.ajax({
             url: 'process.php',
             type: 'POST', // Send post data
-            data: 'type=fetch&start_month='+start_month+'&end_month='+end_month,
+            data: 'type=fetch&start_month=' + start_month + '&end_month=' + end_month,
             async: false,
             success: function (s) {
                 freshevents = s;
                 return s;
             }
         });
-        //console.log('tes', start_month);
-        //console.log('--tes', return_response.responseText);
+
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
@@ -75,6 +74,7 @@ $(document).ready(function () {
                 data: 'type=remove&event_id=' + event.id,
                 type: 'POST',
                 dataType: 'json',
+                async: false,
                 success: function (response) {
                     return response;
                 },
@@ -93,9 +93,10 @@ $(document).ready(function () {
 
         var return_response = $.ajax({
             url: 'process.php',
-            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() +'&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
+            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
             type: 'POST',
             dataType: 'json',
+            async: false,
             success: function (response) {
                 return response;
             },
@@ -118,6 +119,7 @@ $(document).ready(function () {
             data: 'type=change_number_of_logged_in&email=' + email + '&logIn_logOut=' + logIn_logOut + '&event_id=' + event.id,
             type: 'POST',
             dataType: 'json',
+            async: false,
             success: function (response) {
                 return response;
             },
@@ -205,18 +207,18 @@ $(document).ready(function () {
         /*************** Render EVENTS*****************/
         /**********************************************/
 
-        events: function(){
-             if(ajaxCall()!=='success'){
+        events: function () {
+            if (ajaxCall() !== 'success') {
                 refreshEvents();
-             }
-         },
+            }
+        },
 
         /**********************************************/
         /*************** ADD EVENTS********************/
         /**********************************************/
 
         eventReceive: function (event) {
-            if(ajaxCall()!=='success'){
+            if (ajaxCall() !== 'success') {
                 //Define variables
                 var now,
                     worker_capacity,
@@ -274,7 +276,7 @@ $(document).ready(function () {
 
         eventClick: function (event, jsEvent, view) {
 
-            if(ajaxCall()!=='success'){
+            if (ajaxCall() !== 'success') {
                 //Define variables
                 var permissions,
                     email,
