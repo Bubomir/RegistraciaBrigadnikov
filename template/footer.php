@@ -23,6 +23,7 @@
 <script src="js/foundation.js"></script>
 <script src="js/stickyFooter.js"></script>
 <script src="js/app.js"></script>
+<script src="js/modernizr.js"></script>
 <script>
     $(document).ready(function () {
         $('.alert').hide().slideDown(500);
