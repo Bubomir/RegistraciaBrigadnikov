@@ -1,16 +1,4 @@
 var $;
-
-var defNow = $.ajax({
-    type: 'POST',
-    url: 'process.php',
-    data: 'type=get_now',
-    async: false,
-    done: function (response) {
-        "use strict";
-        return response;
-    }
-});
-
 var loggedEmail = $.ajax({
     type: 'POST',
     url: 'process.php',
@@ -226,7 +214,7 @@ $(document).ready(function () {
         droppable: true,
         allDaySlot: false,
         defaultTimedEventDuration: '12:00:00',
-        defaultDate: moment(Date()).format('YYYY-MM-DD'),
+        defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
         /**********************************************/
         /*************** ADD EVENTS********************/
@@ -239,7 +227,7 @@ $(document).ready(function () {
                 click_time,
                 duplicity_bool;
 
-            now = moment(defNow);
+            now = moment(new Date()).format();
             click_time = moment(event.start.format() + '+' + zone);
 
 

@@ -244,9 +244,6 @@ if($type == 'fetch')
     
 	echo json_encode($events);
 }
-if($type == 'get_now'){
-    echo date('c');
-}
 
 if($type == 'get_loggedEmail'){
     session_start();
