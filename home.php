@@ -8,16 +8,7 @@
     if(!isset($_SESSION['user'])){
          header("Location: index.php");
     }
-
     mysqli_close($db);
-    
-    //Logout
-    if(isset($_POST['logout'])){
-        session_destroy();
-        unset($_SESSION['user']);
-        header("Location: index.php");
-    }
-
 ?>
     <!doctype html>
     <html class="no-js" lang="en">
@@ -61,7 +52,7 @@
                             <div class="large-2 medium-3 small-12 medium-push-3 large-push-2 columns text-right">
 
 
-                                <form method="post">
+                                <form action="logout.php" method="post">
                                     <button type="submit" class="button custom-main expand" name="logout">Odhlásit</button>
                                 </form>
                             </div>
@@ -232,7 +223,7 @@
                 </div>
             </div>
             <div class="panel custom">
-                <form method="post" id="myForm">
+                <form method="post" action="registration.php">
                     <div class="row collapse">
                         <div class="small-10 medium-10 large-10 columns">
                             <input type="text" onblur="if (this.placeholder == '') {this.placeholder = 'Jméno';}" onfocus="this.placeholder = '';" placeholder="Jméno" name="first_name" required/>
@@ -298,7 +289,7 @@
                             <div class="column">
                                 <p>Správca</p>
                                 <div class="switch">
-                                    <input class="switch-input" id="exampleSwitch" type="radio" name="exampleSwitch">
+                                    <input class="switch-input" id="exampleSwitch" type="radio" name="permissions" value="admin" required>
                                     <label class="switch-paddle" for="exampleSwitch">
                                         <span class="show-for-sr">Správca</span>
                                     </label>
@@ -307,7 +298,7 @@
                             <div class="column">
                                 <p>Supervízor</p>
                                 <div class="switch">
-                                    <input class="switch-input" id="exampleSwitch2" type="radio" name="exampleSwitch">
+                                    <input class="switch-input" id="exampleSwitch2" type="radio" name="permissions" value="supervizor" required>
                                     <label class="switch-paddle" for="exampleSwitch2">
                                         <span class="show-for-sr">Supervízor</span>
                                     </label>
@@ -316,7 +307,7 @@
                             <div class="columns">
                                 <p>Brigádnik</p>
                                 <div class="switch">
-                                    <input class="switch-input" id="exampleSwitch3" type="radio" name="exampleSwitch">
+                                    <input class="switch-input" id="exampleSwitch3" type="radio" name="permissions" value="brigadnik" required>
                                     <label class="switch-paddle" for="exampleSwitch3">
                                         <span class="show-for-sr">Brigádnik</span>
                                     </label>
@@ -327,11 +318,10 @@
                     <div class="space-top">
                         <div class="row">
                             <div class="large-6 large-push-6  medium-12 small-12 columns">
-
-                                <div class="success button register custom">Registrovat</div>
+                                <button type="submit" name="btn-signup" class="success button register custom">Registrovat</button>
                             </div>
                             <div class="large-6 large-pull-6  medium-12 small-12 columns">
-                                <div class="button custom" data-close onClick="clearForm()">Zavriet</div>
+                                <button class="button custom" data-close onClick="clearForm()">Zavriet</button>
                             </div>
                         </div>
                     </div>
