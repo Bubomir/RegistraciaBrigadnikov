@@ -15,7 +15,7 @@
                         Prihlasovaci email: $email
 
                     Kliknite tu pre vytvorenia vasho hesla a dokoncenie registrácie
-                    http://localhost/createPass.php?tempPass=$tempPass&email=$email";
+                    http://vtstudentplanner.cz/createPass.php?tempPass=$tempPass&email=$email";
 
 
         $headers = 'From: vtstudentplanner.cz'."\r\n" .

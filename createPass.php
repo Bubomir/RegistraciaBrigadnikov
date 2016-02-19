@@ -22,7 +22,6 @@
         if($get_email == $db_email && $get_tempPass == $db_tempPass)
         {
             //Ahoj
-            
             //HERE STARTING TEMPLATE, ORDER VERY IMPORTANT DONT MESS WITH IT!!!!!
             include ('template/head.php');
     
