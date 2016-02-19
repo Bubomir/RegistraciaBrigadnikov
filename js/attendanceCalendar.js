@@ -1,14 +1,4 @@
 var $;
-var defDate = $.ajax({
-    type: 'POST', // Send post data
-    url: 'process.php',
-    data: 'type=get_default_date',
-    async: false,
-    done: function (response) {
-        "use strict";
-        return response;
-    }
-});
 
 var defNow = $.ajax({
     type: 'POST',
@@ -123,6 +113,18 @@ $(document).ready(function () {
         refreshEvents();
     }
 
+    function test(){
+        $('#calendar').fullCalendar('getView').start._d;
+
+        $('calender').fullCalendar('getView').intervalEnd;
+        //var dateFormat = require('UTC');
+         var start = new Date().toISOString();
+       // var test = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
+        console.log('test start', start);
+        console.log('-------test start', moment(start,'M/D/YYYY h:mma'));
+    }
+
     /**********************************************/
     /*********** Log In Log Out EVENTS *************/
     /**********************************************/
@@ -159,7 +161,7 @@ $(document).ready(function () {
             }
         });
 
-        if (returndata.resoponseText === 'success') {
+        if (returndata.responseText === 'success') {
             window.alert("boli ste odpojeny");
             window.location.replace("index.php");
 
@@ -224,7 +226,7 @@ $(document).ready(function () {
         droppable: true,
         allDaySlot: false,
         defaultTimedEventDuration: '12:00:00',
-        defaultDate: defDate,
+        defaultDate: moment(Date()).format('YYYY-MM-DD'),
 
         /**********************************************/
         /*************** ADD EVENTS********************/
@@ -250,8 +252,6 @@ $(document).ready(function () {
                     return response;
                 }
             });
-
-
 
             if (duplicity_bool.responseText === 'failed') {
                 if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
@@ -285,37 +285,11 @@ $(document).ready(function () {
         },
 
         /**********************************************/
-        /******** Drag and drop remove EVENTS *********/
-        /**********************************************/
-
-        //DROP listerner for EVENTS
-        /*eventDrop: function(event, delta, revertFunc) {
-
-                    var title = event.title;
-                    var start = event.start.format();
-                    var end = (event.end == null) ? start : event.end.format();
-                    $.ajax({
-                        url: 'process.php',
-                        data: 'type=resetdate&title='+title+'&start='+start+'&end='+end+'&eventid='+event.id,
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function(response){
-                            if(response.status != 'success')
-                            revertFunc();
-                        },
-                        error: function(e){
-                            revertFunc();
-                            alert('Error processing your request: '+e.responseText);
-                        }
-                    });
-
-		    },*/
-
-        /**********************************************/
         /*************** CLICK EVENTS******************/
         /**********************************************/
 
         eventClick: function (event, jsEvent, view) {
+            test();
             //Define variables
             var permissions,
                 email,
@@ -420,6 +394,33 @@ $(document).ready(function () {
             }
         }
 
+        /**********************************************/
+        /******** Drag and drop remove EVENTS *********/
+        /**********************************************/
+
+        //DROP listerner for EVENTS
+        /*eventDrop: function(event, delta, revertFunc) {
+
+                    var title = event.title;
+                    var start = event.start.format();
+                    var end = (event.end == null) ? start : event.end.format();
+                    $.ajax({
+                        url: 'process.php',
+                        data: 'type=resetdate&title='+title+'&start='+start+'&end='+end+'&eventid='+event.id,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(response){
+                            if(response.status != 'success')
+                            revertFunc();
+                        },
+                        error: function(e){
+                            revertFunc();
+                            alert('Error processing your request: '+e.responseText);
+                        }
+                    });
+
+		    },*/
+
         /*eventResize: function(event, delta, revertFunc) {
 				console.log(event);
 				var title = event.title;
@@ -451,9 +452,5 @@ $(document).ready(function () {
             return false;
         }
     */
-
-
-
-
 
 });

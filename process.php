@@ -244,9 +244,6 @@ if($type == 'fetch')
     
 	echo json_encode($events);
 }
-if($type == 'get_default_date'){
-    echo date('Y-m-d');
-}
 if($type == 'get_now'){
     echo date('c');
 }
