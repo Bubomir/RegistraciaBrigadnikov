@@ -1,3 +1,4 @@
+var $;
 var defDate = $.ajax({
     type: 'POST', // Send post data
     url: 'process.php',
@@ -186,13 +187,13 @@ $(document).ready(function () {
         x: -1,
         y: -1
     };
-    	jQuery(document).on("mousemove", function (event) {
-           currentMousePos.x = event.pageX;
-           currentMousePos.y = event.pageY;
+    jQuery(document).on("mousemove", function (event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
        });
+    */
 
-    /* initialize the external events
-    -----------------------------------------------------------------*/
+    /* initialize the external events */
     $('#external-events .fc-event ').each(function () {
         // store data so the calendar knows to render an event upon drop
         $(this).data('event', {
