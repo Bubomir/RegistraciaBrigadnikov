@@ -48,8 +48,8 @@ $(document).ready(function () {
                 return s;
             }
         });
-        console.log('tes', start_month);
-        console.log('--tes', return_response.responseText);
+        //console.log('tes', start_month);
+        //console.log('--tes', return_response.responseText);
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
