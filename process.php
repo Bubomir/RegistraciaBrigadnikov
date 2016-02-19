@@ -219,9 +219,8 @@ if($type == 'fetch'){
 
     $start_month = $_POST['start_month'];
     $end_month = $_POST['end_month'];
-
 	$events = array();
-	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email");
+	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date BETWEEN '$start_month' AND '$end_month'");
 
         while($fetch = mysqli_fetch_array($query,MYSQLI_ASSOC)){
         $e = array();
