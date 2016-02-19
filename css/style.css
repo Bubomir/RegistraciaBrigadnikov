@@ -9,19 +9,17 @@
     vertical-align: middle;
 }
 
-#calendar {
-
-
-}
 
 #morning-change{
     width: 100%;
     margin: 0 auto;
+    padding-top: 5px;
 }
 
 #night-change{
     margin: 0 auto;
     width: 100%;
+    padding-top: 5px;
 }
 
 #morning-change .fc-event{
