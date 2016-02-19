@@ -219,7 +219,7 @@ if($type == 'remove')
 if($type == 'fetch')
 {
 	$events = array();
-	$query = mysqli_query($db, "SELECT * FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email");
+	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email");
 
         while($fetch = mysqli_fetch_array($query,MYSQLI_ASSOC)){
         $e = array();
@@ -238,7 +238,6 @@ if($type == 'fetch')
         }
      
         $e['start'] = $fetch['Start_Date'];
-        $e['end'] = $fetch['End_Date'];
         $e['color'] = $fetch['Color'];
        array_push($events, $e);
 	}   
