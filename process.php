@@ -6,7 +6,7 @@ $type = $_POST['type'];
 if($type == 'session_check'){
     session_start();
     
-    $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE User_ID=".$_SESSION['user']);
+    $result=mysqli_query($db,"SELECT Session_ID FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
             
     if(session_id() != $userRow['Session_ID']){    
@@ -28,7 +28,7 @@ if($type == 'duplicity_ceck'){
                 $e_email = $fetch['Email'];
         }
      }
-    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE p_Email='$e_email' AND Start_Date='$start_date'");
+    $query = mysqli_query($db, "SELECT ID FROM $table_calendar WHERE p_Email='$e_email' AND Start_Date='$start_date'");
     $count = mysqli_num_rows($query);
 
         if($count == 0){
@@ -47,16 +47,12 @@ if($type == 'new'){
     $capacity = $_POST['capacity'];
     $logged_in = $_POST['logged_in'];
     $color = $_POST['color'];
-    
-    
+
     $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='supervizor'");
     while($fetch = mysqli_fetch_array($result,MYSQLI_ASSOC)){
         if ($email == md5($fetch['Email'])){
             $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In, Color) VALUES('".$fetch['Email']."','$start_date','$end_date','$capacity','$logged_in','$color')");
             $lastid = mysqli_insert_id($db);
-                
-
-
         }
 
 	}
@@ -69,7 +65,7 @@ if($type == 'changeCapacity')
 {
 	$event_id = $_POST['eventID'];
 	$capacity = $_POST['capacity'];
-    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID='$event_id'");
+    $query = mysqli_query($db, "SELECT Logged_In FROM $table_calendar WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query);
     $e_logged_in = $fetch['Logged_In'];
     if($capacity<$e_logged_in){
@@ -90,16 +86,18 @@ if($type == 'changeCapacity')
 if($type == 'check_log_in_log_out'){
     $event_id = $_POST['event_id'];
     $email = $_POST['email'];
-    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID='$event_id'");
+    $query = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query);
     $e_start_date = $fetch['Start_Date'];
+
     $result = mysqli_query($db,"SELECT ID FROM $table_calendar WHERE Start_Date='$e_start_date' AND p_Email='$email'");
     $count = mysqli_num_rows($result);
+
     echo $count;
 }
 if($type == 'check_interval_time'){
     $event_id = $_POST['event_id'];
-    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID='$event_id'");
+    $query = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query);
     $e_start_date = $fetch['Start_Date'];
 
@@ -114,7 +112,7 @@ if($type == 'change_number_of_logged_in'){
 	$logIn_logOut = $_POST['logIn_logOut'];
     $email = $_POST['email'];
    
-    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID='$event_id'");
+    $query = mysqli_query($db, "SELECT Logged_In, Capacity, Start_Date FROM $table_calendar WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query);
 	
     $e_logged_in=$fetch['Logged_In'];
@@ -188,7 +186,7 @@ if($type == 'remove')
 {
 	$event_id = $_POST['event_id'];
 	
-    $query = mysqli_query($db, "SELECT * FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID='$event_id'");
+    $query = mysqli_query($db, "SELECT Start_Date, Permissions FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query,MYSQLI_ASSOC);
     
     $e_start_time = $fetch['Start_Date'];
@@ -198,14 +196,12 @@ if($type == 'remove')
     
     if($e_permissions=='brigadnik'){
         $email = 'brigadnici@brigadnici.sk';
-        $query_2 = mysqli_query($db, "SELECT * FROM $table_calendar WHERE Start_Date='$e_start_time' AND p_Email='$email'");
+        $query_2 = mysqli_query($db, "SELECT ID, Logged_In FROM $table_calendar WHERE Start_Date='$e_start_time' AND p_Email='$email'");
         $fetch_2 = mysqli_fetch_array($query_2,MYSQLI_ASSOC);
         $e_id = $fetch_2['ID'];
         $e_logged_in = $fetch_2['Logged_In'];
         $e_logged_in--; //decrementation capacity on brigadnici Event
-        
-        
-         
+
         $update = mysqli_query($db,"UPDATE $table_calendar SET Logged_In='$e_logged_in' WHERE ID='$e_id'");
         $delete = mysqli_query($db,"DELETE FROM $table_calendar where ID='$event_id'");
         
@@ -214,9 +210,7 @@ if($type == 'remove')
          $delete = mysqli_query($db,"DELETE FROM $table_calendar where ID='$event_id'");
     }
     
-    
-    
-    
+
 	if($delete)
 		echo json_encode(array('status'=>'success'));
 	else
@@ -261,7 +255,7 @@ if($type == 'get_now'){
 if($type == 'get_loggedEmail'){
     session_start();
 
-    $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE User_ID=".$_SESSION['user']);
+    $result=mysqli_query($db,"SELECT Email FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
     echo $userRow['Email'];
 }
@@ -269,9 +263,8 @@ if($type == 'get_loggedEmail'){
 if($type == 'get_loggedPermissions'){
     session_start();
 
-    $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE User_ID=".$_SESSION['user']);
+    $result=mysqli_query($db,"SELECT Permissions FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
-    $nieco = $userRow['Permissions'];
     echo $userRow['Permissions'];
 }
 ?>
