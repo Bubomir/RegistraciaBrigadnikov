@@ -8,11 +8,15 @@
     $permission = $_POST['permissions'];
     $tempPass = md5(rand(1000, 100000));
 
+    //Variabiles for alerts
+    $success = 1;
+    $alertEmailExists = 2;
+    $alertRegFail = 3;
         $result_email = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Email = '$email' ");
         if(mysqli_num_rows($result_email) == 0){
 
             if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions) VALUES('$first_name','$surname','$tempPass','$email','$permission')")){
-                echo true;
+                echo $success;
 
 
                 //Email content
@@ -25,10 +29,10 @@
 
                 mail($to, $subject, $message, $headers);
             } else{
-              echo false;
+              echo $alertRegFail;
             }
         } else{
-            echo false;
+            echo $alertEmailExists;
         }
 
     mysqli_close($db);

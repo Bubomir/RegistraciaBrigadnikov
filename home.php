@@ -348,7 +348,7 @@
 		   C55.166,34.25,55.165,34.25,55.165,34.25z" />
                                         </g>
                                     </svg>
-                                    <div class="alert-message">
+                                    <div id="alert-message">
                                         Registrace nebyla úspěšná!
                                     </div>
                                 </div>
@@ -390,6 +390,7 @@
                 $('.alert-success').hide();
                 $('.alert').hide();
                 $('#registration_form').submit(function (event) {
+                var element = document.getElementById('alert-message');
 
                     var formData = {
                         'first_name': $('input[name=first_name]').val(),
@@ -413,10 +414,13 @@
 
                     console.log($isRegistered);
 
-                    if ($isRegistered == true) {
+                    if ($isRegistered == 1) {
                         $('.alert-success').hide().slideDown(500);
                         $('#registration_form').trigger('reset');
-                    } else {
+                    } else if ($isRegistered == 2) {
+                        $('.alert').hide().slideDown(500);
+                        element.innerHTML = "Uživatel s tímto e-mailem již existuje!!";
+                    } else if ($isRegistered == 3) {
                         $('.alert').hide().slideDown(500);
                     }
                     // stop the form from submitting the normal way and refreshing the page
