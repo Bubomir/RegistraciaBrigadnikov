@@ -8,7 +8,6 @@
     $permission = $_POST['permissions'];
     $tempPass = md5(rand(1000, 100000));
 
-
         $result_email = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Email = '$email' ");
         if(mysqli_num_rows($result_email) == 0){
 
@@ -28,13 +27,9 @@
             } else{
               echo false;
             }
-        else{
-            echo 'email already exists';
+        } else{
+            echo false;
         }
-         mysqli_close($db);
-
-
-
 
     mysqli_close($db);
 ?>
