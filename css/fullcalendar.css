@@ -417,6 +417,7 @@ temporary rendered events).
 }
 
 
+
 /* Scrolling Container
 --------------------------------------------------------------------------------------------------*/
 
@@ -441,7 +442,7 @@ temporary rendered events).
 	font-size: .85em;
 	line-height: 1.5;
 
-	border: 1px solid #3a87ad; /* default BORDER color */
+	/*border: 1px solid #3a87ad; *//* default BORDER color */
 	background-color: #3a87ad; /* default BACKGROUND color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
 }
@@ -579,6 +580,8 @@ a.fc-more:hover {
 
 .fc-toolbar .fc-center {
 	display: inline-block;
+    float: left;
+    padding-left: 50px;
 }
 
 /* the things within each left/right/center section */
@@ -652,6 +655,10 @@ a.fc-more:hover {
 	/* we are sure there are no day numbers in these views, so... */
 	padding-top: 1px; /* add a pixel to make sure there are 2px padding above events */
 	padding-bottom: 1em; /* ensure a space at bottom of cell for user selecting/clicking */
+}
+
+.fc-content:hover{
+    box-shadow: 4px 4px 10px #333;
 }
 
 .fc-basic-view tbody .fc-row {
