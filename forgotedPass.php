@@ -29,8 +29,7 @@
                 $to = $db_email;
                 $subject = "Resetování hesla";
                 $body = "Zde kliknite nebo vložte tento link do vášeho prohlížeče pro resetování hesla: <br>
-                http://vtstudentplanner.cz/resetPass.php?code=$code&email=$email
-                ";
+                http://vtstudentplanner.cz/resetPass.php?code=$code&email=$email";
                 $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
                 
                 mysqli_query($db,"UPDATE $table_employees SET Reset_Password='$code' WHERE Email='$email' ");
