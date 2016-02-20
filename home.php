@@ -24,6 +24,7 @@
         <link href="css/fullcalendar.css" rel='stylesheet' />
         <link rel='stylesheet' href='css/fullcalendar.print.css' media='print' />
         <link href="css/style.css" rel='stylesheet' />
+        <link href="css/sweetalert.css" rel="stylesheet"/>
         <script src="js/modernizr.js"></script>
     </head>
 
@@ -442,6 +443,7 @@
         <script src='../js/calendar/lang/cs.js'></script>
         <script src="js/attendanceCalendar.js"></script>
         <script src="js/stickyFooter.js"></script>
+        <script src="js/sweetalert.min.js"></script>
     </body>
 
     </html>

@@ -264,7 +264,13 @@ $(document).ready(function () {
                         refreshEvents();
                     }
                 } else {
-                    window.alert("Duplicitny zapis");
+                    //window.alert("Duplicitny zapis");
+                    swal({
+                        title: "Chyba...",
+                        text: "Duplicitní zápis!",
+                        type: "error",
+                        confirmButtonColor: "#d62633"
+                    });
                     refreshEvents();
                 }
             }
