@@ -420,8 +420,13 @@
                     }
                     // stop the form from submitting the normal way and refreshing the page
                     event.preventDefault();
-
                 })
+            });
+        </script>
+        <script>
+            $('button[name=btn-close]').click(function(){
+                $('.alert-success').hide();
+                $('.alert').hide();
             });
         </script>
 
