@@ -4,12 +4,6 @@
     cursor: pointer;
 }
 
-#external-events p input {
-    margin: 0 auto;
-    vertical-align: middle;
-}
-
-
 #morning-change{
     width: 100%;
     margin: 0 auto;
@@ -25,7 +19,14 @@
 #morning-change .fc-event{
     background-color: darkorange;
 }
+
+#morning-change .fc-event:hover{
+    box-shadow: 4px 4px 10px #333;
+}
 #night-change .fc-event{
     background-color: black;
+}
+#night-change .fc-event:hover{
+    box-shadow: 4px 4px 10px #333;
 }
 
