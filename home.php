@@ -362,7 +362,7 @@
                                 <button type="submit" name="btn-signup" class="success button register custom">Registrovat</button>
                             </div>
                             <div class="large-6 large-pull-6  medium-12 small-12 columns">
-                                <button class="button custom" data-close onClick="clearForm()">Zavriet</button>
+                                <button class="button custom" onclick="clearForm()" data-close name="btn-close">Zavriet</button>
                             </div>
                         </div>
                     </div>
@@ -417,15 +417,17 @@
                         $('.alert-success').hide().slideDown(500);
                         $('#registration_form').trigger('reset');
                     } else {
-
+                        $('.alert').hide().slideDown(500);
                     }
                     // stop the form from submitting the normal way and refreshing the page
                     event.preventDefault();
-
                 })
-
-
-
+            });
+        </script>
+        <script>
+            $('button[name=btn-close]').click(function(){
+                $('.alert-success').hide();
+                $('.alert').hide();
             });
         </script>
 
