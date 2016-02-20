@@ -8,46 +8,6 @@
     if(!isset($_SESSION['user'])){
          header("Location: index.php");
     }
-
-
-    //Registration
-    if(isset($_POST['btn-signup'])){
-        $first_name = mysqli_real_escape_string($db,$_POST['first_name']);
-        $surname = mysqli_real_escape_string($db,$_POST['surname']);
-        $email =  mysqli_real_escape_string($db,$_POST['email']);
-        $permission = mysqli_real_escape_string($db,$_POST['permissions']);
-        $tempPass = md5(rand(1000, 1000000));
-        $result_email = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Email = '$email' ");
-        if(mysqli_num_rows($result_email) == 0){
-
-            if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions) VALUES('$first_name','$surname','$tempPass','$email','$permission')")){
-
-                //Parameters for sending mail
-                //nastavit registracny email uzivatelov/brigadnikov
-                $to = $email;
-                $subject = 'Registracia brigadnika';
-                $message = "Prihlasovacie udaje:
-                                Prihlasovaci email: $email
-
-                            Kliknite tu pre vytvorenia vasho hesla a dokoncenie registrácie
-                            http://localhost/createPass.php?tempPass=$tempPass&email=$email";
-
-                $headers = 'From: vtstudentplanner.cz'."\r\n" .
-                    'Reply-To: ' . $to . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-                mail($to, $subject, $message, $headers);
-                echo 'succesfully registered';
-                }
-            else{
-                    echo 'error while registering you';
-                }
-        }
-        else{
-            echo 'email already exists';
-        }
-    }
-
-
     mysqli_close($db);
 ?>
     <!doctype html>
