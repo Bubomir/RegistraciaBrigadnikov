@@ -61,18 +61,19 @@
             include('template/login_box_button.php');
             include('template/footer.php');
         
-        }else{
+        } else{
             include ('template/head.php');
 
             $header_name = 'Prošlý';
             include ('template/login_box_header.php');
             include('template/login_box_expired.php');
+
             $alert_message = 'Tomuto linku vypršela platnost!';
             include('template/alert_message.php');
+
             $button_name = null;
             include('template/login_box_button.php');
             include('template/footer.php');
-
         }
     }
 ?>
