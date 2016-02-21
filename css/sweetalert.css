@@ -81,7 +81,7 @@ body.stop-scrolling {
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background-color: #ea7d7d;
+      background-color: #660000;
       color: white;
       line-height: 24px;
       text-align: center;
@@ -90,7 +90,7 @@ body.stop-scrolling {
       display: inline-block; }
   .sweet-alert .sa-input-error {
     position: absolute;
-    top: 29px;
+    top: 43px;
     right: 26px;
     width: 20px;
     height: 20px;
