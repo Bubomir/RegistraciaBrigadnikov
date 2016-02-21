@@ -182,7 +182,7 @@ $(document).ready(function () {
         });
 
         if (returndata.responseText === 'success') {
-            //window.alert("boli ste odpojeny");
+            window.alert("boli ste odpojeny");
             swal({
                 title: "Byli jste odpojen!",
                 text: "Přihlášení z jiného místa!",
