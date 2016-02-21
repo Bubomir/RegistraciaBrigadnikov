@@ -3,7 +3,7 @@ include_once 'dbconnect.php';
 $type = $_POST['type'];
 
 if($type == 'session_check'){
-    session_start();
+   /* session_start();
     
     $result=mysqli_query($db,"SELECT Session_ID FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
@@ -15,7 +15,7 @@ if($type == 'session_check'){
     }
     else{
         echo 'failed';
-    }
+    }*/
 }
 if($type == 'duplicity_ceck'){
     $start_date = $_POST['startDate'];
