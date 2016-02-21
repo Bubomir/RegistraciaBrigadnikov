@@ -414,7 +414,7 @@ $(document).ready(function () {
                 if (permissions === 'brigadnik') {
                     if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
                         if (check_interval_time.responseText > 5) {
-                            //confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
+                            confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
                             if (confirmDialog === true) {
                                 loggedInUpdate(event, email, -1); // -1 == log out from event
                             }
