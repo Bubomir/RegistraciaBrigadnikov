@@ -85,19 +85,19 @@ $(document).ready(function () {
         }*/
         swal({
                 title: "Smazat?",
-                text: "Opravdu chcete smazat tuto změnu?",
+                text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#d62633",
-                confirmButtonText: "Ano",
-                cancelButtonText: "Ne",
+                confirmButtonColor: "orange",
+                confirmButtonText: "Smazat",
+                cancelButtonText: "Zrušit",
                 closeOnConfirm: false,
             },
             function (isConfirm) {
                 if (isConfirm) {
                     swal({
-                        title: "Smazáno!",
-                        text: "Tato změna byla vymazána!",
+                        title: "Smazáno",
+                        text: "Tato změna byla vymazána.",
                         type: "success",
                         confirmButtonColor: "#005200"
                     });
@@ -117,6 +117,7 @@ $(document).ready(function () {
                     refreshEvents();
                 }
             });
+
     }
     /**********************************************/
     /*************** ADD EVENTS********************/
@@ -304,7 +305,8 @@ $(document).ready(function () {
                                     closeOnConfirm: false,
                                     confirmButtonText: "Potvrdit",
                                     cancelButtonText: "Zrušit",
-                                    inputPlaceholder: "Zvolte kapacitu"
+                                    inputPlaceholder: "Zvolte kapacitu",
+                                    confirmButtonColor: "#005200"
                                 },
                                 function (worker_capacity) {
                                     if (!worker_capacity) {
@@ -325,7 +327,12 @@ $(document).ready(function () {
                                         return false
                                     }
 
-                                    swal("Brigádníci přidány :)", "Počet brigádníků je: " + worker_capacity, "success");
+                                    swal({
+                                        title: "Brigádníci přidány :)",
+                                        text: "Počet brigádníků je: " + worker_capacity,
+                                        type: "success",
+                                        confirmButtonColor: "#005200"
+                                    });
                                     eventAdd(event, worker_capacity);
                                 });
                         } else {
@@ -414,19 +421,66 @@ $(document).ready(function () {
                 if (permissions === 'brigadnik') {
                     if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
                         if (check_interval_time.responseText > 5) {
+                            /*
                             confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
                             if (confirmDialog === true) {
                                 loggedInUpdate(event, email, -1); // -1 == log out from event
-                            }
+                            }*/
+                            swal({
+                                    title: "Odhlásit?",
+                                    text: "Opravdu se chcete odhlásit z této změny?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "orange",
+                                    confirmButtonText: "Odhlásit",
+                                    cancelButtonText: "Zrušit",
+                                    closeOnConfirm: false
+                                },
+                                function () {
+                                    swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                                    swal({
+                                        title: "Odhlášen",
+                                        text: "Byly jste odhlášen.",
+                                        type: "success",
+                                        confirmButtonColor: "#005200"
+                                    });
+                                    loggedInUpdate(event, email, -1);
+                                });
                         } else {
-                            window.alert("Nemozno sa odhlasit v tejto lehote");
+                            //window.alert("Nemozno sa odhlasit v tejto lehote");
+                            swal({
+                                title: "Odhlášení zakázáno",
+                                text: "Již není možné se odhlásit!",
+                                type: "error",
+                                confirmButtonColor: "#d62633"
+                            });
                         }
                     } else {
                         if (event.title.search(" Brigádnici:") === 0) {
+                            /*
                             confirmDialog = window.confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
                             if (confirmDialog === true) {
                                 loggedInUpdate(event, email, 1); // 1 == log in on event
-                            }
+                            }*/
+                            swal({
+                                    title: "Přihlásit?",
+                                    text: "Opravdu se chcete přihlásit na tuto změnu?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "orange",
+                                    confirmButtonText: "Přihlásit",
+                                    cancelButtonText: "Zrušit",
+                                    closeOnConfirm: false
+                                },
+                                function () {
+                                    swal({
+                                        title: "Přihlášen",
+                                        text: "Byly jste přihlášen.",
+                                        type: "success",
+                                        confirmButtonColor: "#005200"
+                                    });
+                                    loggedInUpdate(event, email, 1);
+                                });
                         }
                     }
                 }
@@ -439,7 +493,10 @@ $(document).ready(function () {
                                 type: "input",
                                 showCancelButton: true,
                                 closeOnConfirm: false,
-                                inputPlaceholder: "Write something"
+                                confirmButtonColor: "#005200",
+                                confirmButtonText: "Potvrdit",
+                                cancelButtonText: "Zrušit",
+                                inputPlaceholder: "Zvolte kapacitu"
                             },
                             function (worker_capacity) {
                                 if (worker_capacity === false) return false;
@@ -463,13 +520,24 @@ $(document).ready(function () {
                                     data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
                                     async: false,
                                     success: function (msg) {
-                                        swal({
-                                            title: msg,
-                                            text: "Počet brigádníků je: " + worker_capacity,
-                                            type: "success",
-                                            confirmButtonColor: "#005200"
-                                        });
-                                        refreshEvents();
+                                        if (worker_capacity > 0) {
+                                            swal({
+                                                title: "Počet brigádníků změněn",
+                                                text: "Počet brigádníků je: " + worker_capacity,
+                                                type: "success",
+                                                confirmButtonColor: "#005200"
+                                            });
+                                            refreshEvents();
+                                        }
+                                        if (worker_capacity == 0) {
+                                            swal({
+                                                title: "Smazáno",
+                                                text: "Brigádníci byly smazány",
+                                                type: "success",
+                                                confirmButtonColor: "#005200"
+                                            });
+                                            refreshEvents();
+                                        }
                                     },
                                     error: function (obj, text, error) {
                                         swal({

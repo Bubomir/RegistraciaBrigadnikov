@@ -76,7 +76,7 @@ if($type == 'changeCapacity')
         if($capacity!=0){
             $update = mysqli_query($db,"UPDATE $table_calendar SET Capacity='$capacity' WHERE ID='$event_id'");
             if($update){
-                print("Počet brigádníků změněn :)");
+                //print("Počet brigádníků změněn :)");
                 exit(0);
             }
         }
