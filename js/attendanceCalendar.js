@@ -182,15 +182,16 @@ $(document).ready(function () {
         });
 
         if (returndata.responseText === 'success') {
-            //window.alert("boli ste odpojeny");
+            window.alert("boli ste odpojeny");
+            /*
             swal({
                 title: "Byli jste odpojen!",
                 text: "Přihlášení z jiného místa!",
                 type: "error",
                 confirmButtonColor: "#d62633"
             });
+            */
             window.location.replace("index.php");
-            return 'success';
         }
 
     }
@@ -550,7 +551,6 @@ $(document).ready(function () {
                                 });
 
                             });
-
                         /*
                         //vstup pre kapacitu brigadnikov a pretypovanie string na INT
                         worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
