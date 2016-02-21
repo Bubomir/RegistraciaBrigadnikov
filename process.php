@@ -68,13 +68,16 @@ if($type == 'changeCapacity')
     $fetch = mysqli_fetch_array($query);
     $e_logged_in = $fetch['Logged_In'];
     if($capacity<$e_logged_in){
-        echo 'failed';
+        header('HTTP/1.1 500 Internal Server Error');
+        exit("Nelze zmeniť počet");
+
     }
     else{
         if($capacity!=0){
             $update = mysqli_query($db,"UPDATE $table_calendar SET Capacity='$capacity' WHERE ID='$event_id'");
             if($update){
-                echo 'success';
+                print("Počet brigádníků změněn :)");
+                exit(0);
             }
         }
         else{
