@@ -66,7 +66,7 @@ $(document).ready(function () {
     /**********************************************/
 
     function deleteEvent(event) {
-
+        /*
         var con = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
         if (con === true) {
             return_response = $.ajax({
@@ -82,8 +82,41 @@ $(document).ready(function () {
                     window.console.log(e.responseText);
                 }
             });
-        }
-        refreshEvents();
+        }*/
+        swal({
+                title: "Smazat?",
+                text: "Opravdu chcete smazat tuto změnu?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d62633",
+                confirmButtonText: "Ano",
+                cancelButtonText: "Ne",
+                closeOnConfirm: false,
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    swal({
+                        title: "Smazáno!",
+                        text: "Tato změna byla vymazána!",
+                        type: "success",
+                        confirmButtonColor: "#005200"
+                    });
+                    return_response = $.ajax({
+                        url: 'process.php',
+                        data: 'type=remove&event_id=' + event.id,
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        success: function (response) {
+                            return response;
+                        },
+                        error: function (e) {
+                            window.console.log(e.responseText);
+                        }
+                    });
+                    refreshEvents();
+                }
+            });
     }
     /**********************************************/
     /*************** ADD EVENTS********************/
@@ -148,14 +181,20 @@ $(document).ready(function () {
         });
 
         if (returndata.responseText === 'success') {
-            window.alert("boli ste odpojeny");
+            //window.alert("boli ste odpojeny");
+            swal({
+                title: "Byli jste odpojen!",
+                text: "Přihlášení z jiného místa!",
+                type: "error",
+                confirmButtonColor: "#d62633"
+            });
             window.location.replace("index.php");
             return 'success';
         }
 
     }
 
-   // setInterval(ajaxCall, 2000); //2000 ms = 2 second
+    // setInterval(ajaxCall, 2000); //2000 ms = 2 second
 
     /*****************************************************/
     /*************** Data for mouse cursor possion *******/
@@ -242,6 +281,7 @@ $(document).ready(function () {
                 if (duplicity_bool.responseText === 'failed') {
                     if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
                         if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
+                            /*
                             //vstup pre kapacitu brigadnikov a pretypovanie string na INT
                             worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
                                 buttons: {
@@ -255,12 +295,50 @@ $(document).ready(function () {
                             } else {
                                 window.alert("Zle zadane cislo");
                                 refreshEvents();
-                            }
+                            }*/
+                            swal({
+                                    title: "Přidání brigádníků",
+                                    text: "Zvolte počet brigádníků:",
+                                    type: "input",
+                                    showCancelButton: true,
+                                    closeOnConfirm: false,
+                                    confirmButtonText: "Potvrdit",
+                                    cancelButtonText: "Zrušit",
+                                    inputPlaceholder: "Zvolte kapacitu"
+                                },
+                                function (worker_capacity) {
+                                    if (!worker_capacity) {
+                                        refreshEvents();
+                                    }
+                                    if (worker_capacity === false) return false;
+                                    refreshEvents();
+                                    if (worker_capacity === "") {
+                                        swal.showInputError("Prosím zadejte počet brigádníků!");
+                                        return false
+                                    }
+                                    if (isNaN(worker_capacity)) {
+                                        swal.showInputError("Prosím zadajte číslo!");
+                                        return false
+                                    }
+                                    if (worker_capacity <= 0) {
+                                        swal.showInputError("Počet brigádníků musí být více než nula!");
+                                        return false
+                                    }
+
+                                    swal("Brigádníci přidány :)", "Počet brigádníků je: " + worker_capacity, "success");
+                                    eventAdd(event, worker_capacity);
+                                });
                         } else {
                             eventAdd(event, null);
                         }
                     } else {
-                        window.alert("Nemozno pridat smenu");
+                        //window.alert("Nemozno pridat smenu");
+                        swal({
+                            title: "Chyba...",
+                            text: "Změnu nelze přidat!",
+                            type: "error",
+                            confirmButtonColor: "#d62633"
+                        });
                         refreshEvents();
                     }
                 } else {
@@ -336,7 +414,7 @@ $(document).ready(function () {
                 if (permissions === 'brigadnik') {
                     if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
                         if (check_interval_time.responseText > 5) {
-                            confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
+                            //confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
                             if (confirmDialog === true) {
                                 loggedInUpdate(event, email, -1); // -1 == log out from event
                             }
