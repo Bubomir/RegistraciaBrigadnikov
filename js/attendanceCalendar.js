@@ -550,7 +550,6 @@ $(document).ready(function () {
                                 });
 
                             });
-
                         /*
                         //vstup pre kapacitu brigadnikov a pretypovanie string na INT
                         worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
