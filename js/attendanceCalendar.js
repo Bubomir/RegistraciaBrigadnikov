@@ -489,67 +489,92 @@ $(document).ready(function () {
 
                     if (event.title.search(" Brigádnici:") === 0) {
                         swal({
-                                title: "Změnit počet brigádníků",
-                                text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
-                                type: "input",
+                                title: "Chcete zmeniť kapacitu alebo prihlásiť brigádnika?",
+                                text: "You will not be able to recover this imaginary file!",
+                                type: "warning",
                                 showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Zmena kapcity",
+                                cancelButtonText: "Prihlásenie",
                                 closeOnConfirm: false,
-                                confirmButtonColor: "#005200",
-                                confirmButtonText: "Potvrdit",
-                                cancelButtonText: "Zrušit",
-                                inputPlaceholder: "Zvolte kapacitu"
+                                closeOnCancel: false,
+                                allowEscapeKey: false
                             },
-                            function (worker_capacity) {
-                                if (worker_capacity === false) return false;
-                                refreshEvents();
-                                if (worker_capacity === "") {
-                                    swal.showInputError("Prosím zadejte počet brigádníků!");
-                                    return false
-                                }
-                                if (isNaN(worker_capacity)) {
-                                    swal.showInputError("Prosím zadajte číslo!");
-                                    return false
-                                }
-                                if (worker_capacity < 0) {
-                                    swal.showInputError("Počet brigádníků nesmí být více záporný!");
-                                    return false
-                                }
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    swal({
+                                            title: "Změnit počet brigádníků",
+                                            text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
+                                            type: "input",
+                                            showCancelButton: true,
+                                            closeOnConfirm: false,
+                                            confirmButtonColor: "#005200",
+                                            confirmButtonText: "Potvrdit",
+                                            cancelButtonText: "Zrušit",
+                                            inputPlaceholder: "Zvolte kapacitu"
+                                        },
+                                        function (worker_capacity) {
+                                            if (worker_capacity === false) return false;
+                                            refreshEvents();
+                                            if (worker_capacity === "") {
+                                                swal.showInputError("Prosím zadejte počet brigádníků!");
+                                                return false
+                                            }
+                                            if (isNaN(worker_capacity)) {
+                                                swal.showInputError("Prosím zadajte číslo!");
+                                                return false
+                                            }
+                                            if (worker_capacity < 0) {
+                                                swal.showInputError("Počet brigádníků nesmí být více záporný!");
+                                                return false
+                                            }
 
-                                $.ajax({
-                                    url: 'process.php',
-                                    type: 'POST',
-                                    data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
-                                    async: false,
-                                    success: function (msg) {
-                                        if (worker_capacity > 0) {
-                                            swal({
-                                                title: "Počet brigádníků změněn",
-                                                text: "Počet brigádníků je: " + worker_capacity,
-                                                type: "success",
-                                                confirmButtonColor: "#005200"
+                                            $.ajax({
+                                                url: 'process.php',
+                                                type: 'POST',
+                                                data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
+                                                async: false,
+                                                success: function (msg) {
+                                                    if (worker_capacity > 0) {
+                                                        swal({
+                                                            title: "Počet brigádníků změněn",
+                                                            text: "Počet brigádníků je: " + worker_capacity,
+                                                            type: "success",
+                                                            confirmButtonColor: "#005200"
+                                                        });
+                                                        refreshEvents();
+                                                    }
+                                                    if (worker_capacity == 0) {
+                                                        swal({
+                                                            title: "Smazáno",
+                                                            text: "Brigádníci byly smazány",
+                                                            type: "success",
+                                                            confirmButtonColor: "#005200"
+                                                        });
+                                                        refreshEvents();
+                                                    }
+                                                },
+                                                error: function (obj, text, error) {
+                                                    swal({
+                                                        title: obj.responseText,
+                                                        text: "Počet přihlášených je větší než celkový počet",
+                                                        type: "error",
+                                                        confirmButtonColor: "#d62633"
+                                                    });
+                                                }
                                             });
-                                            refreshEvents();
-                                        }
-                                        if (worker_capacity == 0) {
-                                            swal({
-                                                title: "Smazáno",
-                                                text: "Brigádníci byly smazány",
-                                                type: "success",
-                                                confirmButtonColor: "#005200"
-                                            });
-                                            refreshEvents();
-                                        }
-                                    },
-                                    error: function (obj, text, error) {
-                                        swal({
-                                            title: obj.responseText,
-                                            text: "Počet přihlášených je větší než celkový počet",
-                                            type: "error",
-                                            confirmButtonColor: "#d62633"
+
                                         });
-                                    }
-                                });
+                                } else {
+                                    //Ajax here************************************
 
+                                    swal({
+                                        title: "HTML <small>Title</small>!",
+                                        text: '<div style="height: 400px; overflow-y:scroll;">h<br>t<br>m<br>l<br>n<br>i<br>e<br>c<br>n<br>i<br>e<br>n<br>o<br>c<br>n<br>i<br>n<br>e<br>o<br>n<br>o<br>i<br>n<br>o<br>i<br>e<br>n<br>g<br>f<br>g<br>f<br>d<br>s<br>g<br>f<br>g<br>f<br>d<br>s<br>g<br>d<br>g<br>s<br>d<br>f<br>g<br>g</div>',
+                                        html: true
+                                    });
+
+                                }
                             });
                         /*
                         //vstup pre kapacitu brigadnikov a pretypovanie string na INT
