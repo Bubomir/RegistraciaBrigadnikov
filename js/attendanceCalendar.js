@@ -605,7 +605,9 @@ $(document).ready(function () {
                             refreshEvents();
                         }*/
                     } else {
+                        if(permissions == 'admin'){
                         deleteEvent(event);
+                        }
                     }
                 }
             }
