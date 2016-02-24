@@ -167,7 +167,7 @@ $(document).ready(function () {
 
 
     /***********************************************************************/
-    /******** Loop for Checking multiple Log In SET UP on every 2 SEC ******/
+    /********************* Checking multiple Log In ************************/
     /***********************************************************************/
     function ajaxCall() {
         var returndata = $.ajax({
@@ -183,14 +183,9 @@ $(document).ready(function () {
 
         if (returndata.responseText === 'success') {
             window.alert("boli ste odpojeny");
-            swal({
-                title: "Byli jste odpojen!",
-                text: "Přihlášení z jiného místa!",
-                type: "error",
-                confirmButtonColor: "#d62633"
-            });
+            //sweetAlert("Oops...", "Something went wrong!", "error");
             window.location.replace("index.php");
-            return 'success';
+            //return 'success';
         }
 
     }
