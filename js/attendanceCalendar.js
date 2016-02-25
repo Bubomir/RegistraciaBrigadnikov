@@ -24,30 +24,40 @@ $(document).ready(function () {
     "use strict";
 
 
-    function brigadniciClickLogIn() {
+    function brigadniciClickLogIn(divObject) {
+
+        for (var i = 0; i < divObject.length; i++) {
+            divObject[i].addEventListener('click', (function (i) {
+                return function () {
+
+                     console.log("click ", divObject[i]);
+                    var emailHash = divObject[i].dataset.description;
+                    var eventId = divObject[i].dataset.event_id;
+                    var eventStartDate = divObject[i].dataset.start;
+
+                    var return_response = $.ajax({
+                        url: 'process.php',
+                        data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        success: function (response) {
+                            return response;
+                        },
+                        error: function (e) {
+                            window.console.log(e.responseText);
+                        }
 
 
-        var brigObject = document.getElementById("brigLogIn");
+                });
+                    getFreshEvents();
+                    BrigadniciListRender(eventId, eventStartDate);
+                    //this.innerHTML = 'New Text';
+                };
+            })(i), false);
+        }
 
-        var emailHash = brigObject.dataset.description;
-        var eventId = brigObject.dataset.event_id;
-        var eventStartDate = brigObject.dataset.start;
 
-        var return_response = $.ajax({
-            url: 'process.php',
-            data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
-            type: 'POST',
-            dataType: 'json',
-            async: false,
-            success: function (response) {
-                return response;
-            },
-            error: function (e) {
-                window.console.log(e.responseText);
-            }
-
-        });
-        BrigadniciListRender(eventId, eventStartDate);
 
     }
 
@@ -68,6 +78,10 @@ $(document).ready(function () {
             text: '<div class="testing" style="height: 400px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
             html: true
         });
+
+
+        var elements = document.getElementsByClassName('brigLogIn2');
+        brigadniciClickLogIn(elements);
     }
 
     /**********************************************/
@@ -611,17 +625,7 @@ $(document).ready(function () {
                                     //Ajax here************************************
 
                                     BrigadniciListRender(event.id, event.start.format());
-                                    var elements = document.getElementsByClassName('brigLogIn2');
 
-                                    for (var i = 0; i < elements.length; i++) {
-                                        elements[i].addEventListener('click', (function (i) {
-                                            return function () {
-                                                console.log('tesfse ', i);
-                                               // brigadniciClickLogIn();
-                                                //this.innerHTML = 'New Text';
-                                            };
-                                        })(i), false);
-                                    }
                                 }
 
 
@@ -656,8 +660,8 @@ $(document).ready(function () {
                             refreshEvents();
                         }*/
                     } else {
-                        if(permissions == 'admin'){
-                        deleteEvent(event);
+                        if (permissions == 'admin') {
+                            deleteEvent(event);
                         }
                     }
                 }
