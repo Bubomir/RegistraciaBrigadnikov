@@ -112,8 +112,10 @@
                                              $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
                                              while ($row = mysqli_fetch_assoc($result)){
                                                  if($row['First_Name']!="Brigádnici"){
+                                                     if($userRow['Permissions'] == 'admin'){
                                                       $meno = $row['First_Name'] . " ". $row['Surname'];
                                                      echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'darkorange'>$meno</div>";
+                                                     }
                                                  }
                                                  else{
                                                     echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'green' style='background-color: green;'>".$row['First_Name']." R</div>";
@@ -170,8 +172,10 @@
                                                 $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
                                                 while ($row = mysqli_fetch_assoc($result)){
                                                     if($row['First_Name']!="Brigádnici"){
+                                                        if($userRow['Permissions'] == 'admin'){
                                                         $meno = $row['First_Name'] . " ". $row['Surname'];
                                                         echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'black'>$meno</div>";
+                                                        }
                                                     }
                                                     else{
                                                         echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'green' style='background-color: green;'>".$row['First_Name']." N</div>";

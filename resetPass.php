@@ -35,7 +35,7 @@
                 $newPass = $_POST['newPass'];
                 $checkNewPass = $_POST['checkNewPass'];
                 
-                if($newPass == $checkNewPass)
+                if($newPass === $checkNewPass)
                 {
                     //Encrypting a new password
                     $enc_pass = md5($newPass);
