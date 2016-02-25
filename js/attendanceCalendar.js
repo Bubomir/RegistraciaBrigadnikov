@@ -280,6 +280,7 @@ $(document).ready(function () {
             center: 'title',
             right: false
         },
+        eventLimit: true,
         droppable: true,
         allDaySlot: false,
         defaultTimedEventDuration: '12:00:00',
