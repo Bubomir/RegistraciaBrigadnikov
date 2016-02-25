@@ -51,7 +51,6 @@ $(document).ready(function () {
                 return s;
             }
         });
-        console.log("fsefes",return_response.responseText);
 
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
@@ -308,13 +307,14 @@ $(document).ready(function () {
                 type: 'POST',
                 url: 'process.php',
                 data: 'type=mouseOver&eventID='+event.id,
+                dataType: 'json',
                 async: false,
                 done: function (response) {
                     "use strict";
                     return response;
                 }
             });
-
+            //data staci naparsovat posielane ako json pole EMAIL PHONE NUM
             console.log("bubo je uzasny ",mouseOverResponse.responseText );
         },
 

@@ -313,10 +313,18 @@ if($type == 'get_loggedPermissions'){
     echo $userRow['Permissions'];
 }
 if($type == 'mouseOver'){
-    //$mouse_over_id = $_POST['eventID']
-   // $query = mysqli_query($db, "SELECT Email, Mobile_Number FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$mouse_over_id'");
+    $mouse_over_id = $_POST['eventID'];
+    $query = mysqli_query($db, "SELECT Email, Mobile_Number FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$mouse_over_id'");
+    $fetch = mysqli_fetch_array($query);
+
+    $e = array();
+    $event_array = array();
+    $e['Email'] = $fetch['Email'];
+    $e['Phone_num'] = $fetch['Mobile_Number'];
 
 
+    array_push($event_array, $e);
+    echo json_encode($event_array);
 }
 
 /*
