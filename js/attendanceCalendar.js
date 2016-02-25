@@ -489,7 +489,7 @@ $(document).ready(function () {
                 });
 
                 if (permissions === 'brigadnik') {
-                    if (check_logIn_logOut.responseText !== '0' && event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
+                    if (check_logIn_logOut.responseText !== '0' && event.title.search(" R Brigádnici:") === 0 || check_logIn_logOut.responseText !== '0' && event.title.search(" N Brigádnici:") === 0) {
                         if (check_interval_time.responseText > 5) {
 
                             swal({
