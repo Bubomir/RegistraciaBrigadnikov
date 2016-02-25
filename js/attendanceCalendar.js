@@ -175,6 +175,7 @@ $(document).ready(function () {
     function brigadniciClickLogIn(divObject) {
 
         for (i = 0; i < divObject.length; i++) {
+            console.log(divObject[i], i);
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
 
@@ -608,7 +609,7 @@ $(document).ready(function () {
                                                         });
                                                         refreshEvents();
                                                     }
-                                                    if (worker_capacity === 0) {
+                                                    if (worker_capacity === '0') {
                                                         swal({
                                                             title: "Smazáno",
                                                             text: "Brigádníci byly smazány",
