@@ -261,11 +261,13 @@ if($type == 'fetch'){
 
         while($fetch = mysqli_fetch_array($query,MYSQLI_ASSOC)){
 
+
         $e = array();
         $e['id'] = $fetch['ID'];
         
         if($fetch['Permissions']=='supervizor'){
-            if(date('h:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
+
+            if(date('H:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
                 if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
                     $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
@@ -273,7 +275,7 @@ if($type == 'fetch'){
                     $e['title'] =  '  R '.$fetch['First_Name'].' '.$fetch['Surname'];
                 }
             }
-            if(date('h:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
+            if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
                 if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
                     $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
@@ -309,6 +311,12 @@ if($type == 'get_loggedPermissions'){
     $result=mysqli_query($db,"SELECT Permissions FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
     echo $userRow['Permissions'];
+}
+if($type == 'mouseOver'){
+    //$mouse_over_id = $_POST['eventID']
+   // $query = mysqli_query($db, "SELECT Email, Mobile_Number FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$mouse_over_id'");
+
+
 }
 
 /*

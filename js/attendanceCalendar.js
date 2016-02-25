@@ -51,6 +51,7 @@ $(document).ready(function () {
                 return s;
             }
         });
+        console.log("fsefes",return_response.responseText);
 
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
@@ -68,18 +69,18 @@ $(document).ready(function () {
     /*************** DELETE EVENTS*****************/
     /**********************************************/
 
-    function deleteEvent(event,accountPermmision) {
+    function deleteEvent(event, accountPermmision) {
 
         swal({
-            title: "Smazat?",
-            text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "orange",
-            confirmButtonText: "Smazat",
-            cancelButtonText: "Zrušit",
-            closeOnConfirm: false
-        },
+                title: "Smazat?",
+                text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "orange",
+                confirmButtonText: "Smazat",
+                cancelButtonText: "Zrušit",
+                closeOnConfirm: false
+            },
             function (isConfirm) {
                 if (isConfirm) {
                     swal({
@@ -90,7 +91,7 @@ $(document).ready(function () {
                     });
                     return_response = $.ajax({
                         url: 'process.php',
-                        data: 'type=remove&event_id=' + event.id+ '&permissionAcount=' + accountPermmision,
+                        data: 'type=remove&event_id=' + event.id + '&permissionAcount=' + accountPermmision,
                         type: 'POST',
                         dataType: 'json',
                         async: false,
@@ -287,7 +288,7 @@ $(document).ready(function () {
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
         //Remove time from event
-        eventRender: function(event, element) {
+        eventRender: function (event, element) {
             $(element).find(".fc-time").remove();
         },
 
@@ -301,8 +302,20 @@ $(document).ready(function () {
             }
         },
 
-        eventMouseover: function(){
-          console.log("bubo je uzasny");
+        eventMouseover: function (event) {
+
+            var mouseOverResponse = $.ajax({
+                type: 'POST',
+                url: 'process.php',
+                data: 'type=mouseOver&eventID='+event.id,
+                async: false,
+                done: function (response) {
+                    "use strict";
+                    return response;
+                }
+            });
+
+            console.log("bubo je uzasny ",mouseOverResponse.responseText );
         },
 
         /**********************************************/
@@ -336,16 +349,16 @@ $(document).ready(function () {
                         if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
 
                             swal({
-                                title: "Přidání brigádníků",
-                                text: "Zvolte počet brigádníků:",
-                                type: "input",
-                                showCancelButton: true,
-                                closeOnConfirm: false,
-                                confirmButtonText: "Potvrdit",
-                                cancelButtonText: "Zrušit",
-                                inputPlaceholder: "Zvolte kapacitu",
-                                confirmButtonColor: "#005200"
-                            },
+                                    title: "Přidání brigádníků",
+                                    text: "Zvolte počet brigádníků:",
+                                    type: "input",
+                                    showCancelButton: true,
+                                    closeOnConfirm: false,
+                                    confirmButtonText: "Potvrdit",
+                                    cancelButtonText: "Zrušit",
+                                    inputPlaceholder: "Zvolte kapacitu",
+                                    confirmButtonColor: "#005200"
+                                },
                                 function (worker_capacity) {
                                     if (!worker_capacity) {
                                         refreshEvents();
@@ -463,15 +476,15 @@ $(document).ready(function () {
                         if (check_interval_time.responseText > 5) {
 
                             swal({
-                                title: "Odhlásit?",
-                                text: "Opravdu se chcete odhlásit z této změny?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "orange",
-                                confirmButtonText: "Odhlásit",
-                                cancelButtonText: "Zrušit",
-                                closeOnConfirm: false
-                            },
+                                    title: "Odhlásit?",
+                                    text: "Opravdu se chcete odhlásit z této změny?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "orange",
+                                    confirmButtonText: "Odhlásit",
+                                    cancelButtonText: "Zrušit",
+                                    closeOnConfirm: false
+                                },
                                 function () {
                                     swal("Deleted!", "Your imaginary file has been deleted.", "success");
                                     swal({
@@ -495,15 +508,15 @@ $(document).ready(function () {
                         if (event.title.search(" Brigádnici:") === 0) {
 
                             swal({
-                                title: "Přihlásit?",
-                                text: "Opravdu se chcete přihlásit na tuto změnu?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "orange",
-                                confirmButtonText: "Přihlásit",
-                                cancelButtonText: "Zrušit",
-                                closeOnConfirm: false
-                            },
+                                    title: "Přihlásit?",
+                                    text: "Opravdu se chcete přihlásit na tuto změnu?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "orange",
+                                    confirmButtonText: "Přihlásit",
+                                    cancelButtonText: "Zrušit",
+                                    closeOnConfirm: false
+                                },
                                 function () {
                                     swal({
                                         title: "Přihlášen",
@@ -520,30 +533,30 @@ $(document).ready(function () {
 
                     if (event.title.search(" Brigádnici:") === 0) {
                         swal({
-                            title: "Chcete zmeniť kapacitu alebo prihlásiť brigádnika?",
-                            text: "You will not be able to recover this imaginary file!",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Zmena kapcity",
-                            cancelButtonText: "Prihlásenie",
-                            closeOnConfirm: false,
-                            closeOnCancel: false,
-                            allowEscapeKey: false
-                        },
+                                title: "Chcete zmeniť kapacitu alebo prihlásiť brigádnika?",
+                                text: "You will not be able to recover this imaginary file!",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Zmena kapcity",
+                                cancelButtonText: "Prihlásenie",
+                                closeOnConfirm: false,
+                                closeOnCancel: false,
+                                allowEscapeKey: false
+                            },
                             function (isConfirm) {
                                 if (isConfirm) {
                                     swal({
-                                        title: "Změnit počet brigádníků",
-                                        text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
-                                        type: "input",
-                                        showCancelButton: true,
-                                        closeOnConfirm: false,
-                                        confirmButtonColor: "#005200",
-                                        confirmButtonText: "Potvrdit",
-                                        cancelButtonText: "Zrušit",
-                                        inputPlaceholder: "Zvolte kapacitu"
-                                    },
+                                            title: "Změnit počet brigádníků",
+                                            text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
+                                            type: "input",
+                                            showCancelButton: true,
+                                            closeOnConfirm: false,
+                                            confirmButtonColor: "#005200",
+                                            confirmButtonText: "Potvrdit",
+                                            cancelButtonText: "Zrušit",
+                                            inputPlaceholder: "Zvolte kapacitu"
+                                        },
                                         function (worker_capacity) {
                                             if (worker_capacity === false) {
                                                 return false;
@@ -611,7 +624,7 @@ $(document).ready(function () {
 
                     } else {
 
-                            deleteEvent(event,permissions);
+                        deleteEvent(event, permissions);
 
                     }
                 }
@@ -656,7 +669,7 @@ $(document).ready(function () {
 
     });
 
-  // setInterval(ajaxCall, 2000); //2000 ms = 2 second
+    // setInterval(ajaxCall, 2000); //2000 ms = 2 second
 
     /*****************************************************/
     /*************** Data for mouse cursor possion *******/
