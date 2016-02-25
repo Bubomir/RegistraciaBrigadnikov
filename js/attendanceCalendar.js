@@ -173,14 +173,10 @@ $(document).ready(function () {
     /**********************************************/
 
     function brigadniciClickLogIn(divObject) {
-<<<<<<< HEAD
-        console.log(divObject);
-        for (var i = 0; i < divObject.length; i++) {
-=======
+
 
         for (i = 0; i < divObject.length; i++) {
-            console.log(divObject[i], i);
->>>>>>> origin/master
+
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
 
