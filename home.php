@@ -409,6 +409,7 @@
                         'first_name': $('input[name=first_name]').val(),
                         'surname': $('input[name=surname]').val(),
                         'email': $('input[name=email]').val(),
+                        'mobile_number': $('input[name=mobile_number]'),
                         'permissions': $('input[name=permissions]:checked').val()
                     }
 

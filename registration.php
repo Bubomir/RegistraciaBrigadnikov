@@ -4,7 +4,8 @@
     //Variabiles acquired from ajax throught registration form
     $first_name = $_POST['first_name'];
     $surname = $_POST['surname'];
-    $email =  $email = $_POST['email'];
+    $email = $_POST['email'];
+    $mobile_number = $_POST['mobile_number'];
     $permission = $_POST['permissions'];
     $tempPass = md5(rand(1000, 100000));
 
