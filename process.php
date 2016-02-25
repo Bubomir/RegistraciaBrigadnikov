@@ -214,20 +214,7 @@ if($type == 'change_number_of_logged_in'){
 	else
 		echo 'failed';
 }
-/*
-if($type == 'resetdate')
-{
-	$title = $_POST['title'];
-	$startdate = $_POST['start'];
-	$enddate = $_POST['end'];
-	$eventid = $_POST['eventid'];
-	$update = mysqli_query($conn,"UPDATE $table_smeny SET title='$title', startdate = '$startdate', enddate = '$enddate' where id='$eventid'");
-	if($update)
-		echo json_encode(array('status'=>'success'));
-	else
-		echo json_encode(array('status'=>'failed'));
-}
-*/
+
 if($type == 'remove')
 {
 	$event_id = $_POST['event_id'];
@@ -311,4 +298,20 @@ if($type == 'get_loggedPermissions'){
     $userRow=mysqli_fetch_array($result);
     echo $userRow['Permissions'];
 }
+
+/*
+if($type == 'resetdate')
+{
+	$title = $_POST['title'];
+	$startdate = $_POST['start'];
+	$enddate = $_POST['end'];
+	$eventid = $_POST['eventid'];
+	$update = mysqli_query($conn,"UPDATE $table_smeny SET title='$title', startdate = '$startdate', enddate = '$enddate' where id='$eventid'");
+	if($update)
+		echo json_encode(array('status'=>'success'));
+	else
+		echo json_encode(array('status'=>'failed'));
+}
+*/
+
 ?>
