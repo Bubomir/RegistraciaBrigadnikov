@@ -22,6 +22,54 @@ var loggedPermissions = $.ajax({
 });
 $(document).ready(function () {
     "use strict";
+
+
+    function brigadniciClickLogIn() {
+
+
+        var brigObject = document.getElementById("brigLogIn");
+
+        var emailHash = brigObject.dataset.description;
+        var eventId = brigObject.dataset.event_id;
+        var eventStartDate = brigObject.dataset.start;
+
+        var return_response = $.ajax({
+            url: 'process.php',
+            data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            success: function (response) {
+                return response;
+            },
+            error: function (e) {
+                window.console.log(e.responseText);
+            }
+
+        });
+        BrigadniciListRender(eventId, eventStartDate);
+
+    }
+
+
+    function BrigadniciListRender(eventID, eventStartDate) {
+        var brigadniciListResponse = $.ajax({
+            type: 'POST', // Send post data
+            url: 'process.php',
+            data: 'type=brigadnici_list&eventID=' + eventID + '&start_date=' + eventStartDate,
+            async: false,
+            done: function (response) {
+                return response;
+            }
+        });
+
+        swal({
+            title: "HTML <small>Title</small>!",
+            text: '<div class="testing" style="height: 400px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
+            html: true
+        });
+    }
+
     /**********************************************/
     /*************** RENDER EVENTS*****************/
     /**********************************************/
@@ -183,9 +231,21 @@ $(document).ready(function () {
 
         if (returndata.responseText === 'success') {
             window.alert("boli ste odpojeny");
+
             //sweetAlert("Oops...", "Something went wrong!", "error");
-            window.location.replace("index.php");
+
             //return 'success';
+
+            /*
+            swal({
+                title: "Byli jste odpojen!",
+                text: "Přihlášení z jiného místa!",
+                type: "error",
+                confirmButtonColor: "#d62633"
+            });
+            */
+            window.location.replace("index.php");
+
         }
 
     }
@@ -205,6 +265,8 @@ $(document).ready(function () {
         currentMousePos.y = event.pageY;
        });
     */
+
+
 
     /* initialize the external events */
     $('#external-events .fc-event ').each(function () {
@@ -277,21 +339,7 @@ $(document).ready(function () {
                 if (duplicity_bool.responseText === 'failed') {
                     if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
                         if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
-                            /*
-                            //vstup pre kapacitu brigadnikov a pretypovanie string na INT
-                            worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
-                                buttons: {
-                                    Ok: true,
-                                    Cancel: false
-                                }
-                            }), 10); //10 RADIX parameter
-                            //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
-                            if (!isNaN(worker_capacity) && worker_capacity > 0) {
-                                eventAdd(event, worker_capacity);
-                            } else {
-                                window.alert("Zle zadane cislo");
-                                refreshEvents();
-                            }*/
+
                             swal({
                                     title: "Přidání brigádníků",
                                     text: "Zvolte počet brigádníků:",
@@ -334,7 +382,7 @@ $(document).ready(function () {
                             eventAdd(event, null);
                         }
                     } else {
-                        //window.alert("Nemozno pridat smenu");
+
                         swal({
                             title: "Chyba...",
                             text: "Změnu nelze přidat!",
@@ -344,7 +392,7 @@ $(document).ready(function () {
                         refreshEvents();
                     }
                 } else {
-                    //window.alert("Duplicitny zapis");
+
                     swal({
                         title: "Chyba...",
                         text: "Duplicitní zápis!",
@@ -483,68 +531,102 @@ $(document).ready(function () {
 
                     if (event.title.search(" Brigádnici:") === 0) {
                         swal({
-                                title: "Změnit počet brigádníků",
-                                text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
-                                type: "input",
+                                title: "Chcete zmeniť kapacitu alebo prihlásiť brigádnika?",
+                                text: "You will not be able to recover this imaginary file!",
+                                type: "warning",
                                 showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Zmena kapcity",
+                                cancelButtonText: "Prihlásenie",
                                 closeOnConfirm: false,
-                                confirmButtonColor: "#005200",
-                                confirmButtonText: "Potvrdit",
-                                cancelButtonText: "Zrušit",
-                                inputPlaceholder: "Zvolte kapacitu"
+                                closeOnCancel: false,
+                                allowEscapeKey: false
                             },
-                            function (worker_capacity) {
-                                if (worker_capacity === false) return false;
-                                refreshEvents();
-                                if (worker_capacity === "") {
-                                    swal.showInputError("Prosím zadejte počet brigádníků!");
-                                    return false
-                                }
-                                if (isNaN(worker_capacity)) {
-                                    swal.showInputError("Prosím zadajte číslo!");
-                                    return false
-                                }
-                                if (worker_capacity < 0) {
-                                    swal.showInputError("Počet brigádníků nesmí být více záporný!");
-                                    return false
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    swal({
+                                            title: "Změnit počet brigádníků",
+                                            text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
+                                            type: "input",
+                                            showCancelButton: true,
+                                            closeOnConfirm: false,
+                                            confirmButtonColor: "#005200",
+                                            confirmButtonText: "Potvrdit",
+                                            cancelButtonText: "Zrušit",
+                                            inputPlaceholder: "Zvolte kapacitu"
+                                        },
+                                        function (worker_capacity) {
+                                            if (worker_capacity === false) return false;
+                                            refreshEvents();
+                                            if (worker_capacity === "") {
+                                                swal.showInputError("Prosím zadejte počet brigádníků!");
+                                                return false
+                                            }
+                                            if (isNaN(worker_capacity)) {
+                                                swal.showInputError("Prosím zadajte číslo!");
+                                                return false
+                                            }
+                                            if (worker_capacity < 0) {
+                                                swal.showInputError("Počet brigádníků nesmí být více záporný!");
+                                                return false
+                                            }
+
+                                            $.ajax({
+                                                url: 'process.php',
+                                                type: 'POST',
+                                                data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
+                                                async: false,
+                                                success: function (msg) {
+                                                    if (worker_capacity > 0) {
+                                                        swal({
+                                                            title: "Počet brigádníků změněn",
+                                                            text: "Počet brigádníků je: " + worker_capacity,
+                                                            type: "success",
+                                                            confirmButtonColor: "#005200"
+                                                        });
+                                                        refreshEvents();
+                                                    }
+                                                    if (worker_capacity == 0) {
+                                                        swal({
+                                                            title: "Smazáno",
+                                                            text: "Brigádníci byly smazány",
+                                                            type: "success",
+                                                            confirmButtonColor: "#005200"
+                                                        });
+                                                        refreshEvents();
+                                                    }
+                                                },
+                                                error: function (obj, text, error) {
+                                                    swal({
+                                                        title: obj.responseText,
+                                                        text: "Počet přihlášených je větší než celkový počet",
+                                                        type: "error",
+                                                        confirmButtonColor: "#d62633"
+                                                    });
+                                                }
+                                            });
+
+                                        });
+                                } else {
+                                    //Ajax here************************************
+
+                                    BrigadniciListRender(event.id, event.start.format());
+                                    var elements = document.getElementsByClassName('brigLogIn2');
+
+                                    for (var i = 0; i < elements.length; i++) {
+                                        elements[i].addEventListener('click', (function (i) {
+                                            return function () {
+                                                console.log('tesfse ', i);
+                                               // brigadniciClickLogIn();
+                                                //this.innerHTML = 'New Text';
+                                            };
+                                        })(i), false);
+                                    }
                                 }
 
-                                $.ajax({
-                                    url: 'process.php',
-                                    type: 'POST',
-                                    data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
-                                    async: false,
-                                    success: function (msg) {
-                                        if (worker_capacity > 0) {
-                                            swal({
-                                                title: "Počet brigádníků změněn",
-                                                text: "Počet brigádníků je: " + worker_capacity,
-                                                type: "success",
-                                                confirmButtonColor: "#005200"
-                                            });
-                                            refreshEvents();
-                                        }
-                                        if (worker_capacity == 0) {
-                                            swal({
-                                                title: "Smazáno",
-                                                text: "Brigádníci byly smazány",
-                                                type: "success",
-                                                confirmButtonColor: "#005200"
-                                            });
-                                            refreshEvents();
-                                        }
-                                    },
-                                    error: function (obj, text, error) {
-                                        swal({
-                                            title: obj.responseText,
-                                            text: "Počet přihlášených je větší než celkový počet",
-                                            type: "error",
-                                            confirmButtonColor: "#d62633"
-                                        });
-                                    }
-                                });
 
                             });
+
                         /*
                         //vstup pre kapacitu brigadnikov a pretypovanie string na INT
                         worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {

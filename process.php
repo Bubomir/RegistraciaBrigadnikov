@@ -2,6 +2,27 @@
 include_once 'dbconnect.php';
 $type = $_POST['type'];
 
+if($type == 'brigadnici_list'){
+    $event_id = $_POST['eventID'];
+    $start_date = $_POST['start_date'];
+
+    $result=mysqli_query($db,"SELECT * FROM $table_employees  WHERE Permissions = 'brigadnik'");
+
+    $brigadniciList = array();
+
+    while ($row = mysqli_fetch_assoc($result)){
+
+        $result_2=mysqli_query($db,"SELECT ID FROM $table_calendar  WHERE start_date = '$start_date' AND p_Email= '".$row['Email']."'");
+        $count = mysqli_num_rows($result_2);
+
+        if($count == 0){
+            $meno = $row['First_Name'] . " ". $row['Surname'];
+            $brigadniciList [] = "<div id='brigLogIn' class='brigLogIn2 fc-event' data-start='$start_date' data-event_id='$event_id' data-description=".md5($row['Email']).">$meno</div>";
+        }
+    }
+    echo implode(" ",$brigadniciList);
+}
+
 if($type == 'session_check'){
     session_start();
     
@@ -38,6 +59,10 @@ if($type == 'duplicity_ceck'){
         }
 }
 
+/*****************************/
+/******* ADD NEW EVENT *******/
+/*****************************/
+
 if($type == 'new'){
 	
     $start_date = $_POST['start_date'];
@@ -46,7 +71,7 @@ if($type == 'new'){
     $capacity = $_POST['capacity'];
     $logged_in = $_POST['logged_in'];
     $color = $_POST['color'];
-
+    $insert = 'false';
     $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='supervizor'");
     while($fetch = mysqli_fetch_array($result,MYSQLI_ASSOC)){
         if ($email == md5($fetch['Email'])){
@@ -56,10 +81,14 @@ if($type == 'new'){
 
 	}
     if($insert){
-        echo 'success';
+        echo 'succesfesfijios';
      }
+    else{
+        echo 'failed';
+    }
 
 }
+
 if($type == 'changeCapacity')
 {
 	$event_id = $_POST['eventID'];
@@ -114,12 +143,26 @@ if($type == 'change_number_of_logged_in'){
 	$logIn_logOut = $_POST['logIn_logOut'];
     $email = $_POST['email'];
    
+    if($logIn_logOut == 'emailhash'){
+
+        $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='brigadnik'");
+
+        while($fetch = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+
+            if ($email == md5($fetch['Email'])){
+                $email = $fetch['Email'];
+                $logIn_logOut = 1;
+            }
+	   }
+    }
+
     $query = mysqli_query($db, "SELECT Logged_In, Capacity, Start_Date FROM $table_calendar WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query);
 	
     $e_logged_in=$fetch['Logged_In'];
     $e_capacity = $fetch['Capacity'];
     $e_start_date = $fetch['Start_Date'];
+
     $end_date = date('c', strtotime($e_start_date." + 12 Hours"));
 
     $result = mysqli_query($db,"SELECT ID FROM $table_calendar WHERE Start_Date='$e_start_date' AND p_Email='$email'");
@@ -139,6 +182,7 @@ if($type == 'change_number_of_logged_in'){
                 //inkrementacia poctu pre prihlasenie
                 $e_logged_in++;
                 $update = mysqli_query($db,"UPDATE $table_calendar SET Logged_In='$e_logged_in' where ID='$event_id'");
+
                 $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In) VALUES('$email','$e_start_date','$end_date','null','null')");
             }
             else{
@@ -166,9 +210,9 @@ if($type == 'change_number_of_logged_in'){
     }
     
     if($update)
-		echo json_encode(array('status'=>'success'));
+		echo 'success';
 	else
-		echo json_encode(array('status'=>'failed'));
+		echo 'failed';
 }
 /*
 if($type == 'resetdate')

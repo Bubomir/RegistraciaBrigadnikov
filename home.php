@@ -386,6 +386,7 @@
         <script src="js/app.js"></script>
         <script src="js/clearForm.js"></script>
         <script>
+
             $(document).ready(function () {
 
                 $('.alert-success').hide();
