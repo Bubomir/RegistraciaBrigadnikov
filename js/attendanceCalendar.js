@@ -306,7 +306,7 @@ $(document).ready(function () {
             var mouseOverResponse = $.ajax({
                 type: 'POST',
                 url: 'process.php',
-                data: 'type=mouseOver&eventID='+event.id,
+                data: 'type=mouseOver&eventID=' + event.id,
                 dataType: 'json',
                 async: false,
                 done: function (response) {
@@ -315,24 +315,24 @@ $(document).ready(function () {
                 }
             });
             //data staci naparsovat posielane ako json pole EMAIL PHONE NUM
-            console.log("bubo je uzasny ",mouseOverResponse.responseText );
-             var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:#ccc;position:absolute;z-index:10001;">' + event.title + '</div>';
+            console.log("bubo je uzasny ", mouseOverResponse.responseText);
+            var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:#ccc;position:absolute;z-index:10001;">' + event.title + '</div>';
             $("body").append(tooltip);
-            $(this).mouseover(function(e) {
-            $(this).css('z-index', 10000);
-            $('.tooltipevent').fadeIn('500');
-            $('.tooltipevent').fadeTo('10', 1.9);
-    }).mousemove(function(e) {
-        $('.tooltipevent').css('top', e.pageY + 10);
-        $('.tooltipevent').css('left', e.pageX + 20);
-    });
+            $(this).mouseover(function (e) {
+                $(this).css('z-index', 10000);
+                $('.tooltipevent').fadeIn('500');
+                $('.tooltipevent').fadeTo('10', 1.9);
+            }).mousemove(function (e) {
+                $('.tooltipevent').css('top', e.pageY + 10);
+                $('.tooltipevent').css('left', e.pageX + 20);
+            });
         },
 
 
-eventMouseout: function() {
-     $(this).css('z-index', 8);
-     $('.tooltipevent').remove();
-},
+        eventMouseout: function () {
+            $(this).css('z-index', 8);
+            $('.tooltipevent').remove();
+        },
 
 
         /**********************************************/
@@ -489,7 +489,7 @@ eventMouseout: function() {
                 });
 
                 if (permissions === 'brigadnik') {
-                    if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
+                    if (check_logIn_logOut.responseText !== '0' && event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
                         if (check_interval_time.responseText > 5) {
 
                             swal({
