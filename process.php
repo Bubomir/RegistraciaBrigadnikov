@@ -260,16 +260,28 @@ if($type == 'fetch'){
 	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date BETWEEN '$start_month' AND '$end_month'");
 
         while($fetch = mysqli_fetch_array($query,MYSQLI_ASSOC)){
+
         $e = array();
         $e['id'] = $fetch['ID'];
         
         if($fetch['Permissions']=='supervizor'){
-            if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
-                $e['title'] = ' '.$fetch['First_Name'].': '.$fetch['Logged_In'].'/'.$fetch['Capacity'];
+            if(date('h:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
+                if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
+                    $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
+                }
+                else{
+                    $e['title'] =  '  R '.$fetch['First_Name'].' '.$fetch['Surname'];
+                }
             }
-            else{
-                $e['title'] =  '  '.$fetch['First_Name'].' '.$fetch['Surname'];
+            if(date('h:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
+                if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
+                    $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
+                }
+                else{
+                    $e['title'] =  '  N '.$fetch['First_Name'].' '.$fetch['Surname'];
+                }
             }
+
         }
         else{
             $e['title'] = $fetch['First_Name'].' '.$fetch['Surname'];
