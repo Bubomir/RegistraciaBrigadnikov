@@ -6,7 +6,7 @@ if($type == 'brigadnici_list'){
     $event_id = $_POST['eventID'];
     $start_date = $_POST['start_date'];
 
-    $result=mysqli_query($db,"SELECT * FROM $table_employees  WHERE Permissions = 'brigadnik'");
+    $result=mysqli_query($db,"SELECT * FROM $table_employees  WHERE Permissions = 'brigadnik' ORDER BY Surname ASC");
 
     $brigadniciList = array();
 
@@ -16,8 +16,8 @@ if($type == 'brigadnici_list'){
         $count = mysqli_num_rows($result_2);
 
         if($count == 0){
-            $meno = $row['First_Name'] . " ". $row['Surname'];
-            $brigadniciList [] = "<div id='brigLogIn' class='brigLogIn2 fc-event' data-start='$start_date' data-event_id='$event_id' data-description=".md5($row['Email']).">$meno</div>";
+            $meno = $row['Surname']." ".$row['First_Name'];
+            $brigadniciList [] = "<div class='brigLogIn2 fc-event' data-start='$start_date' data-event_id='$event_id' data-description=".md5($row['Email']).">$meno</div>";
         }
     }
     echo implode(" ",$brigadniciList);
