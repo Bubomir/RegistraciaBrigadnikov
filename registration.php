@@ -16,7 +16,7 @@
         $result_email = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Email = '$email' ");
         if(mysqli_num_rows($result_email) == 0){
 
-            if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions, Mobile_Number) VALUES('$first_name','$surname','$tempPass','$email','$permission','$mobile_number')")){
+            if(mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions,Mobile_Number) VALUES('$first_name','$surname','$tempPass','$email','$permission','$mobile_number')")){
                 echo $success;
 
 
