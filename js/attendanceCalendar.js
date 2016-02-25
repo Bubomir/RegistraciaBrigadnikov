@@ -68,7 +68,7 @@ $(document).ready(function () {
     /*************** DELETE EVENTS*****************/
     /**********************************************/
 
-    function deleteEvent(event) {
+    function deleteEvent(event,accountPermmision) {
 
         swal({
             title: "Smazat?",
@@ -90,7 +90,7 @@ $(document).ready(function () {
                     });
                     return_response = $.ajax({
                         url: 'process.php',
-                        data: 'type=remove&event_id=' + event.id,
+                        data: 'type=remove&event_id=' + event.id+ '&permissionAcount=' + accountPermmision,
                         type: 'POST',
                         dataType: 'json',
                         async: false,
@@ -302,6 +302,11 @@ $(document).ready(function () {
         defaultTimedEventDuration: '12:00:00',
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
+        //Remove time from event
+        eventRender: function(event, element) {
+            $(element).find(".fc-time").remove();
+        },
+
         /**********************************************/
         /*************** Render EVENTS*****************/
         /**********************************************/
@@ -310,6 +315,10 @@ $(document).ready(function () {
             if (ajaxCall() !== 'success') {
                 refreshEvents();
             }
+        },
+
+        eventMouseover: function(){
+          console.log("bubo je uzasny");
         },
 
         /**********************************************/
@@ -626,7 +635,7 @@ $(document).ready(function () {
 
                     } else {
 
-                            deleteEvent(event);
+                            deleteEvent(event,permissions);
 
                     }
                 }

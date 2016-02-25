@@ -231,7 +231,8 @@ if($type == 'resetdate')
 if($type == 'remove')
 {
 	$event_id = $_POST['event_id'];
-	
+	$permmison_acount = $_POST['permissionAcount'];
+
     $query = mysqli_query($db, "SELECT Start_Date, Permissions FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID='$event_id'");
     $fetch = mysqli_fetch_array($query,MYSQLI_ASSOC);
     
@@ -253,7 +254,9 @@ if($type == 'remove')
         
     }
     else{
-         $delete = mysqli_query($db,"DELETE FROM $table_calendar where ID='$event_id'");
+        if($permmison_acount=='admin'){
+            $delete = mysqli_query($db,"DELETE FROM $table_calendar where ID='$event_id'");
+        }
     }
     
 
