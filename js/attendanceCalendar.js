@@ -522,7 +522,7 @@ eventMouseout: function() {
                             });
                         }
                     } else {
-                        if (event.title.search(" Brigádnici:") === 0) {
+                        if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
 
                             swal({
                                     title: "Přihlásit?",
