@@ -69,23 +69,7 @@ $(document).ready(function () {
     /**********************************************/
 
     function deleteEvent(event) {
-        /*
-        var con = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
-        if (con === true) {
-            return_response = $.ajax({
-                url: 'process.php',
-                data: 'type=remove&event_id=' + event.id,
-                type: 'POST',
-                dataType: 'json',
-                async: false,
-                success: function (response) {
-                    return response;
-                },
-                error: function (e) {
-                    window.console.log(e.responseText);
-                }
-            });
-        }*/
+
         swal({
             title: "Smazat?",
             text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
@@ -174,9 +158,7 @@ $(document).ready(function () {
 
     function brigadniciClickLogIn(divObject) {
 
-
         for (i = 0; i < divObject.length; i++) {
-
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
 
@@ -641,34 +623,7 @@ $(document).ready(function () {
 
                             });
 
-                        /*
-                        //vstup pre kapacitu brigadnikov a pretypovanie string na INT
-                        worker_capacity = parseInt(window.prompt('počet brigádnikov:', "", {
-                            buttons: {
-                                Ok: true,
-                                Cancel: false
-                            }
-                        }), 10); //10 RADIX parameter
-                        //Osetrenie na datovy typ INT a na min kapacitu smeny jednej brigadnik
-                        if (!isNaN(worker_capacity) && worker_capacity > -1) {
 
-                            varning_resposne = $.ajax({
-                                url: 'process.php',
-                                type: 'POST',
-                                data: 'type=changeCapacity&eventID=' + event.id + '&capacity=' + worker_capacity,
-                                async: false,
-                                done: function (response) {
-                                    return response;
-                                }
-                            });
-                            if (varning_resposne.responseText === 'failed') {
-                                window.alert("Najskor treba odhlasit brigadnika/ov");
-                            }
-                            refreshEvents();
-                        } else {
-                            window.alert("Zle zadane cislo");
-                            refreshEvents();
-                        }*/
                     } else {
 
                             deleteEvent(event);
