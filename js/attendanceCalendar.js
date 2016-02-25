@@ -316,7 +316,24 @@ $(document).ready(function () {
             });
             //data staci naparsovat posielane ako json pole EMAIL PHONE NUM
             console.log("bubo je uzasny ",mouseOverResponse.responseText );
+             var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:#ccc;position:absolute;z-index:10001;">' + event.title + '</div>';
+            $("body").append(tooltip);
+            $(this).mouseover(function(e) {
+            $(this).css('z-index', 10000);
+            $('.tooltipevent').fadeIn('500');
+            $('.tooltipevent').fadeTo('10', 1.9);
+    }).mousemove(function(e) {
+        $('.tooltipevent').css('top', e.pageY + 10);
+        $('.tooltipevent').css('left', e.pageX + 20);
+    });
         },
+
+
+eventMouseout: function() {
+     $(this).css('z-index', 8);
+     $('.tooltipevent').remove();
+},
+
 
         /**********************************************/
         /*************** ADD EVENTS********************/
