@@ -158,7 +158,7 @@ $(document).ready(function () {
 
     function brigadniciClickLogIn(divObject) {
 
-        for (i = 0; i < divObject.length; i++) {
+        for (var i = 0; i < divObject.length; i++) {
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
 
