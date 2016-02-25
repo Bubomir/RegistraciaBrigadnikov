@@ -50,7 +50,7 @@ $(document).ready(function () {
 
 
                 });
-                    getFreshEvents();
+                    refreshEvents();
                     BrigadniciListRender(eventId, eventStartDate);
                     //this.innerHTML = 'New Text';
                 };
