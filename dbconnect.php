@@ -57,6 +57,7 @@
         Password VARCHAR(255) NOT NULL,
         Email VARCHAR(255) NOT NULL,
         Permissions VARCHAR(10) NOT NULL,
+        Mobile_Number INT(255) NOT NULL,
         Reset_Password VARCHAR(50) NOT NULL DEFAULT 0,
         Session_ID VARCHAR(255) NOT NULL,
         UNIQUE (`Email`,`User_ID`) 
