@@ -173,8 +173,14 @@ $(document).ready(function () {
     /**********************************************/
 
     function brigadniciClickLogIn(divObject) {
+<<<<<<< HEAD
         console.log(divObject);
         for (var i = 0; i < divObject.length; i++) {
+=======
+
+        for (i = 0; i < divObject.length; i++) {
+            console.log(divObject[i], i);
+>>>>>>> origin/master
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
 
@@ -608,7 +614,7 @@ $(document).ready(function () {
                                                         });
                                                         refreshEvents();
                                                     }
-                                                    if (worker_capacity === 0) {
+                                                    if (worker_capacity === '0') {
                                                         swal({
                                                             title: "Smazáno",
                                                             text: "Brigádníci byly smazány",
@@ -668,9 +674,9 @@ $(document).ready(function () {
                             refreshEvents();
                         }*/
                     } else {
-                        if (permissions === 'admin') {
+
                             deleteEvent(event);
-                        }
+
                     }
                 }
             }
