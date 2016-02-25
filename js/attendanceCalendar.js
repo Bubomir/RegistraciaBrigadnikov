@@ -252,23 +252,6 @@ $(document).ready(function () {
 
     }
 
-    // setInterval(ajaxCall, 2000); //2000 ms = 2 second
-
-    /*****************************************************/
-    /*************** Data for mouse cursor possion *******/
-    /****************************************************/
-    /*
-    var currentMousePos = {
-        x: -1,
-        y: -1
-    };
-    jQuery(document).on("mousemove", function (event) {
-        currentMousePos.x = event.pageX;
-        currentMousePos.y = event.pageY;
-       });
-    */
-
-
 
     /* initialize the external events */
     $('#external-events .fc-event ').each(function () {
@@ -477,11 +460,7 @@ $(document).ready(function () {
                 if (permissions === 'brigadnik') {
                     if (check_logIn_logOut.responseText !== '0' && event.title.search(" Brigádnici:") === 0) {
                         if (check_interval_time.responseText > 5) {
-                            /*
-                            confirmDialog = window.confirm('Naozaj sa chcete odhlásiť z tejto zmeny?');
-                            if (confirmDialog === true) {
-                                loggedInUpdate(event, email, -1); // -1 == log out from event
-                            }*/
+
                             swal({
                                 title: "Odhlásit?",
                                 text: "Opravdu se chcete odhlásit z této změny?",
@@ -503,7 +482,7 @@ $(document).ready(function () {
                                     loggedInUpdate(event, email, -1);
                                 });
                         } else {
-                            //window.alert("Nemozno sa odhlasit v tejto lehote");
+
                             swal({
                                 title: "Odhlášení zakázáno",
                                 text: "Již není možné se odhlásit!",
@@ -513,11 +492,7 @@ $(document).ready(function () {
                         }
                     } else {
                         if (event.title.search(" Brigádnici:") === 0) {
-                            /*
-                            confirmDialog = window.confirm('Naozaj sa chcete prihlásiť na tuto smenu?');
-                            if (confirmDialog === true) {
-                                loggedInUpdate(event, email, 1); // 1 == log in on event
-                            }*/
+
                             swal({
                                 title: "Přihlásit?",
                                 text: "Opravdu se chcete přihlásit na tuto změnu?",
@@ -680,7 +655,21 @@ $(document).ready(function () {
 
     });
 
+  // setInterval(ajaxCall, 2000); //2000 ms = 2 second
 
+    /*****************************************************/
+    /*************** Data for mouse cursor possion *******/
+    /****************************************************/
+    /*
+    var currentMousePos = {
+        x: -1,
+        y: -1
+    };
+    jQuery(document).on("mousemove", function (event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+       });
+    */
 
     /***********************************************************/
     /***********Test If Cursor is Over the Calendar DIV*********/
