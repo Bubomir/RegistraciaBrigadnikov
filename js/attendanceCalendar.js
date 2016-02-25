@@ -548,7 +548,7 @@ eventMouseout: function() {
                 }
                 if (permissions === 'admin' || permissions === 'supervizor') {
 
-                    if (event.title.search(" Brigádnici:") === 0) {
+                    if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
                         swal({
                                 title: "Chcete zmeniť kapacitu alebo prihlásiť brigádnika?",
                                 text: "You will not be able to recover this imaginary file!",
