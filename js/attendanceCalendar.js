@@ -314,32 +314,24 @@ $(document).ready(function () {
                     "use strict";
                     return response;
                 }
-            }).responseText;
+            });
             //var data =  mouseOverResponse.map(JSON.parse);
             //data staci naparsovat posielane ako json pole EMAIL PHONE NUM
-<<<<<<< HEAD
+
             var mouseOver = JSON.parse(mouseOverResponse.responseText);
             var name = mouseOver[0].Name;
             var email = mouseOver[0].Email;
             var phone_num = mouseOver[0].Phone_num;
             var permission =  mouseOver[0].Permissions;
 
-            console.log("bubo je uzasny ", name);
+
             //var tooltip = document.getElementById('popup-info');
             //var tooltip = $('#phantom-popup').load('template/popup_info.php');
             $("body").prepend(tooltip);
             document.getElementById('popup-name').innerHTML = name;
             document.getElementById('popup-email').innerHTML = email;
             document.getElementById('popup-number').innerHTML = phone_num;
-=======
-            console.log("bubo je uzasny ", mouseOverResponse);
-            //var tooltip = document.getElementById('popup-info');
-            //var tooltip = $('#phantom-popup').load('template/popup_info.php');
-            $("body").prepend(tooltip);
-            document.getElementById('popup-name').innerHTML = mouseOverResponse.Permissions;
-            document.getElementById('popup-email').innerHTML = "jeb";
-            document.getElementById('popup-number').innerHTML = "jeb";
->>>>>>> origin/master
+
             $(this).mouseover(function (e) {
                 $(this).css('z-index', 10000);
                 $('#popup-info').fadeIn('500');
