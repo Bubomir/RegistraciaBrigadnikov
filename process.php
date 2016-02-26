@@ -286,7 +286,12 @@ if($type == 'fetch'){
 
         }
         else{
-            $e['title'] = $fetch['First_Name'].' '.$fetch['Surname'];
+            if(date('H:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
+                $e['title'] = 'R '.$fetch['First_Name'].' '.$fetch['Surname'];
+            }
+            if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
+                $e['title'] = 'N '.$fetch['First_Name'].' '.$fetch['Surname'];
+            }
         }
      
         $e['start'] = $fetch['Start_Date'];
