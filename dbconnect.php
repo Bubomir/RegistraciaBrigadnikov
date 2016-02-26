@@ -109,9 +109,9 @@
     }
 
     // CREATE TABLE NOTIFICATION
-    $table_notifications = 'notification';
+    $table_notification = 'notification';
 
-    $sql_notifications = 'CREATE TABLE IF NOT EXISTS '.$table_notifications.'(
+    $sql_notification = 'CREATE TABLE IF NOT EXISTS '.$table_notification.'(
         ID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         p_Email_KTO VARCHAR(255) NOT NULL,
         p_Email_KOMU VARCHAR(255) NOT NULL,
@@ -125,7 +125,7 @@
         )';
 
     // Check if table was create
-    if (!mysqli_query($db, $sql_notifications)) {
+    if (!mysqli_query($db, $sql_notification)) {
         echo "Error creating table: " . mysqli_error($db);
     }
    

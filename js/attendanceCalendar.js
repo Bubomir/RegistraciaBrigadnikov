@@ -84,12 +84,9 @@ $(document).ready(function () {
             },
             function (isConfirm) {
                 if (isConfirm) {
-                    swal({
-                        title: "Smazáno",
-                        text: "Tato změna byla vymazána.",
-                        type: "success",
-                        confirmButtonColor: "#005200"
-                    });
+                    //CREATE NOTIFICATION
+                    addNotification(event.id, 'odhlasenie');
+
                     return_response = $.ajax({
                         url: 'process.php',
                         data: 'type=remove&event_id=' + event.id + '&permissionAcount=' + accountPermmision,
@@ -103,11 +100,26 @@ $(document).ready(function () {
                             window.console.log(e.responseText);
                         }
                     });
-                    refreshEvents();
-                }
-            });
+                    console.log('delete ', return_response.responseText);
 
-    }
+                    if ('success') {
+                        swal({
+                            title: "Smazáno",
+                            text: "Tato změna byla vymazána.",
+                            type: "success",
+                            confirmButtonColor: "#005200"
+                        });
+
+
+                        refreshEvents();
+
+                    } else {
+                        alert('chyba pri zmazavani');
+                    }
+                };
+        }
+
+    )}
     /**********************************************/
     /*************** ADD EVENTS********************/
     /**********************************************/
@@ -128,7 +140,7 @@ $(document).ready(function () {
             }
 
         });
-    console.log("dasadsdsad",return_response.responseText);
+        console.log("dasadsdsad", return_response.responseText);
         refreshEvents();
     }
 
@@ -184,6 +196,7 @@ $(document).ready(function () {
 
 
                         });
+                    addNotification(eventId, 'prihlasenie');
                     //background Refresh events
                     refreshEvents();
                     //render list of brigadnici
@@ -253,6 +266,23 @@ $(document).ready(function () {
 
         }
 
+    }
+
+    function addNotification(eventID, activity) {
+        console.log('ajax test', eventID + ' acti ' + activity + 'email login ' + loggedEmail.responseText);
+
+        var returndata = $.ajax({
+            url: 'process.php',
+            type: 'POST',
+            data: 'type=addNotification&email_KTO=' + loggedEmail.responseText + '&eventID=' + eventID + '&activity=' + activity,
+            async: false,
+            success: function (data) {
+                return data;
+
+            }
+        });
+
+        console.log('fsef',returndata.responseText);
     }
 
 
@@ -572,6 +602,7 @@ $(document).ready(function () {
                     if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
                         brigadniciListRender(event.id, event.start.format());
 
+
                         // UPOZORNENIE !!!
                         //sluzi na nastavovanie kapacity brigadnikov na smeny nepouzite pretoze firma si neziadala tuto funkcionalitu
 
@@ -669,27 +700,27 @@ $(document).ready(function () {
                     } else {
 
 
-                        if(permissions === 'admin'){
+                        if (permissions === 'admin') {
 
                             deleteEvent(event, permissions);
-                        }
-                        else{
-                             var checkingForDelete = $.ajax({
-                            type: 'POST',
-                            url: 'process.php',
-                            data: 'type=checkingForDelete&eventID=' + event.id,
-                            dataType: 'json',
-                            async: false,
-                            done: function (response) {
-                                "use strict";
-                                return response;
-                            }
-                        });
-                            if(checkingForDelete.responseText === 'supervizor'){
+
+
+                        } else {
+                            var checkingForDelete = $.ajax({
+                                type: 'POST',
+                                url: 'process.php',
+                                data: 'type=checkingForDelete&eventID=' + event.id,
+                                dataType: 'json',
+                                async: false,
+                                done: function (response) {
+                                    "use strict";
+                                    return response;
+                                }
+                            });
+                            if (checkingForDelete.responseText === 'supervizor') {
                                 alert('nemas prava na vymazamnioe');
-                            }
-                            else{
-                                 deleteEvent(event, permissions);
+                            } else {
+                                deleteEvent(event, permissions);
 
                             }
 

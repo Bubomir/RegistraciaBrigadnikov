@@ -203,6 +203,7 @@ if($type == 'change_number_of_logged_in'){
                 $update = mysqli_query($db,"UPDATE $table_calendar SET Logged_In='$e_logged_in' where ID='$event_id'");
 
                 $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In) VALUES('$email','$e_start_date','$end_date','null','null')");
+
             }
             else{
                 $update = false;
@@ -267,9 +268,9 @@ if($type == 'remove')
     
 
 	if($delete)
-		echo json_encode(array('status'=>'success'));
+		echo 'success';
 	else
-		echo json_encode(array('status'=>'failed'));
+		echo 'failed';
 }
 if($type == 'fetch'){
 
@@ -361,6 +362,43 @@ if($type == 'checkingForDelete'){
     echo $fetch['Permissions'];
 
  }
+
+if($type == 'addNotification'){
+    $emailKTO = $_POST['email_KTO'];
+    $eventID = $_POST['eventID'];
+    $activity = $_POST['activity'];
+
+
+
+    $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID = '$eventID'");
+    $fetch=mysqli_fetch_array($query);
+
+    $emailKOHO = $fetch['p_Email'];
+    $startDate = $fetch['Start_Date'];
+    $timeStamp = date('c');
+
+    $result = mysqli_query($db, "SELECT p_Email FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date = '$startDate' AND Permissions = 'supervizor' ");
+
+     while($fetch_2 = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+
+        if($fetch_2['p_Email'] != $email_brigadnici){
+            $emailKOMU = $fetch_2['p_Email'];
+        }
+     }
+
+    echo $emailKOMU;
+
+    $insert = mysqli_query($db,"INSERT INTO $table_notification (p_Email_KTO, p_Email_KOMU, p_Email_KOHO, Activity, Start_Date, TimeStamp) VALUES('$emailKTO','$emailKOMU','$emailKOHO','$activity','$startDate','$timeStamp')");
+
+    if ($insert){
+        echo 'success';
+    }
+    else{
+        echo 'failed';
+    }
+
+
+}
 
 /*
 if($type == 'resetdate')
