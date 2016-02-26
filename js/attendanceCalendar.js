@@ -1,5 +1,7 @@
-var $;
-var tooltip = $('#popup-info').detach();
+var $,
+    moment,
+    swal;
+var    tooltip = $('#popup-info').detach();
 
 var loggedEmail = $.ajax({
     type: 'POST',
@@ -350,9 +352,9 @@ $(document).ready(function () {
 
                     return response;
                 }
-            });
+            }),
 
-            var mouseOver = JSON.parse(mouseOverResponse.responseText),
+                mouseOver = JSON.parse(mouseOverResponse.responseText),
                 name = mouseOver[0].Name,
                 email = mouseOver[0].Email,
                 phone_num = mouseOver[0].Phone_num,
