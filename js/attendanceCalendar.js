@@ -53,6 +53,7 @@ $(document).ready(function () {
             }
         });
 
+
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
