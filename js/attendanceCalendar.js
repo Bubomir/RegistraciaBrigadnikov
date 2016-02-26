@@ -1,5 +1,6 @@
-var tooltip = $('#popup-info').detach();
 var $;
+var tooltip = $('#popup-info').detach();
+
 var loggedEmail = $.ajax({
     type: 'POST',
     url: 'process.php',
@@ -24,6 +25,26 @@ var loggedPermissions = $.ajax({
 
 $(document).ready(function () {
     "use strict";
+
+    /**********************************************/
+    /*************** ADD NOTIFICATIONS **************/
+    /**********************************************/
+
+    function addNotification(eventID, activity) {
+
+        var returndata = $.ajax({
+            url: 'process.php',
+            type: 'POST',
+            data: 'type=addNotification&email_KTO=' + loggedEmail.responseText + '&eventID=' + eventID + '&activity=' + activity,
+            async: false,
+            success: function (data) {
+                return data;
+
+            }
+        });
+
+    }
+
 
 
     /**********************************************/
@@ -73,15 +94,15 @@ $(document).ready(function () {
     function deleteEvent(event, accountPermmision) {
 
         swal({
-                title: "Smazat?",
-                text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "orange",
-                confirmButtonText: "Smazat",
-                cancelButtonText: "Zrušit",
-                closeOnConfirm: false
-            },
+            title: "Smazat?",
+            text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "orange",
+            confirmButtonText: "Smazat",
+            cancelButtonText: "Zrušit",
+            closeOnConfirm: false
+        },
             function (isConfirm) {
                 if (isConfirm) {
                     //CREATE NOTIFICATION
@@ -100,9 +121,9 @@ $(document).ready(function () {
                             window.console.log(e.responseText);
                         }
                     });
-                    console.log('delete ', return_response.responseText);
 
-                    if ('success') {
+
+                    if ('success' === return_response.responseText) {
                         swal({
                             title: "Smazáno",
                             text: "Tato změna byla vymazána.",
@@ -110,16 +131,16 @@ $(document).ready(function () {
                             confirmButtonColor: "#005200"
                         });
 
-
                         refreshEvents();
 
                     } else {
-                        alert('chyba pri zmazavani');
+                        window.alert('chyba pri zmazavani');
                     }
-                };
-        }
+                }
+            }
 
-    )}
+            );
+    }
     /**********************************************/
     /*************** ADD EVENTS********************/
     /**********************************************/
@@ -140,7 +161,7 @@ $(document).ready(function () {
             }
 
         });
-        console.log("dasadsdsad", return_response.responseText);
+
         refreshEvents();
     }
 
@@ -172,8 +193,8 @@ $(document).ready(function () {
     /**********************************************/
 
     function brigadniciClickLogIn(divObject) {
-
-        for (var i = 0; i < divObject.length; i++) {
+        var i;
+        for (i = 0; i < divObject.length; i++) {
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
 
@@ -268,22 +289,6 @@ $(document).ready(function () {
 
     }
 
-    function addNotification(eventID, activity) {
-        console.log('ajax test', eventID + ' acti ' + activity + 'email login ' + loggedEmail.responseText);
-
-        var returndata = $.ajax({
-            url: 'process.php',
-            type: 'POST',
-            data: 'type=addNotification&email_KTO=' + loggedEmail.responseText + '&eventID=' + eventID + '&activity=' + activity,
-            async: false,
-            success: function (data) {
-                return data;
-
-            }
-        });
-
-        console.log('fsef',returndata.responseText);
-    }
 
 
     /* initialize the external events */
@@ -342,21 +347,21 @@ $(document).ready(function () {
                 dataType: 'json',
                 async: false,
                 done: function (response) {
-                    "use strict";
+
                     return response;
                 }
             });
 
-            var mouseOver = JSON.parse(mouseOverResponse.responseText);
-            var name = mouseOver[0].Name;
-            var email = mouseOver[0].Email;
-            var phone_num = mouseOver[0].Phone_num;
-            var permission = mouseOver[0].Permissions;
+            var mouseOver = JSON.parse(mouseOverResponse.responseText),
+                name = mouseOver[0].Name,
+                email = mouseOver[0].Email,
+                phone_num = mouseOver[0].Phone_num,
+                permission = mouseOver[0].Permissions;
 
 
             //var tooltip = document.getElementById('popup-info');
             //var tooltip = $('#phantom-popup').load('template/popup_info.php');
-            if (permission == 'brigadnik') {
+            if (permission === 'brigadnik') {
                 $("body").prepend(tooltip);
                 document.getElementById('popup-name').innerHTML = name;
                 document.getElementById('popup-email').innerHTML = email;
@@ -496,7 +501,8 @@ $(document).ready(function () {
                     check_interval_time,
                     confirmDialog,
                     varning_resposne,
-                    worker_capacity;
+                    worker_capacity,
+                    checkingForDelete;
 
                 permissions = $.ajax({
                     type: 'POST',
@@ -540,19 +546,19 @@ $(document).ready(function () {
                 });
 
                 if (permissions === 'brigadnik') {
-                    if (check_logIn_logOut.responseText !== '0' && event.title.search(" R Brigádnici:") === 0 || check_logIn_logOut.responseText !== '0' && event.title.search(" N Brigádnici:") === 0) {
+                    if ((check_logIn_logOut.responseText !== '0' && event.title.search(" R Brigádnici:") === 0) || (check_logIn_logOut.responseText !== '0' && event.title.search(" N Brigádnici:") === 0)) {
                         if (check_interval_time.responseText > 5) {
 
                             swal({
-                                    title: "Odhlásit?",
-                                    text: "Opravdu se chcete odhlásit z této změny?",
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "orange",
-                                    confirmButtonText: "Odhlásit",
-                                    cancelButtonText: "Zrušit",
-                                    closeOnConfirm: false
-                                },
+                                title: "Odhlásit?",
+                                text: "Opravdu se chcete odhlásit z této změny?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "orange",
+                                confirmButtonText: "Odhlásit",
+                                cancelButtonText: "Zrušit",
+                                closeOnConfirm: false
+                            },
                                 function () {
                                     swal("Deleted!", "Your imaginary file has been deleted.", "success");
                                     swal({
@@ -576,15 +582,15 @@ $(document).ready(function () {
                         if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
 
                             swal({
-                                    title: "Přihlásit?",
-                                    text: "Opravdu se chcete přihlásit na tuto změnu?",
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "orange",
-                                    confirmButtonText: "Přihlásit",
-                                    cancelButtonText: "Zrušit",
-                                    closeOnConfirm: false
-                                },
+                                title: "Přihlásit?",
+                                text: "Opravdu se chcete přihlásit na tuto změnu?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "orange",
+                                confirmButtonText: "Přihlásit",
+                                cancelButtonText: "Zrušit",
+                                closeOnConfirm: false
+                            },
                                 function () {
                                     swal({
                                         title: "Přihlášen",
@@ -706,19 +712,19 @@ $(document).ready(function () {
 
 
                         } else {
-                            var checkingForDelete = $.ajax({
+                            checkingForDelete = $.ajax({
                                 type: 'POST',
                                 url: 'process.php',
                                 data: 'type=checkingForDelete&eventID=' + event.id,
                                 dataType: 'json',
                                 async: false,
                                 done: function (response) {
-                                    "use strict";
+
                                     return response;
                                 }
                             });
                             if (checkingForDelete.responseText === 'supervizor') {
-                                alert('nemas prava na vymazamnioe');
+                                window.alert('nemas prava na vymazamnioe');
                             } else {
                                 deleteEvent(event, permissions);
 
