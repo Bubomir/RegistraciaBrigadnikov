@@ -1,3 +1,4 @@
+var tooltip = $('#popup-info').detach();
 var $;
 var loggedEmail = $.ajax({
     type: 'POST',
@@ -303,7 +304,6 @@ $(document).ready(function () {
         },
 
         eventMouseover: function (event) {
-
             var mouseOverResponse = $.ajax({
                 type: 'POST',
                 url: 'process.php',
@@ -317,22 +317,26 @@ $(document).ready(function () {
             });
             //data staci naparsovat posielane ako json pole EMAIL PHONE NUM
             console.log("bubo je uzasny ", mouseOverResponse.responseText);
-            var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:#ccc;position:absolute;z-index:10001;">' + event.title + '</div>';
-            $("body").append(tooltip);
+            //var tooltip = document.getElementById('popup-info');
+            //var tooltip = $('#phantom-popup').load('template/popup_info.php');
+            $("body").prepend(tooltip);
+            document.getElementById('popup-name').innerHTML = "jeb";
+            document.getElementById('popup-email').innerHTML = "jeb";
+            document.getElementById('popup-number').innerHTML = "jeb";
             $(this).mouseover(function (e) {
                 $(this).css('z-index', 10000);
-                $('.tooltipevent').fadeIn('500');
-                $('.tooltipevent').fadeTo('10', 1.9);
+                $('#popup-info').fadeIn('500');
+                $('#popup-info').fadeTo('10', 1.9);
             }).mousemove(function (e) {
-                $('.tooltipevent').css('top', e.pageY + 10);
-                $('.tooltipevent').css('left', e.pageX + 20);
+                $('#popup-info').css('top', e.pageY + 10);
+                $('#popup-info').css('left', e.pageX + 20);
             });
         },
 
 
         eventMouseout: function () {
             $(this).css('z-index', 8);
-            $('.tooltipevent').remove();
+            $('#popup-info').detach();
         },
 
 
