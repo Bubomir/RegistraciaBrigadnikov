@@ -41,13 +41,13 @@
     $first_name_admin = 'Admin';
     $surname_admin = 'Super';
     $password_admin = md5(mysqli_real_escape_string($db,'root'));
-    $email_admin =  'admin@admin.sk';
+    $email_admin =  'admin@vtstudentplanner.cz';
     $permissions_admin = 'admin';
 
     $first_name_brigadnici = 'Brigádnici';
     $surname_brigadnici = ' ';
     $password_brigadnici = md5(mysqli_real_escape_string($db,'brigadnici'));
-    $email_brigadnici = 'brigadnici@brigadnici.sk';
+    $email_brigadnici = 'brigadnici@vtstudentplanner.sk';
     $permissions_brigadnici = 'supervizor';
 
     $sql = 'CREATE TABLE IF NOT EXISTS '.$table_employees.'(
@@ -105,6 +105,27 @@
 
     // Check if table was create
     if (!mysqli_query($db, $sql_calendar)) {
+        echo "Error creating table: " . mysqli_error($db);
+    }
+
+    // CREATE TABLE NOTIFICATION
+    $table_notifications = 'notification';
+
+    $sql_notifications = 'CREATE TABLE IF NOT EXISTS '.$table_notifications.'(
+        ID INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        p_Email_KTO VARCHAR(255) NOT NULL,
+        p_Email_KOMU VARCHAR(255) NOT NULL,
+        p_Email_KOHO VARCHAR(255) NOT NULL,
+        Activity VARCHAR(255) NOT NULL,
+        Start_Date TIMESTAMP NOT NULL,
+        TimeStamp TIMESTAMP NOT NULL,
+        FOREIGN KEY (p_Email_KTO) REFERENCES '.$table_employees.'(Email),
+        FOREIGN KEY (p_Email_KOMU) REFERENCES '.$table_employees.'(Email),
+        FOREIGN KEY (p_Email_KOHO) REFERENCES '.$table_employees.'(Email)
+        )';
+
+    // Check if table was create
+    if (!mysqli_query($db, $sql_notifications)) {
         echo "Error creating table: " . mysqli_error($db);
     }
    

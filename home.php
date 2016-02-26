@@ -426,7 +426,7 @@
         <footer>
             <div class="row">
                 <div class="large-12 columns">
-                    <p>@ 2016 <b>Muth v.o.s</b>
+                    <p>&copy 2016 <b>Muth v.o.s</b>
                         <span class="separator">|</span> Všetky práva vyhradené
                         <span class="separator">|</span> Tel: +421 948 634 433
                         <span class="separator">|</span> Email: info@muth.sk

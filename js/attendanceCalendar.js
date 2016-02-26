@@ -128,6 +128,7 @@ $(document).ready(function () {
             }
 
         });
+    console.log("dasadsdsad",return_response.responseText);
         refreshEvents();
     }
 

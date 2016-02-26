@@ -50,7 +50,7 @@ if($type == 'duplicity_ceck'){
         }
      }
 
-    if($e_email=='brigadnici@brigadnici.sk'){
+    if($e_email == $email_brigadnici){
         $query = mysqli_query($db, "SELECT ID FROM $table_calendar WHERE p_Email='$e_email' AND Start_Date='$start_date'");
         $count = mysqli_num_rows($query);
     }
@@ -83,8 +83,19 @@ if($type == 'new'){
     $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='supervizor'");
     while($fetch = mysqli_fetch_array($result,MYSQLI_ASSOC)){
         if ($email == md5($fetch['Email'])){
-            $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In, Color) VALUES('".$fetch['Email']."','$start_date','$end_date','$capacity','$logged_in','$color')");
-            $lastid = mysqli_insert_id($db);
+
+            if($fetch['Email'] == $email_brigadnici){
+                $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In, Color) VALUES('".$fetch['Email']."','$start_date','$end_date','$capacity','$logged_in','$color')");
+                $lastid = mysqli_insert_id($db);
+            }
+            else{
+                $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In, Color) VALUES('".$fetch['Email']."','$start_date','$end_date','$capacity','$logged_in','$color')");
+                $lastid = mysqli_insert_id($db);
+
+                $inser_2 = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In, Color) VALUES('$email_brigadnici','$start_date','$end_date','9999','$logged_in','green')");
+                $lasti_2 = mysqli_insert_id($db);
+            }
+
         }
 
 	}
@@ -237,7 +248,7 @@ if($type == 'remove')
    
     
     if($e_permissions=='brigadnik'){
-        $email = 'brigadnici@brigadnici.sk';
+        $email = $email_brigadnici;
         $query_2 = mysqli_query($db, "SELECT ID, Logged_In FROM $table_calendar WHERE Start_Date='$e_start_time' AND p_Email='$email'");
         $fetch_2 = mysqli_fetch_array($query_2,MYSQLI_ASSOC);
         $e_id = $fetch_2['ID'];
@@ -276,7 +287,7 @@ if($type == 'fetch'){
         if($fetch['Permissions']=='supervizor'){
 
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
-                if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
+                if($fetch['p_Email'] == $email_brigadnici){
                     $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
@@ -284,7 +295,7 @@ if($type == 'fetch'){
                 }
             }
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
-                if($fetch['p_Email'] == "brigadnici@brigadnici.sk"){
+                if($fetch['p_Email'] == $email_brigadnici){
                     $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
