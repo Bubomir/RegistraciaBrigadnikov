@@ -481,7 +481,9 @@
             $('#numberOfChange').hide();
             $("input[type=radio]").click(function(){
                 if(document.getElementById('exampleSwitch2').checked) {
-                     $('#numberOfChange').hide().slideDown(500);
+                     $('#numberOfChange').slideDown(500, function(){
+                          $('#numberOfChange').show;
+                     })
                         $('input[name=numberOfChange]').attr('required', true);
                 }else{
                     $('#numberOfChange').slideUp(500, function(){
@@ -502,7 +504,8 @@
                         'surname': $('input[name=surname]').val(),
                         'email': $('input[name=email]').val(),
                         'mobile_number': $('input[name=mobile_number]').val(),
-                        'permissions': $('input[name=permissions]:checked').val()
+                        'permissions': $('input[name=permissions]:checked').val(),
+                        'change_number': $('input[name=numberOfChange]:checked').val()
                     }
 
                     //console.log('test',formData);
@@ -523,6 +526,9 @@
                     if ($isRegistered == 1) {
                         $('.alert-success').hide().slideDown(500);
                         $('#registration_form').trigger('reset');
+                         $('#numberOfChange').slideUp(500, function(){
+                    $('#numberOfChange').hide();
+                });
                     } else if ($isRegistered == 2) {
                         $('.alert').hide().slideDown(500);
                         element.innerHTML = "Uživatel s tímto e-mailem již existuje!!";
