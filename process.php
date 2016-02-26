@@ -41,15 +41,23 @@ if($type == 'session_check'){
 if($type == 'duplicity_ceck'){
     $start_date = $_POST['startDate'];
     $email_hash = $_POST['emailHash'];
-    $e_email;
+
+    $e_email = array();
     $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='supervizor'");
     while($fetch = mysqli_fetch_array($result,MYSQLI_ASSOC)){
          if ($email_hash == md5($fetch['Email'])){
                 $e_email = $fetch['Email'];
         }
      }
-    $query = mysqli_query($db, "SELECT ID FROM $table_calendar WHERE p_Email='$e_email' AND Start_Date='$start_date'");
-    $count = mysqli_num_rows($query);
+
+    if($e_email=='brigadnici@brigadnici.sk'){
+        $query = mysqli_query($db, "SELECT ID FROM $table_calendar WHERE p_Email='$e_email' AND Start_Date='$start_date'");
+        $count = mysqli_num_rows($query);
+    }
+    else{
+        $query = mysqli_query($db, "SELECT ID FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email WHERE Permissions='supervizor' AND Start_Date='$start_date'");
+        $count = mysqli_num_rows($query);
+    }
 
         if($count == 0){
             echo 'failed';
@@ -272,7 +280,7 @@ if($type == 'fetch'){
                     $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  R '.$fetch['First_Name'].' '.$fetch['Surname'];
+                    $e['title'] =  '  R '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
@@ -280,7 +288,7 @@ if($type == 'fetch'){
                     $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  N '.$fetch['First_Name'].' '.$fetch['Surname'];
+                    $e['title'] =  '  N '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
 
