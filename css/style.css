@@ -32,10 +32,11 @@
 
 #popup-info{
     height: 100px;
-    width: 200px;
+    width: 250px;
     background: white;
     position:absolute;
     z-index:10001;
+     box-shadow: 4px 4px 10px #333;
 }
 
 #popup-info ul {
