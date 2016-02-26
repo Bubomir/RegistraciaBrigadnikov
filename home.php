@@ -213,7 +213,7 @@
 
 
 
-        <div class="reveal medium" id="animatedModal10" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
+        <div class="tiny reveal" id="animatedModal10" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
             <div class="panel custom color">
                 <div class="row">
                     <div class="large-10 medium-9 small-8 columns logo-header text-left">
@@ -295,11 +295,12 @@
                                 <g><path  d="M69.328,17.517H30.567v0.01c-1.331,0.056-2.396,1.144-2.396,2.49v59.967c0,1.345,1.065,2.433,2.396,2.489v0.011h38.761c1.38,0,2.5-1.119,2.5-2.5V20.017C71.828,18.636,70.709,17.517,69.328,17.517z M50.059,79.9c-1.353,0-2.45-1.097-2.45-2.45c0-1.354,1.097-2.451,2.45-2.451s2.45,1.097,2.45,2.451C52.509,78.803,51.412,79.9,50.059,79.9zM61.872,72.505H38.128V27.473h23.743V72.505z"/></g>
                                                 </span>
                         </div>
+
                     </div>
                     <div class="row large-up-3 medium-up-3 small-up-3 text-center">
                         <div class="column">
                             <p>Správca</p>
-                            <div class="switch">
+                            <div class="switch small">
                                 <input class="switch-input" id="exampleSwitch" type="radio" name="permissions" value="admin" required>
                                 <label class="switch-paddle" for="exampleSwitch">
                                     <span class="show-for-sr">Správca</span>
@@ -308,7 +309,7 @@
                         </div>
                         <div class="column">
                             <p>Supervízor</p>
-                            <div class="switch">
+                            <div class="switch small">
                                 <input class="switch-input" id="exampleSwitch2" type="radio" name="permissions" value="supervizor" required>
                                 <label class="switch-paddle" for="exampleSwitch2">
                                     <span class="show-for-sr">Supervízor</span>
@@ -317,7 +318,7 @@
                         </div>
                         <div class="columns">
                             <p>Brigádnik</p>
-                            <div class="switch">
+                            <div class="switch small">
                                 <input class="switch-input" id="exampleSwitch3" type="radio" name="permissions" value="brigadnik" required>
                                 <label class="switch-paddle" for="exampleSwitch3">
                                     <span class="show-for-sr">Brigádnik</span>
@@ -325,6 +326,44 @@
                             </div>
                         </div>
                     </div>
+                    <div id="numberOfChange" class="row large-up-4 medium-up-4 small-up-4 text-center">
+                    <div class="column">
+                        <p>1</p>
+                        <div class="switch tiny">
+                            <input class="switch-input" id="changeNumberOne" type="radio" value="1" name="numberOfChange">
+                            <label class="switch-paddle" for="changeNumberOne">
+                                <span class="show-for-sr">1</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <p>2</p>
+                        <div class="switch tiny">
+                            <input class="switch-input" id="changeNumberTwo" type="radio" value="2" name="numberOfChange">
+                            <label class="switch-paddle" for="changeNumberTwo">
+                                <span class="show-for-sr">2</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <p>3</p>
+                        <div class="switch tiny">
+                            <input class="switch-input" id="changeNumberThree" type="radio" value="3" name="numberOfChange">
+                            <label class="switch-paddle" for="changeNumberThree">
+                                <span class="show-for-sr">3</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <p>4</p>
+                        <div class="switch tiny">
+                            <input class="switch-input" id="changeNumberFour" type="radio" value="4" name="numberOfChange">
+                            <label class="switch-paddle" for="changeNumberFour">
+                                <span class="show-for-sr">4</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                     <div class="alert-free-space">
                         <div class="alert-success">
                             <div class="row">
@@ -439,6 +478,18 @@
         <script src="js/app.js"></script>
         <script src="js/clearForm.js"></script>
         <script>
+            $('#numberOfChange').hide();
+            $("input[type=radio]").click(function(){
+                if(document.getElementById('exampleSwitch2').checked) {
+                     $('#numberOfChange').hide().slideDown(500);
+                        $('input[name=numberOfChange]').attr('required', true);
+                }else{
+                    $('#numberOfChange').slideUp(500, function(){
+                        $('#numberOfChange').hide();
+                    });
+                     $('#numberOfChange').removeAttr('required', false);
+                }
+            });
 
             $(document).ready(function () {
                 $('.alert-success').hide();
@@ -487,6 +538,7 @@
             $('button[name=btn-close]').click(function(){
                 $('.alert-success').hide();
                 $('.alert').hide();
+                $('#numberOfChange').hide();
             });
         </script>
         <script src='js/calendar/moment.min.js'></script>
