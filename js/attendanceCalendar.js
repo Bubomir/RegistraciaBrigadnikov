@@ -327,6 +327,7 @@ $(document).ready(function () {
 
             //var tooltip = document.getElementById('popup-info');
             //var tooltip = $('#phantom-popup').load('template/popup_info.php');
+            if(permission == 'brigadnik'){
             $("body").prepend(tooltip);
             document.getElementById('popup-name').innerHTML = name;
             document.getElementById('popup-email').innerHTML = email;
@@ -340,6 +341,7 @@ $(document).ready(function () {
                 $('#popup-info').css('top', e.pageY + 10);
                 $('#popup-info').css('left', e.pageX + 20);
             });
+            }
         },
 
 
