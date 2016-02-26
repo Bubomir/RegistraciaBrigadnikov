@@ -189,7 +189,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button style="margin-top: 50px;">Oznámení</button>
+                            <button class="success button register custom" style="margin-top: 50px;">Oznámení</button>
                         </div>
                     </div>
 
