@@ -333,6 +333,15 @@ if($type == 'mouseOver'){
     array_push($event_array, $e);
     echo json_encode($event_array);
 }
+if($type == 'checkingForDelete'){
+    $eventID = $_POST['eventID'];
+    $query = mysqli_query($db, "SELECT * FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$eventID'");
+    $fetch=mysqli_fetch_array($query);
+
+
+    echo $fetch['Permissions'];
+
+ }
 
 /*
 if($type == 'resetdate')
