@@ -388,8 +388,24 @@ if($type == 'addNotification'){
     else{
         echo 'failed';
     }
+}
 
+if($type == 'canDelete'){
+    $start_date = $_POST['start_date'];
+    $eventID = $_POST['event_id'];
 
+    $result = mysqli_query($db, "SELECT * FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID = '$eventID' AND p_Email != '$email_brigadnici' AND Permissions = 'supervizor' ");
+    $count = mysqli_num_rows($result);
+
+    if($count == 1){
+        $result_2 = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE Start_Date = '$start_date' AND ID != '$eventID'");
+        $count_2 = mysqli_num_rows($result_2);
+    }
+    else{
+        $count_2 = 0;
+    }
+
+    echo $count_2;
 }
 
 /*

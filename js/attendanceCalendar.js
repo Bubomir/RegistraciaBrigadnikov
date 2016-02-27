@@ -1,7 +1,7 @@
 var $,
     moment,
     swal;
-var    tooltip = $('#popup-info').detach();
+var tooltip = $('#popup-info').detach();
 
 var loggedEmail = $.ajax({
     type: 'POST',
@@ -95,53 +95,73 @@ $(document).ready(function () {
 
     function deleteEvent(event, accountPermmision) {
 
-        swal({
-            title: "Smazat?",
-            text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "orange",
-            confirmButtonText: "Smazat",
-            cancelButtonText: "Zrušit",
-            closeOnConfirm: false
-        },
-            function (isConfirm) {
-                if (isConfirm) {
-                    //CREATE NOTIFICATION
-                    addNotification(event.id, 'odhlasenie');
+        /*TEST*/
+        return_response = $.ajax({
+            url: 'process.php',
+            data: 'type=canDelete&start_date=' + event.start.format() + '&event_id=' + event.id,
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            success: function (response) {
+                return response;
+            },
+            error: function (e) {
+                window.console.log(e.responseText);
+            }
+        });
 
-                    return_response = $.ajax({
-                        url: 'process.php',
-                        data: 'type=remove&event_id=' + event.id + '&permissionAcount=' + accountPermmision,
-                        type: 'POST',
-                        dataType: 'json',
-                        async: false,
-                        success: function (response) {
-                            return response;
-                        },
-                        error: function (e) {
-                            window.console.log(e.responseText);
-                        }
-                    });
+        if (return_response.responseText == 0) {
 
+            swal({
+                    title: "Smazat?",
+                    text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "orange",
+                    confirmButtonText: "Smazat",
+                    cancelButtonText: "Zrušit",
+                    closeOnConfirm: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        //CREATE NOTIFICATION
+                        addNotification(event.id, 'odhlasenie');
 
-                    if ('success' === return_response.responseText) {
-                        swal({
-                            title: "Smazáno",
-                            text: "Tato změna byla vymazána.",
-                            type: "success",
-                            confirmButtonColor: "#005200"
+                        return_response = $.ajax({
+                            url: 'process.php',
+                            data: 'type=remove&event_id=' + event.id + '&permissionAcount=' + accountPermmision,
+                            type: 'POST',
+                            dataType: 'json',
+                            async: false,
+                            success: function (response) {
+                                return response;
+                            },
+                            error: function (e) {
+                                window.console.log(e.responseText);
+                            }
                         });
 
-                        refreshEvents();
 
-                    } else {
-                        window.alert('chyba pri zmazavani');
+                        if ('success' === return_response.responseText) {
+                            swal({
+                                title: "Smazáno",
+                                text: "Tato změna byla vymazána.",
+                                type: "success",
+                                confirmButtonColor: "#005200"
+                            });
+
+                            refreshEvents();
+
+                        } else {
+                            window.alert('chyba pri zmazavani');
+                        }
                     }
                 }
-            }
 
             );
+        } else {
+            window.alert('najprv treba vymazat eventy');
+        }
     }
     /**********************************************/
     /*************** ADD EVENTS********************/
@@ -219,7 +239,7 @@ $(document).ready(function () {
 
 
                         });
-                newEventID = JSON.parse(return_response.responseText).eventID;
+                    newEventID = JSON.parse(return_response.responseText).eventID;
 
 
                     addNotification(newEventID, 'prihlasenie');
@@ -346,16 +366,16 @@ $(document).ready(function () {
 
         eventMouseover: function (event) {
             var mouseOverResponse = $.ajax({
-                type: 'POST',
-                url: 'process.php',
-                data: 'type=mouseOver&eventID=' + event.id,
-                dataType: 'json',
-                async: false,
-                done: function (response) {
+                    type: 'POST',
+                    url: 'process.php',
+                    data: 'type=mouseOver&eventID=' + event.id,
+                    dataType: 'json',
+                    async: false,
+                    done: function (response) {
 
-                    return response;
-                }
-            }),
+                        return response;
+                    }
+                }),
 
                 mouseOver = JSON.parse(mouseOverResponse.responseText),
                 name = mouseOver[0].Name,
@@ -555,15 +575,15 @@ $(document).ready(function () {
                         if (check_interval_time.responseText > 5) {
 
                             swal({
-                                title: "Odhlásit?",
-                                text: "Opravdu se chcete odhlásit z této změny?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "orange",
-                                confirmButtonText: "Odhlásit",
-                                cancelButtonText: "Zrušit",
-                                closeOnConfirm: false
-                            },
+                                    title: "Odhlásit?",
+                                    text: "Opravdu se chcete odhlásit z této změny?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "orange",
+                                    confirmButtonText: "Odhlásit",
+                                    cancelButtonText: "Zrušit",
+                                    closeOnConfirm: false
+                                },
                                 function () {
                                     swal("Deleted!", "Your imaginary file has been deleted.", "success");
                                     swal({
@@ -587,15 +607,15 @@ $(document).ready(function () {
                         if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
 
                             swal({
-                                title: "Přihlásit?",
-                                text: "Opravdu se chcete přihlásit na tuto změnu?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "orange",
-                                confirmButtonText: "Přihlásit",
-                                cancelButtonText: "Zrušit",
-                                closeOnConfirm: false
-                            },
+                                    title: "Přihlásit?",
+                                    text: "Opravdu se chcete přihlásit na tuto změnu?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "orange",
+                                    confirmButtonText: "Přihlásit",
+                                    cancelButtonText: "Zrušit",
+                                    closeOnConfirm: false
+                                },
                                 function () {
                                     swal({
                                         title: "Přihlášen",
