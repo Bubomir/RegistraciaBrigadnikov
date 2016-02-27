@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once 'dbconnect.php';
+    include 'dbconnect.php';
 
     $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE User_ID=".$_SESSION['user']);
     $userRow=mysqli_fetch_array($result);
@@ -8,6 +8,8 @@
     if(!isset($_SESSION['user'])){
          header("Location: index.php");
     }
+
+
 
     mysqli_close($db);
 ?>
@@ -24,7 +26,7 @@
         <link href="css/fullcalendar.css" rel='stylesheet' />
         <link rel='stylesheet' href='css/fullcalendar.print.css' media='print' />
         <link href="css/style.css" rel='stylesheet' />
-        <link href="css/sweetalert.css" rel="stylesheet"/>
+        <link href="css/sweetalert.css" rel="stylesheet" />
         <script src="js/modernizr.js"></script>
     </head>
 
@@ -113,7 +115,7 @@
                                              while ($row = mysqli_fetch_assoc($result)){
                                                  if($row['First_Name']!="Brigádnici"){
                                                      if($userRow['Permissions'] == 'admin'){
-                                                      $meno = $row['First_Name'] . " ". $row['Surname'];
+                                                      $meno = $row['Change_Number'].' '.$row['Surname'].' '.$row['First_Name'];
                                                      echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'darkorange'>$meno</div>";
                                                      }
                                                  }
@@ -173,7 +175,7 @@
                                                 while ($row = mysqli_fetch_assoc($result)){
                                                     if($row['First_Name']!="Brigádnici"){
                                                         if($userRow['Permissions'] == 'admin'){
-                                                        $meno = $row['First_Name'] . " ". $row['Surname'];
+                                                        $meno =  $row['Change_Number'].' '.$row['Surname'].' '.$row['First_Name'];
                                                         echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'black'>$meno</div>";
                                                         }
                                                     }
@@ -286,7 +288,7 @@
                                 </g>
                         </span>
                         </div>
-                             <div class="small-10 medium-10 large-10 columns">
+                        <div class="small-10 medium-10 large-10 columns">
                             <input type="text" onblur="if (this.placeholder == '') {this.placeholder = 'Telefonní číslo';}" onfocus="this.placeholder = '';" placeholder="Telefonní číslo" name="mobile_number" required/>
                         </div>
                         <div class="small-2 medium-2 large-2 columns">
@@ -328,43 +330,43 @@
                         </div>
                     </div>
                     <div id="numberOfChange" class="row large-up-4 medium-up-4 small-up-4 text-center">
-                    <div class="column">
-                        <p>1</p>
-                        <div class="switch tiny">
-                            <input class="switch-input" id="changeNumberOne" type="radio" value="1" name="numberOfChange">
-                            <label class="switch-paddle" for="changeNumberOne">
-                                <span class="show-for-sr">1</span>
-                            </label>
+                        <div class="column">
+                            <p>1</p>
+                            <div class="switch tiny">
+                                <input class="switch-input" id="changeNumberOne" type="radio" value="1" name="numberOfChange">
+                                <label class="switch-paddle" for="changeNumberOne">
+                                    <span class="show-for-sr">1</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <p>2</p>
+                            <div class="switch tiny">
+                                <input class="switch-input" id="changeNumberTwo" type="radio" value="2" name="numberOfChange">
+                                <label class="switch-paddle" for="changeNumberTwo">
+                                    <span class="show-for-sr">2</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <p>3</p>
+                            <div class="switch tiny">
+                                <input class="switch-input" id="changeNumberThree" type="radio" value="3" name="numberOfChange">
+                                <label class="switch-paddle" for="changeNumberThree">
+                                    <span class="show-for-sr">3</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <p>4</p>
+                            <div class="switch tiny">
+                                <input class="switch-input" id="changeNumberFour" type="radio" value="4" name="numberOfChange">
+                                <label class="switch-paddle" for="changeNumberFour">
+                                    <span class="show-for-sr">4</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="column">
-                        <p>2</p>
-                        <div class="switch tiny">
-                            <input class="switch-input" id="changeNumberTwo" type="radio" value="2" name="numberOfChange">
-                            <label class="switch-paddle" for="changeNumberTwo">
-                                <span class="show-for-sr">2</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <p>3</p>
-                        <div class="switch tiny">
-                            <input class="switch-input" id="changeNumberThree" type="radio" value="3" name="numberOfChange">
-                            <label class="switch-paddle" for="changeNumberThree">
-                                <span class="show-for-sr">3</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <p>4</p>
-                        <div class="switch tiny">
-                            <input class="switch-input" id="changeNumberFour" type="radio" value="4" name="numberOfChange">
-                            <label class="switch-paddle" for="changeNumberFour">
-                                <span class="show-for-sr">4</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
                     <div class="alert-free-space">
                         <div class="alert-success">
                             <div class="row">
@@ -422,29 +424,56 @@
         </div>
 
         <div class="tiny reveal" id="modal-notifications" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
-        <div class="panel notifications box">
-            <div class="panel scroll">
-                <?php
-                    $test = true;
-                    include('template/notifications_alert.php');
-                    include('template/notifications_success.php');
+            <div class="panel notifications box">
+                <div class="panel scroll">
+                    <?php
+                    $activity = 'all';
+                    $interval = 'all';
+                    //sort by activity and time interval
+                     if($activity == 'all' && $interval == 'all'){
+                         $result_notification_KTO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KTO ");
+                         $result_notification_KOMU = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOMU ");
+                         $result_notification_KOHO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOHO  ");
+                     }
+                    if($activity != 'all' && $interval == 'all'){
+                        $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE Activity='$activity' ");
+                    }
+                    if($activity != 'all' && $interval != 'all'){
+                        $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE Activity='$activity' AND TimeStamp = '$interval'");
+                    }
+                    if($activity == 'all' && $interval != 'all'){
+                        $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE TimeStamp = '$interval'");
+                    }
+
+
+                    $row_notification_KOMU = mysqli_fetch_assoc($result_notification_KOMU);
+                    $row_notification_KOHO = mysqli_fetch_assoc($result_notification_KOHO);
+
+                  while ($row_notification_KTO = mysqli_fetch_assoc($result_notification_KTO)){
+                       if ($row_notification_KTO['Activity'] == 'prihlasenie'){
+                            include('template/notifications_success.php');
+                       }
+                       else{
+                           include('template/notifications_alert.php');
+                       }
+                   }
                 ?>
-            </div>
-        </div>
-        <div class="panel notifications box">
-            <div class="row">
-                <div class="large-4 large-centered">
-                    <div class="button custom" data-close>Zavriet</div>
                 </div>
             </div>
+            <div class="panel notifications box">
+                <div class="row">
+                    <div class="large-4 large-centered">
+                        <div class="button custom" data-close>Zavriet</div>
+                    </div>
+                </div>
 
+            </div>
         </div>
-    </div>
-                    <div id="popup-info">
-    <ul>
-        <li>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-                <path d="M81.195,31.517c1.128,0,2.042-0.897,2.042-1.996V23.61c0-1.102-0.914-2-2.042-2h-4.586v-1.603
+        <div id="popup-info">
+            <ul>
+                <li>
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                        <path d="M81.195,31.517c1.128,0,2.042-0.897,2.042-1.996V23.61c0-1.102-0.914-2-2.042-2h-4.586v-1.603
 	c0-1.771-1.436-3.207-3.206-3.207H19.97c-1.771,0-3.206,1.435-3.206,3.207v59.986c0,1.766,1.436,3.206,3.206,3.206h53.432
 	c1.77,0,3.206-1.44,3.206-3.206v-1.67h4.586c1.128,0,2.042-0.894,2.042-1.996v-5.912c0-1.102-0.914-2-2.042-2h-4.586v-5.699h4.586
 	c1.128,0,2.042-0.894,2.042-1.991v-5.912c0-1.102-0.914-2-2.042-2h-4.586v-5.699h4.586c1.128,0,2.042-0.897,2.042-1.996v-5.912
@@ -452,36 +481,42 @@
 	c-0.992,0-1.795-0.935-1.795-2.088v-8.604c0-0.856,0.447-1.625,1.127-1.941l10.9-5.077c-2.583-1.557-4.351-4.689-4.351-8.304
 	c0-5.168,3.599-9.356,8.041-9.356c4.443,0,8.042,4.188,8.042,9.356c0,3.562-1.708,6.655-4.226,8.238l10.789,5.148
 	c0.674,0.325,1.115,1.085,1.115,1.937V63.681z" />
-            </svg><div id="popup-name"></div></li>
-        <li>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-                <g>
-                    <path d="M85.944,20.189H14.056c-1.41,0-2.556,1.147-2.556,2.557v5.144c0,0.237,0.257,0.509,0.467,0.619
+                    </svg>
+                    <div id="popup-name"></div>
+                </li>
+                <li>
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                        <g>
+                            <path d="M85.944,20.189H14.056c-1.41,0-2.556,1.147-2.556,2.557v5.144c0,0.237,0.257,0.509,0.467,0.619
 		l37.786,21.583c0.098,0.057,0.208,0.083,0.318,0.083c0.112,0,0.225-0.029,0.324-0.088L87.039,28.53
 		c0.206-0.115,0.752-0.419,0.957-0.559c0.248-0.169,0.504-0.322,0.504-0.625v-4.601C88.5,21.336,87.354,20.189,85.944,20.189z" />
-                    <path d="M88.181,35.646c-0.2-0.116-0.444-0.111-0.645,0.004L66.799,47.851c-0.166,0.096-0.281,0.266-0.309,0.458
+                            <path d="M88.181,35.646c-0.2-0.116-0.444-0.111-0.645,0.004L66.799,47.851c-0.166,0.096-0.281,0.266-0.309,0.458
 		c-0.025,0.191,0.035,0.386,0.164,0.527l20.74,22.357c0.123,0.133,0.291,0.204,0.467,0.204c0.079,0,0.159-0.015,0.234-0.043
 		c0.245-0.097,0.405-0.332,0.405-0.596V36.201C88.5,35.971,88.379,35.76,88.181,35.646z" />
-                    <path d="M60.823,51.948c-0.204-0.221-0.532-0.27-0.791-0.118l-8.312,4.891c-0.976,0.574-2.226,0.579-3.208,0.021
+                            <path d="M60.823,51.948c-0.204-0.221-0.532-0.27-0.791-0.118l-8.312,4.891c-0.976,0.574-2.226,0.579-3.208,0.021
 		l-7.315-4.179c-0.242-0.137-0.547-0.104-0.751,0.086L12.668,78.415c-0.148,0.138-0.222,0.337-0.2,0.538
 		c0.022,0.201,0.139,0.381,0.314,0.482c0.432,0.254,0.849,0.375,1.273,0.375h71.153c0.255,0,0.485-0.151,0.585-0.385
 		c0.102-0.232,0.056-0.503-0.118-0.689L60.823,51.948z" />
-                    <path d="M34.334,49.601c0.15-0.137,0.225-0.339,0.203-0.54c-0.022-0.202-0.142-0.381-0.318-0.483L12.453,36.146
+                            <path d="M34.334,49.601c0.15-0.137,0.225-0.339,0.203-0.54c-0.022-0.202-0.142-0.381-0.318-0.483L12.453,36.146
 		c-0.194-0.112-0.439-0.11-0.637,0.004c-0.196,0.114-0.316,0.325-0.316,0.552v32.62c0,0.253,0.15,0.483,0.382,0.584
 		c0.082,0.037,0.169,0.055,0.257,0.055c0.157,0,0.314-0.059,0.434-0.171L34.334,49.601z" />
-                </g>
-            </svg><div id="popup-email"></div></li>
-        <li>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-                <g>
-                    <path d="M69.328,17.517H30.567v0.01c-1.331,0.056-2.396,1.144-2.396,2.49v59.967c0,1.345,1.065,2.433,2.396,2.489
+                        </g>
+                    </svg>
+                    <div id="popup-email"></div>
+                </li>
+                <li>
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                        <g>
+                            <path d="M69.328,17.517H30.567v0.01c-1.331,0.056-2.396,1.144-2.396,2.49v59.967c0,1.345,1.065,2.433,2.396,2.489
 		v0.011h38.761c1.38,0,2.5-1.119,2.5-2.5V20.017C71.828,18.636,70.709,17.517,69.328,17.517z M50.059,79.9
 		c-1.353,0-2.45-1.097-2.45-2.45c0-1.354,1.097-2.451,2.45-2.451s2.45,1.097,2.45,2.451C52.509,78.803,51.412,79.9,50.059,79.9z
 		 M61.872,72.505H38.128V27.473h23.743V72.505z" />
-                </g>
-            </svg><div id="popup-number"></div></li>
-    </ul>
-</div>
+                        </g>
+                    </svg>
+                    <div id="popup-number"></div>
+                </li>
+            </ul>
+        </div>
         <footer>
             <div class="row">
                 <div class="large-12 columns">
@@ -502,19 +537,19 @@
             $('.alert-success').hide();
             $('.alert').hide();
             $('#numberOfChange').hide();
-            $("input[type=radio]").click(function(){
-                if(document.getElementById('exampleSwitch2').checked) {
-                     $('#numberOfChange').slideDown(500, function(){
-                          $('#numberOfChange').show;
-                     })
+            $("input[type=radio]").click(function () {
+                if (document.getElementById('exampleSwitch2').checked) {
+                    $('#numberOfChange').slideDown(500, function () {
+                        $('#numberOfChange').show;
+                    })
                     $('input[name=numberOfChange]').attr('required', true);
                     numberOfChange = $('input[name=numberOfChange]:checked').val();
-                }else{
-                    $('#numberOfChange').slideUp(500, function(){
+                } else {
+                    $('#numberOfChange').slideUp(500, function () {
                         $('#numberOfChange').hide();
                     });
-                     $('input[name=numberOfChange]').removeAttr('required', false);
-                    }
+                    $('input[name=numberOfChange]').removeAttr('required', false);
+                }
             });
 
             $(document).ready(function () {
@@ -522,8 +557,8 @@
 
 
                 $('#registration_form').submit(function (event) {
-                $('.alert-success').hide();
-                $('.alert').hide();
+                    $('.alert-success').hide();
+                    $('.alert').hide();
 
 
                     var formData = {
@@ -554,12 +589,12 @@
                         document.getElementById('alert-message-success').innerHTML = "Registrace byla úspešná";
                         $('.alert-success').hide().slideDown(500);
                         $('#registration_form').trigger('reset');
-                         $('#numberOfChange').slideUp(500, function(){
-                    $('#numberOfChange').hide();
-                });
+                        $('#numberOfChange').slideUp(500, function () {
+                            $('#numberOfChange').hide();
+                        });
                     } else if ($isRegistered == 2) {
                         $('.alert').hide().slideDown(500);
-                       document.getElementById('alert-message').innerHTML = "Uživatel s tímto e-mailem již existuje!!";
+                        document.getElementById('alert-message').innerHTML = "Uživatel s tímto e-mailem již existuje!!";
                     } else if ($isRegistered == 3) {
                         $('.alert').hide().slideDown(500);
                     }
@@ -569,7 +604,7 @@
             });
         </script>
         <script>
-            $('button[name=btn-close]').click(function(){
+            $('button[name=btn-close]').click(function () {
                 $('.alert-success').hide();
                 $('.alert').hide();
                 $('#numberOfChange').hide();

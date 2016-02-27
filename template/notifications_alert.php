@@ -13,7 +13,7 @@
 
         </div>
         <div class="large-11 columns">
-            <p>Majster N prihlásil brigádika na rannú zmenu majstrovi f na tento dátm.</p>
+            <p><?php echo ("Majster ".$row_notification_KTO['Surname'].' '.$row_notification_KTO['First_Name']." prihlásil ".$row_notification_KOHO['Surname'].' '.$row_notification_KOHO['First_Name']." na rannú zmenu majstrovi  na tento dátm. "); ?></p>
         </div>
         <div class="large-1 columns">
             <svg version="1.1" id="time-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -33,7 +33,7 @@
         </div>
         <div class="large-11 columns ">
             <div class="clock-notifications">
-                Zmena bola vykonaná o tomto čase
+                <?php echo $row_notification_KTO['TimeStamp']; ?>
             </div>
         </div>
     </div>

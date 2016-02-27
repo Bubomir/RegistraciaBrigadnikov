@@ -286,7 +286,7 @@ if($type == 'fetch'){
                     $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  R '.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
+                    $e['title'] =  '  R/'.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
@@ -294,7 +294,7 @@ if($type == 'fetch'){
                     $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  N '.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
+                    $e['title'] =  '  N/'.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
 
@@ -430,6 +430,7 @@ if($type == 'canAdd'){
 
     echo $count;
 }
+
 
 /*
 if($type == 'resetdate')
