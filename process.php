@@ -394,7 +394,7 @@ if($type == 'canDelete'){
     $start_date = $_POST['start_date'];
     $eventID = $_POST['event_id'];
 
-    $result = mysqli_query($db, "SELECT * FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID = '$eventID' AND p_Email != '$email_brigadnici' AND Permissions = 'supervizor' ");
+    $result = mysqli_query($db, "SELECT ID FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID = '$eventID' AND p_Email != '$email_brigadnici' AND Permissions = 'supervizor' ");
     $count = mysqli_num_rows($result);
 
     if($count == 1){
@@ -406,6 +406,29 @@ if($type == 'canDelete'){
     }
 
     echo $count_2;
+}
+if($type == 'canAdd'){
+    $start_date = $_POST['start_date'];
+    $emailHash = $_POST['emailHash'];
+    $email = null;
+
+    $result = mysqli_query($db, "SELECT Email FROM $table_employees WHERE Permissions='supervizor'");
+    while($fetch = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+         if ($emailHash == md5($fetch['Email'])){
+                $email = $fetch['Email'];
+        }
+     }
+
+    if($email == $email_brigadnici){
+        $result = mysqli_query($db, "SELECT ID FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date='$start_date' AND p_Email != '$email_brigadnici' AND Permissions = 'supervizor' ");
+        $count = mysqli_num_rows($result);
+    }
+    else{
+        $count = 1;
+    }
+
+
+    echo $count;
 }
 
 /*

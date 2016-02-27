@@ -95,7 +95,7 @@ $(document).ready(function () {
 
     function deleteEvent(event, accountPermmision) {
 
-        /*TEST*/
+        /*Check if can be master delete*/
         return_response = $.ajax({
             url: 'process.php',
             data: 'type=canDelete&start_date=' + event.start.format() + '&event_id=' + event.id,
@@ -169,9 +169,10 @@ $(document).ready(function () {
 
     function eventAdd(event, capacity) {
 
+        /*check if can be add brig event*/
         var return_response = $.ajax({
             url: 'process.php',
-            data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
+            data: 'type=canAdd&start_date=' + event.start.format() + '&emailHash=' + event.description,
             type: 'POST',
             dataType: 'json',
             async: false,
@@ -181,10 +182,29 @@ $(document).ready(function () {
             error: function (e) {
                 window.console.log(e.responseText);
             }
-
         });
 
-        refreshEvents();
+        if (return_response.responseText == 1) {
+            var return_response = $.ajax({
+                url: 'process.php',
+                data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                success: function (response) {
+                    return response;
+                },
+                error: function (e) {
+                    window.console.log(e.responseText);
+                }
+
+            });
+
+            refreshEvents();
+        }
+        else{
+            window.alert("najprv pridaj majstra");
+        }
     }
 
 
