@@ -479,26 +479,33 @@
         <script src="js/app.js"></script>
         <script src="js/clearForm.js"></script>
         <script>
+            var help = 0;
+            $('.alert-success').hide();
+            $('.alert').hide();
             $('#numberOfChange').hide();
             $("input[type=radio]").click(function(){
                 if(document.getElementById('exampleSwitch2').checked) {
                      $('#numberOfChange').slideDown(500, function(){
                           $('#numberOfChange').show;
                      })
-                        $('input[name=numberOfChange]').attr('required', true);
+                    $('input[name=numberOfChange]').attr('required', true);
+                    help = $('input[name=numberOfChange]:checked').val();
                 }else{
                     $('#numberOfChange').slideUp(500, function(){
                         $('#numberOfChange').hide();
                     });
-                     $('#numberOfChange').removeAttr('required', false);
-                }
+                     $('input[name=numberOfChange]').removeAttr('required', false);
+                    }
             });
 
             $(document).ready(function () {
+
+
+
+                $('#registration_form').submit(function (event) {
                 $('.alert-success').hide();
                 $('.alert').hide();
-                $('#registration_form').submit(function (event) {
-                var element = document.getElementById('alert-message');
+
 
                     var formData = {
                         'first_name': $('input[name=first_name]').val(),
@@ -506,7 +513,7 @@
                         'email': $('input[name=email]').val(),
                         'mobile_number': $('input[name=mobile_number]').val(),
                         'permissions': $('input[name=permissions]:checked').val(),
-                        'change_number': $('input[name=numberOfChange]:checked').val()
+                        'change_number': help
                     }
 
                     //console.log('test',formData);
@@ -532,7 +539,7 @@
                 });
                     } else if ($isRegistered == 2) {
                         $('.alert').hide().slideDown(500);
-                        element.innerHTML = "Uživatel s tímto e-mailem již existuje!!";
+                       document.getElementById('alert-message').innerHTML = "Uživatel s tímto e-mailem již existuje!!";
                     } else if ($isRegistered == 3) {
                         $('.alert').hide().slideDown(500);
                     }
