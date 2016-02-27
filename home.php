@@ -192,6 +192,32 @@
                                 </div>
                             </div>
                             <button data-toggle="modal-notifications" class="success button register custom" style="margin-top: 50px;">Oznámení</button>
+                            <label>Status
+                        <select>
+                            <option value="apollo">Vše</option>
+                            <option value="starbuck">Přihlášení</option>
+                            <option value="hotdog">Odhlášení</option>
+                        </select>
+                    </label>
+                    <label>Rok
+                        <select id="year"></select>
+                    </label>
+                    <label>Mesiac
+                        <select>
+                            <option value="1">Leden</option>
+                            <option value="2">Únor</option>
+                            <option value="3">Březen</option>
+                            <option value="4">Duben</option>
+                            <option value="5">Květen</option>
+                            <option value="6">Červen</option>
+                            <option value="7">Červenec</option>
+                            <option value="8">Srpen</option>
+                            <option value="9">Září</option>
+                            <option value="10">Říjen</option>
+                            <option value="11">Listopad</option>
+                            <option value="12">Prosinec</option>
+                        </select>
+                    </label>
                         </div>
                     </div>
 
@@ -533,6 +559,14 @@
         <script src="js/app.js"></script>
         <script src="js/clearForm.js"></script>
         <script>
+            var start = 2010;
+        var end = new Date().getFullYear();
+        var options = "";
+        for (var year = start; year <= end; year++) {
+            options += "<option>" + year + "</option>";
+        }
+        document.getElementById("year").innerHTML = options;
+
             var numberOfChange = 0;
             $('.alert-success').hide();
             $('.alert').hide();
