@@ -44,7 +44,7 @@ $(document).ready(function () {
 
             }
         });
-
+        console.log('vdsvdv', returndata.responseText);
     }
 
 
@@ -203,7 +203,7 @@ $(document).ready(function () {
                     var emailHash = divObject[i].dataset.description,
                         eventId = divObject[i].dataset.event_id,
                         eventStartDate = divObject[i].dataset.start,
-
+                        newEventID,
                         return_response = $.ajax({
                             url: 'process.php',
                             data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
@@ -219,7 +219,10 @@ $(document).ready(function () {
 
 
                         });
-                    addNotification(eventId, 'prihlasenie');
+                newEventID = JSON.parse(return_response.responseText).eventID;
+
+
+                    addNotification(newEventID, 'prihlasenie');
                     //background Refresh events
                     refreshEvents();
                     //render list of brigadnici

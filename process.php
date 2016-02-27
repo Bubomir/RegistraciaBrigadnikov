@@ -100,7 +100,7 @@ if($type == 'new'){
 
 	}
     if($insert){
-        echo 'succesfesfijios';
+        echo 'success';
      }
     else{
         echo 'failed';
@@ -203,36 +203,30 @@ if($type == 'change_number_of_logged_in'){
                 $update = mysqli_query($db,"UPDATE $table_calendar SET Logged_In='$e_logged_in' where ID='$event_id'");
 
                 $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In) VALUES('$email','$e_start_date','$end_date','null','null')");
-
+                $lastid = mysqli_insert_id($db);
             }
-            else{
-                $update = false;
-            }
-                      
             break;
         }
             
         case -1:{
             
             //dekrementacia poctu pre prihlasenie
-           
             if((int)($interval_time->format('%a'))>5 && $e_logged_in>0){
                 $e_logged_in--;
                 $update = mysqli_query($db,"UPDATE $table_calendar SET Logged_In='$e_logged_in' WHERE ID='$event_id'");
                 $delete = mysqli_query($db,"DELETE FROM $table_calendar WHERE ID='$del_id'");
             }
-            else{
-                $update = false;
-            }
-            
             break;
         }
     }
     
-    if($update)
-		echo 'success';
-	else
-		echo 'failed';
+    if($insert || $delete){
+        $succes = array(
+            "status"=> "success",
+            "eventID"=> "$lastid"
+        );
+        echo json_encode($succes);
+    }
 }
 
 if($type == 'remove')
@@ -277,7 +271,7 @@ if($type == 'fetch'){
     $start_month = $_POST['start_month'];
     $end_month = $_POST['end_month'];
 	$events = array();
-	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date BETWEEN '$start_month' AND '$end_month'");
+	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Change_Number, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date BETWEEN '$start_month' AND '$end_month'");
 
         while($fetch = mysqli_fetch_array($query,MYSQLI_ASSOC)){
 
@@ -292,7 +286,7 @@ if($type == 'fetch'){
                     $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  R '.$fetch['Surname'].' '.$fetch['First_Name'];
+                    $e['title'] =  '  R '.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
@@ -300,7 +294,7 @@ if($type == 'fetch'){
                     $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  N '.$fetch['Surname'].' '.$fetch['First_Name'];
+                    $e['title'] =  '  N '.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
 
@@ -385,8 +379,6 @@ if($type == 'addNotification'){
             $emailKOMU = $fetch_2['p_Email'];
         }
      }
-
-    echo $emailKOMU;
 
     $insert = mysqli_query($db,"INSERT INTO $table_notification (p_Email_KTO, p_Email_KOMU, p_Email_KOHO, Activity, Start_Date, TimeStamp) VALUES('$emailKTO','$emailKOMU','$emailKOHO','$activity','$startDate','$timeStamp')");
 
