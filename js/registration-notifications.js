@@ -49,6 +49,7 @@
             });
 
 
+            //Registration starts here
             var numberOfChange = 0;
             $('.alert-success').hide();
             $('.alert').hide();
