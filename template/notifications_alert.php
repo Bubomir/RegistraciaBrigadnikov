@@ -13,7 +13,21 @@
 
         </div>
         <div class="large-11 columns">
-            <p><?php echo ("Majster ".$row_notification_KTO['Surname'].' '.$row_notification_KTO['First_Name']." prihlásil ".$row_notification_KOHO['Surname'].' '.$row_notification_KOHO['First_Name']." na rannú zmenu majstrovi  na tento dátm. "); ?></p>
+            <p>
+                <?php echo (
+                    $row_notification_KTO['Change_Number'].' '
+                    .$row_notification_KTO['Surname'].' '
+                    .$row_notification_KTO['First_Name']
+                    ." odhlasil "
+                    .$row_notification_KOHO['Surname']
+                    .' zo smeny majstra '
+                    .$row_notification_KOHO['Change_Number'].' '
+                    .$row_notification_KOHO['First_Name'].' '
+                    .$row_notification_KOMU['Surname'].' '
+                    .$row_notification_KOMU['First_Name'].' '
+                    .$row_notification_KTO['Start_Date']);
+                ?>
+            </p>
         </div>
         <div class="large-1 columns">
             <svg version="1.1" id="time-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">

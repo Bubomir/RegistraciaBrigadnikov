@@ -192,32 +192,34 @@
                                 </div>
                             </div>
                             <button data-toggle="modal-notifications" class="success button register custom" style="margin-top: 50px;">Oznámení</button>
+                            <form id="notificationFilter">
                             <label>Status
-                        <select>
-                            <option value="apollo">Vše</option>
-                            <option value="starbuck">Přihlášení</option>
-                            <option value="hotdog">Odhlášení</option>
-                        </select>
-                    </label>
-                    <label>Rok
-                        <select id="year"></select>
-                    </label>
-                    <label>Mesiac
-                        <select>
-                            <option value="1">Leden</option>
-                            <option value="2">Únor</option>
-                            <option value="3">Březen</option>
-                            <option value="4">Duben</option>
-                            <option value="5">Květen</option>
-                            <option value="6">Červen</option>
-                            <option value="7">Červenec</option>
-                            <option value="8">Srpen</option>
-                            <option value="9">Září</option>
-                            <option value="10">Říjen</option>
-                            <option value="11">Listopad</option>
-                            <option value="12">Prosinec</option>
-                        </select>
-                    </label>
+                                <select name="activity">
+                                    <option name="all" value="all">Vše</option>
+                                    <option name="log_in" value="log in">Přihlášení</option>
+                                    <option name="log_out" value="log out">Odhlášení</option>
+                                </select>
+                            </label>
+                            <label>Rok
+                                <select name="year" id="year"></select>
+                            </label>
+                            <label>Mesiac
+                                <select name="month">
+                                    <option name="01" value="1">Leden</option>
+                                    <option name="02" value="2">Únor</option>
+                                    <option name="03" value="3">Březen</option>
+                                    <option name="04" value="4">Duben</option>
+                                    <option name="05" value="5">Květen</option>
+                                    <option name="06" value="6">Červen</option>
+                                    <option name="07" value="7">Červenec</option>
+                                    <option name="08" value="8">Srpen</option>
+                                    <option name="09" value="9">Září</option>
+                                    <option name="10" value="10">Říjen</option>
+                                    <option name="11" value="11">Listopad</option>
+                                    <option name="12" value="12">Prosinec</option>
+                                </select>
+                            </label>
+                            </form>
                         </div>
                     </div>
 
@@ -459,7 +461,7 @@
                      if($activity == 'all' && $interval == 'all'){
                          $result_notification_KTO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KTO ");
                          $result_notification_KOMU = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOMU ");
-                         $result_notification_KOHO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOHO  ");
+                         $result_notification_KOHO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOHO ");
                      }
                     if($activity != 'all' && $interval == 'all'){
                         $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE Activity='$activity' ");
@@ -471,11 +473,9 @@
                         $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE TimeStamp = '$interval'");
                     }
 
-
-                    $row_notification_KOMU = mysqli_fetch_assoc($result_notification_KOMU);
-                    $row_notification_KOHO = mysqli_fetch_assoc($result_notification_KOHO);
-
                   while ($row_notification_KTO = mysqli_fetch_assoc($result_notification_KTO)){
+                      $row_notification_KOHO = mysqli_fetch_assoc($result_notification_KOHO);
+                    $row_notification_KOMU = mysqli_fetch_assoc($result_notification_KOMU);
                        if ($row_notification_KTO['Activity'] == 'prihlasenie'){
                             include('template/notifications_success.php');
                        }
@@ -560,12 +560,27 @@
         <script src="js/clearForm.js"></script>
         <script>
             var start = 2010;
-        var end = new Date().getFullYear();
-        var options = "";
-        for (var year = start; year <= end; year++) {
-            options += "<option>" + year + "</option>";
-        }
-        document.getElementById("year").innerHTML = options;
+            var end = new Date().getFullYear();
+            var currentMonth = ("0" + (new Date().getMonth() + 1));
+            var options = "";
+            for (var year = end; year >= start; year--) {
+                options += "<option value='"+year+"'>" + year + "</option>";
+            }
+
+            var sel = document.forms['notificationFilter'].elements['year'];
+
+            $('option[name="' + currentMonth + '"]').attr('selected', 'selected');
+
+            $('option[name="2010"]').attr('selected', 'selected');
+            //$("select[name='year'").find('option:selected').val();
+
+            var notificationPicker = {
+                    'year': $("select[name='year'").find('option:selected').val()
+                }
+                //PRIPRAVENE PRE AJAX
+            console.log('parsing ', sel);
+
+            document.getElementById("year").innerHTML = options;
 
             var numberOfChange = 0;
             $('.alert-success').hide();
@@ -587,8 +602,6 @@
             });
 
             $(document).ready(function () {
-
-
 
                 $('#registration_form').submit(function (event) {
                     $('.alert-success').hide();
