@@ -44,7 +44,7 @@
                     $db_tempPermission2 = explode('non-',$db_tempPermission);
 
                     //Updating a database with a new password
-                    mysqli_query($db, "UPDATE $table_employees SET Password = '$enc_pass' AND Permissions = '$db_tempPermission2[1]' WHERE Email = '$get_email'");
+                    mysqli_query($db, "UPDATE $table_employees SET Password = '$enc_pass', Permissions = '$db_tempPermission2[1]' WHERE Email = '$get_email'");
                     $isRegistered = true;
                     $alert_message = 'Vaše heslo bylo vytvořeno.';
                     include ('template/alert_message_success.php');
