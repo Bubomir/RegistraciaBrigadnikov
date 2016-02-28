@@ -3714,13 +3714,10 @@ button, .button {
   color: #FFFFFF;
   transition: background-color 300ms ease-out;
 }
-/* line 163, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
-button:hover, button:focus, .button:hover, .button:focus {
-  background-color: #ab1e29;
-}
+
 /* line 169, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button:hover, button:focus, .button:hover, .button:focus {
-  color: #FFFFFF;
+  color: #333;
 }
 /* line 225, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.secondary, .button.secondary {
@@ -3837,25 +3834,19 @@ button.round, .button.round {
 }
 /* line 242, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled, button[disabled], .button.disabled, .button[disabled] {
-  background-color: #d62633;
-  border-color: #ab1e29;
-  color: #FFFFFF;
+  background-color: #e7e7e7;
+  border-color: #b9b9b9;
+  color: #333333;
   box-shadow: none;
   cursor: default;
   opacity: 0.7;
 }
-/* line 163, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
-button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #ab1e29;
-}
+
 /* line 169, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  color: #FFFFFF;
+  color: #333333;
 }
-/* line 180, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
-button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #d62633;
-}
+
 /* line 243, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled.secondary, button[disabled].secondary, .button.disabled.secondary, .button[disabled].secondary {
   background-color: #e7e7e7;
