@@ -107,7 +107,7 @@
                                     </div>
 
                                     <div class="large-12 medium-12 small-12 columns text-center">
-                                        <div id="morning-change">
+                                        <div class="morning-change">
                                             Ranní změny
                                             <?php
                                              include 'dbconnect.php';
@@ -116,11 +116,11 @@
                                                  if($row['First_Name']!="Brigádnici"){
                                                      if($userRow['Permissions'] == 'admin'){
                                                       $meno = $row['Change_Number'].' '.$row['Surname'].' '.$row['First_Name'];
-                                                     echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'darkorange'>$meno</div>";
+                                                     echo "<div id='supervizor-event-morning' class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'darkorange'>$meno</div>";
                                                      }
                                                  }
                                                  else{
-                                                    echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'green' style='background-color: green;'>".$row['First_Name']." R</div>";
+                                                    echo "<div id='brig-button' class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'green'>".$row['First_Name']." R</div>";
                                                  }
                                              }
 
@@ -167,7 +167,7 @@
                                     </div>
 
                                     <div class="large-12 medium-12 small-12 columns text-center">
-                                        <div id="night-change">
+                                        <div class="night-change">
                                             Noční změny
                                             <?php
                                                 include 'dbconnect.php';
@@ -176,11 +176,11 @@
                                                     if($row['First_Name']!="Brigádnici"){
                                                         if($userRow['Permissions'] == 'admin'){
                                                         $meno =  $row['Change_Number'].' '.$row['Surname'].' '.$row['First_Name'];
-                                                        echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'black'>$meno</div>";
+                                                        echo "<div id='supervizor-event-night' class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'black'>$meno</div>";
                                                         }
                                                     }
                                                     else{
-                                                        echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'green' style='background-color: green;'>".$row['First_Name']." N</div>";
+                                                        echo "<div id='brig-button' class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'green'>".$row['First_Name']." N</div>";
 
                                                     }
 
@@ -454,7 +454,7 @@
         </div>
 
         <div class="tiny reveal" id="modal-notifications" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
-            <div class="panel notifications box">
+            <div id="notifications-box" class="panel notifications box">
                 <div class="panel scroll">
                     <?php include('notification.php'); ?>
                 </div>
@@ -561,11 +561,15 @@
                     }
                 });
 
-                console.log('sfes', notficationData);
+                console.log('sfes', notificationResponse.responseText);
+                $('#modal-notifications').prepend(notificationBox);
             }
 
-            // NOTIFICATION BUTTON CLICK ACTION
-            $(" #notificationButton").click(function () {
+            var notificationBox = $('#notifications-box').detach();
+            //console.log(notificationBox);
+            $("#notificationButton").click(function () {
+
+
                 var activityPick = document.getElementById("activity");
                 var activityPickUser = activity.options[activity.selectedIndex].value;
 
@@ -577,6 +581,8 @@
 
                 var interval = yearPickUser + '-' + monthPickUser;
                 clickNotification(activityPickUser, interval);
+
+
             });
 
 
