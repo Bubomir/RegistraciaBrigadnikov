@@ -164,6 +164,7 @@ $(document).ready(function () {
             );
         } else {
             window.alert('najprv treba vymazat eventy');
+            refreshEvents();
         }
     }
     /**********************************************/
@@ -389,7 +390,6 @@ $(document).ready(function () {
         eventLimit: true,
         droppable: true,
         allDaySlot: false,
-        defaultTimedEventDuration: '12:00:00',
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
         //Remove time from event
