@@ -191,38 +191,40 @@
                                     </div>
                                 </div>
                             </div>
-                            <button data-toggle="modal-notifications" class="success button register custom" style="margin-top: 50px;">Oznámení</button>
-                            <form id="notificationFilter">
-                            <label>Status
-                                <select name="activity">
-                                    <option name="all" value="all">Vše</option>
-                                    <option name="log_in" value="log in">Přihlášení</option>
-                                    <option name="log_out" value="log out">Odhlášení</option>
-                                </select>
-                            </label>
-                            <label>Rok
-                                <select name="year" id="year"></select>
-                            </label>
-                            <label>Mesiac
-                                <select name="month">
-                                    <option name="01" value="1">Leden</option>
-                                    <option name="02" value="2">Únor</option>
-                                    <option name="03" value="3">Březen</option>
-                                    <option name="04" value="4">Duben</option>
-                                    <option name="05" value="5">Květen</option>
-                                    <option name="06" value="6">Červen</option>
-                                    <option name="07" value="7">Červenec</option>
-                                    <option name="08" value="8">Srpen</option>
-                                    <option name="09" value="9">Září</option>
-                                    <option name="10" value="10">Říjen</option>
-                                    <option name="11" value="11">Listopad</option>
-                                    <option name="12" value="12">Prosinec</option>
-                                </select>
-                            </label>
-                            </form>
+                            <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" type="button" form="norificationForm" style="margin-top: 50px;">Oznámení</button>
+                            <form method="get" id="norificationForm">
+                                <label>Status
+                                    <select id="activity">
+                                        <option value="all">Vše</option>
+                                        <option value="log in">Přihlášení</option>
+                                        <option value="log out">Odhlášení</option>
+                                    </select>
+                                </label>
+                                <label>Rok
+                                    <select name="year" id="year">
+                                        <option name="01" value="rwerwe">teest</option>
+                                    </select>
+                                </label>
+                                <label>Mesiac
+                                    <select id="month">
+                                        <option name="01" value="01">Leden</option>
+                                        <option name="02" value="02">Únor</option>
+                                        <option name="03" value="03">Březen</option>
+                                        <option name="04" value="04">Duben</option>
+                                        <option name="05" value="05">Květen</option>
+                                        <option name="06" value="06">Červen</option>
+                                        <option name="07" value="07">Červenec</option>
+                                        <option name="08" value="08">Srpen</option>
+                                        <option name="09" value="09">Září</option>
+                                        <option name="10" value="10">Říjen</option>
+                                        <option name="11" value="11">Listopad</option>
+                                        <option name="12" value="12">Prosinec</option>
+                                    </select>
+                                </label>
+
                         </div>
                     </div>
-
+                    </form>
                     <?php }?>
                         <?php if($userRow['Permissions'] == 'supervizor' || $userRow['Permissions'] == 'admin'){?>
                             <div class="large-10 medium-10 small-12 columns">
@@ -475,7 +477,7 @@
 
                   while ($row_notification_KTO = mysqli_fetch_assoc($result_notification_KTO)){
                       $row_notification_KOHO = mysqli_fetch_assoc($result_notification_KOHO);
-                    $row_notification_KOMU = mysqli_fetch_assoc($result_notification_KOMU);
+                      $row_notification_KOMU = mysqli_fetch_assoc($result_notification_KOMU);
                        if ($row_notification_KTO['Activity'] == 'prihlasenie'){
                             include('template/notifications_success.php');
                        }
@@ -564,23 +566,27 @@
             var currentMonth = ("0" + (new Date().getMonth() + 1));
             var options = "";
             for (var year = end; year >= start; year--) {
-                options += "<option value='"+year+"'>" + year + "</option>";
+                options += "<option value='" + year + "'>" + year + "</option>";
             }
-
-            var sel = document.forms['notificationFilter'].elements['year'];
-
+            //pick current month
             $('option[name="' + currentMonth + '"]').attr('selected', 'selected');
 
-            $('option[name="2010"]').attr('selected', 'selected');
-            //$("select[name='year'").find('option:selected').val();
+            var activityPick = document.getElementById("activity");
+            var activityPickUser = activity.options[activity.selectedIndex].value;
 
-            var notificationPicker = {
-                    'year': $("select[name='year'").find('option:selected').val()
-                }
+            var monthPick = document.getElementById("month");
+            var monthPickUser = monthPick.options[monthPick.selectedIndex].value;
+
+            var yearPick = document.getElementById("year");
+            var yearPickUser = yearPick.options[yearPick.selectedIndex].value;
+
                 //PRIPRAVENE PRE AJAX
-            console.log('parsing ', sel);
+            console.log('parsing ', yearPickUser);
+
 
             document.getElementById("year").innerHTML = options;
+
+
 
             var numberOfChange = 0;
             $('.alert-success').hide();
