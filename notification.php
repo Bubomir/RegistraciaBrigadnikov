@@ -4,8 +4,6 @@ include_once 'dbconnect.php';
      $interval = $_POST['interval'];
      $activity = $_POST['activity'];
 
-
-
               //sort by activity and time interval
                if($activity == 'all' && $interval == 'all'){
                    $result_notification_KTO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KTO ");

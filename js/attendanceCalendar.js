@@ -110,6 +110,8 @@ $(document).ready(function () {
             }
         });
 
+    console.log('dsads', return_response.responseText);
+
         if (return_response.responseText == 0) {
 
             swal({
