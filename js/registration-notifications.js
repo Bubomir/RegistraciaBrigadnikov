@@ -69,17 +69,41 @@
                 }
             });
 
+            //zistenie práve lognutého užívateľa
+            var loggedPermissions = $.ajax({
+                type: 'POST',
+                url: 'process.php',
+                data: 'type=get_loggedPermissions',
+                async: false,
+                done: function (response) {
+                "use strict";
+                return response;
+            }
+            });
+            //Ak je supervízor schovať možnosti zvolenia práv defaulnte brigadnicke práve
+            if(loggedPermissions.responseText == 'supervizor'){
+                $('#permissionPicker').remove();
+            }
+
+            //Premenná ktorá sa napĺňa právami
             $(document).ready(function () {
                 $('#registration_form').submit(function (event) {
                     $('.alert-success').hide();
                     $('.alert').hide();
-
+                    //Premenná ktorá sa napĺňa právami
+                    var tempPerm = null;
+                    //Ak je supervízor tak môže registrovať iba brigádnikov
+                    if(loggedPermissions.responseText == 'supervizor'){
+                        tempPerm = 'non-brigadnik';
+                    }else{
+                        tempPerm = $('input[name=permissions]:checked').val();
+                    }
                     var formData = {
                         'first_name': $('input[name=first_name]').val(),
                         'surname': $('input[name=surname]').val(),
                         'email': $('input[name=email]').val(),
                         'mobile_number': $('input[name=mobile_number]').val(),
-                        'permissions': $('input[name=permissions]:checked').val(),
+                        'permissions': tempPerm,
                         'change_number': numberOfChange
                     }
 
@@ -118,6 +142,7 @@
                     // stop the form from submitting the normal way and refreshing the page
                     event.preventDefault();
                 })
+
             });
 
             $('button[name=btn-close]').click(function () {

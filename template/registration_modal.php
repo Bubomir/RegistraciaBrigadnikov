@@ -85,6 +85,7 @@
                 </div>
 
             </div>
+                <div id="permissionPicker">
             <div class="row large-up-3 medium-up-3 small-up-3 text-center">
                 <div class="column">
                     <p>Správca</p>
@@ -114,6 +115,7 @@
                     </div>
                 </div>
             </div>
+                </div>
             <div id="numberOfChange" class="row large-up-4 medium-up-4 small-up-4 text-center">
                 <div class="column">
                     <p>1</p>
