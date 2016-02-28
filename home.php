@@ -563,8 +563,7 @@
                         return response;
                     }
                 });
-                 document.getElementById("notifications-box").innerHTML = notificationResponse.responseText;
-                console.log('test ',notificationResponse.responseText);
+                document.getElementById("notifications-box").innerHTML = notificationResponse.responseText;
 
             }
             $("#notificationButton").click(function () {
@@ -579,9 +578,9 @@
                 var yearPickUser = yearPick.options[yearPick.selectedIndex].value;
 
                 var interval = yearPickUser + '-' + monthPickUser;
-                clickNotification('all', 'all');
-                //clickNotification(activityPickUser, interval);
-               // $('#notifications-box').load("notification.php");
+
+                clickNotification(activityPickUser, interval);
+
             });
 
 
