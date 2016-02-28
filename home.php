@@ -544,7 +544,7 @@
             $('option[name="' + currentMonth + '"]').attr('selected', 'selected');
 
 
-
+            //FEED NOTIFICATIoN DATA FOR RENDERING
             function clickNotification(activity, interval) {
                 var notficationData = {
                     'activity': activity,
@@ -560,9 +560,11 @@
                         return response;
                     }
                 });
+
                 console.log('sfes', notficationData);
             }
 
+            // NOTIFICATION BUTTON CLICK ACTION
             $(" #notificationButton").click(function () {
                 var activityPick = document.getElementById("activity");
                 var activityPickUser = activity.options[activity.selectedIndex].value;
