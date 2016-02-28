@@ -109,7 +109,7 @@ $(document).ready(function () {
             }
         });
 
-    console.log('dsads', return_response.responseText);
+    //console.log('dsads', return_response.responseText);
 
         if (return_response.responseText == 0) {
 
@@ -162,7 +162,12 @@ $(document).ready(function () {
 
             );
         } else {
-            window.alert('najprv treba vymazat eventy');
+            swal({
+                title: "Chyba...",
+                text: "Je potrebné odhlásiť všetkych brigádnikov a vymazať brigádnicky event!",
+                type: "error",
+                confirmButtonColor: "#d62633"
+            });
             refreshEvents();
         }
     }
@@ -241,36 +246,37 @@ $(document).ready(function () {
         for (var i = 0; i < divObject.length; i++) {
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
-                    var emailHash = divObject[i].dataset.description,
-                        eventId = divObject[i].dataset.event_id,
-                        eventStartDate = divObject[i].dataset.start,
-                        return_response = $.ajax({
-                            url: 'process.php',
-                            data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
-                            type: 'POST',
-                            dataType: 'json',
-                            async: false,
-                            success: function (response) {
-                                return response;
-                            },
-                            error: function (e) {
-                                window.console.log(e.responseText);
-                            }
-                        });
+                    var emailHash = divObject[i].dataset.description;
+                    var eventId = divObject[i].dataset.event_id;
+                    var eventStartDate = divObject[i].dataset.start;
 
+                        //console.log(divObject);
                         swal({
-                            title: "Are you sure?",
-                            text: "You will not be able to recover this imaginary file!",
+                            title: "Přihlásit?",
+                            text: "Zvolený brigádník bude přihlášen na tuto změnu.",
                             type: "warning",
                             showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Yes, delete it!",
-                            cancelButtonText: "No, cancel plx!",
+                            confirmButtonColor: "orange",
+                            confirmButtonText: "Přihlásit!",
+                            cancelButtonText: "Zrušit!",
                             closeOnConfirm: false,
                             closeOnCancel: false
                         },
-                             function(isConfirm){
+                        function(isConfirm){
                             if (isConfirm) {
+                                var return_response = $.ajax({
+                                    url: 'process.php',
+                                    data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function (response) {
+                                        return response;
+                                    },
+                                    error: function (e) {
+                                        window.console.log(e.responseText);
+                                    }
+                                });
                                 var newEventID = JSON.parse(return_response.responseText);
 
                                 addNotification(newEventID.eventID, 'logIn');
@@ -278,17 +284,18 @@ $(document).ready(function () {
                                 refreshEvents();
                                 //render list of brigadnici
                                 swal({
-                                    title: "success",
-                                    text: "nieco",
+                                    title: "Přihlášen!",
+                                    text: "Brigádník byl přihlášen na tuto změnu.",
                                     type: "success",
-                                    confirButtonColor: "#DD6B55",
+                                    confirmButtonColor: "#005200",
                                     closeOnConfirm: false
                                 },
                                 function(){
-                                    brigadniciListRender(eventId, eventStartDate);
+                                   brigadniciListRender(eventId, eventStartDate);
                                 });
+
                             } else {
-                                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                                brigadniciListRender(eventId, eventStartDate);
                             }
                         });
                 };
@@ -310,8 +317,63 @@ $(document).ready(function () {
             });
             swal({
                 title: "Seznam brigádníků<br><small>na přihlášení</small>",
-                text: '<div style="height: 400px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
-                html: true
+                text: '<div style="height: 250px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
+                html: true,
+                confirmButtonText: "Zavřít",
+                confirmButtonColor: "#3a87ad",
+                showCancelButton: true,
+                cancelButtonText: "Smazat",
+                closeOnCancel: false
+            },
+            function(isConfirm){
+                if(isConfirm){
+
+                } else {
+                    swal({
+                        title: "Smazat?",
+                        text: "Opravdu chcete smazat tento brigádně event?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "orange",
+                        confirmButtonText: "Smazat",
+                        cancelButtonText: "Zrušit",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                         function(isConfirm){
+                        if (isConfirm) {
+                            $.ajax({
+                             url: 'process.php',
+                             type: 'POST',
+                             data: 'type=changeCapacity&eventID=' + eventID + '&capacity=' + 0,
+                             async: false,
+                             success: function (msg) {
+                                refreshEvents();
+                                swal({
+                                     title: "Smazáno!",
+                                     text: "Brigádně event z této změny byl smazán.",
+                                     type: "success",
+                                     confirmButtonColor: "#005200"
+                                 });
+                             },
+                             error: function (obj, text, error) {
+                                 swal({
+                                     title: "Nelze smazat!",
+                                     text: "Nejprve je třeba odhlásit všech brigádníků!!",
+                                     type: "error",
+                                     confirmButtonColor: "#d62633",
+                                     closeOnConfirm: false
+                                 },
+                                 function(){
+                                    brigadniciListRender(eventID, eventStartDate);
+                                 });
+                             }
+                         });
+                        } else {
+                            brigadniciListRender(eventID, eventStartDate);
+                        }
+                    });
+                }
             });
 
             //feed new elements for log in on event
@@ -784,7 +846,6 @@ $(document).ready(function () {
                                 dataType: 'json',
                                 async: false,
                                 done: function (response) {
-
                                     return response;
                                 }
                             });

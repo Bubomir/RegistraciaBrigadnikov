@@ -1800,6 +1800,16 @@ input:hover:-ms-input-placeholder {
 }
 
 /* line 1050, ../scss/_settings.scss */
+.clock-notifications.success {
+  border-color: #006600;
+}
+
+/* line 1053, ../scss/_settings.scss */
+.clock-notifications.alerts {
+  border-color: #660000;
+}
+
+/* line 1057, ../scss/_settings.scss */
 #time-icon {
   fill: #B8B8B8;
   margin-top: 10px;
@@ -1807,38 +1817,38 @@ input:hover:-ms-input-placeholder {
   width: 20px;
 }
 
-/* line 1057, ../scss/_settings.scss */
+/* line 1064, ../scss/_settings.scss */
 .panel.notifications.box {
   box-shadow: none;
   margin-bottom: 0px;
   border: none;
 }
 
-/* line 1063, ../scss/_settings.scss */
+/* line 1070, ../scss/_settings.scss */
 .panel.notifications {
   margin-bottom: 5px;
   box-shadow: none;
 }
 
-/* line 1070, ../scss/_settings.scss */
+/* line 1077, ../scss/_settings.scss */
 .panel.notifications.success {
   background: #e1faea;
   padding: 8px;
 }
 
-/* line 1075, ../scss/_settings.scss */
+/* line 1082, ../scss/_settings.scss */
 .panel.notifications.success svg {
   float: left;
   fill: #006600;
 }
 
-/* line 1079, ../scss/_settings.scss */
+/* line 1086, ../scss/_settings.scss */
 .panel.notifications.alerts {
   background: #fce6e2;
   padding: 8px;
 }
 
-/* line 1083, ../scss/_settings.scss */
+/* line 1090, ../scss/_settings.scss */
 .panel.notifications.alerts svg {
   float: left;
   fill: #660000;
@@ -1846,36 +1856,36 @@ input:hover:-ms-input-placeholder {
   width: 24px;
 }
 
-/* line 1089, ../scss/_settings.scss */
+/* line 1096, ../scss/_settings.scss */
 .panel.scroll {
-  height: 600px;
+  height: 450px;
   overflow-y: scroll;
   padding: 0px;
   box-shadow: none;
 }
 
-/* line 1095, ../scss/_settings.scss */
+/* line 1102, ../scss/_settings.scss */
 .panel {
   box-shadow: 2px 2px 10px #000000;
 }
 
-/* line 1098, ../scss/_settings.scss */
+/* line 1105, ../scss/_settings.scss */
 .alert {
   color: #660000;
 }
 
-/* line 1102, ../scss/_settings.scss */
+/* line 1109, ../scss/_settings.scss */
 .alert-free-space {
   margin-top: 25px;
   height: 40px;
 }
 
-/* line 1107, ../scss/_settings.scss */
+/* line 1114, ../scss/_settings.scss */
 .alert-success {
   color: #006600;
 }
 
-/* line 1111, ../scss/_settings.scss */
+/* line 1118, ../scss/_settings.scss */
 .alert-success svg {
   fill: #006600;
   margin-top: 3px;
@@ -1883,7 +1893,7 @@ input:hover:-ms-input-placeholder {
   width: 30px;
 }
 
-/* line 1118, ../scss/_settings.scss */
+/* line 1125, ../scss/_settings.scss */
 .alert svg {
   fill: #660000;
   margin-top: 3px;
@@ -1891,17 +1901,17 @@ input:hover:-ms-input-placeholder {
   width: 30px;
 }
 
-/* line 1125, ../scss/_settings.scss */
+/* line 1132, ../scss/_settings.scss */
 .alert-message {
   font-weight: bold;
 }
 
-/* line 1129, ../scss/_settings.scss */
+/* line 1136, ../scss/_settings.scss */
 .space-top {
   margin-top: 60px;
 }
 
-/* line 1134, ../scss/_settings.scss */
+/* line 1141, ../scss/_settings.scss */
 svg {
   width: 24px;
   height: 24px;
@@ -1910,13 +1920,13 @@ svg {
   fill: #B8B8B8;
 }
 
-/* line 1142, ../scss/_settings.scss */
+/* line 1149, ../scss/_settings.scss */
 .postfix.custom {
   background: #F0EEF0;
   border: none;
 }
 
-/* line 1147, ../scss/_settings.scss */
+/* line 1154, ../scss/_settings.scss */
 .logo-change svg {
   width: 100%;
   height: 30px;
@@ -1925,18 +1935,18 @@ svg {
   margin-bottom: 20px;
 }
 
-/* line 1155, ../scss/_settings.scss */
+/* line 1162, ../scss/_settings.scss */
 .logo-morning svg {
   fill: orange;
 }
 
-/* line 1161, ../scss/_settings.scss */
+/* line 1168, ../scss/_settings.scss */
 .logo-night svg {
   fill: black;
 }
 
 @media screen and (max-width: 1024px) {
-  /* line 1167, ../scss/_settings.scss */
+  /* line 1174, ../scss/_settings.scss */
   .button {
     font-size: 13px;
   }

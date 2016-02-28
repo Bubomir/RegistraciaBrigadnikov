@@ -18,13 +18,13 @@
                     $row_notification_KTO['Change_Number'].' '
                     .$row_notification_KTO['Surname'].' '
                     .$row_notification_KTO['First_Name']
-                    ." odhlasil "
-                    .$row_notification_KOHO['Surname']
+                    ." odhlasil brigádnika "
+                    .$row_notification_KOHO['Surname'] . ' '
+                    .$row_notification_KOHO['First_Name']
                     .' zo smeny majstra '
-                    .$row_notification_KOHO['Change_Number'].' '
-                    .$row_notification_KOHO['First_Name'].' '
+                    .$row_notification_KOMU['Change_Number'].' '
                     .$row_notification_KOMU['Surname'].' '
-                    .$row_notification_KOMU['First_Name'].' '
+                    .$row_notification_KOMU['First_Name'].' - '
                     .$row_notification_KTO['Start_Date']);
                 ?>
             </p>
@@ -46,7 +46,7 @@
 
         </div>
         <div class="large-11 columns ">
-            <div class="clock-notifications">
+            <div class="clock-notifications alerts">
                 <?php echo $row_notification_KTO['TimeStamp']; ?>
             </div>
         </div>
