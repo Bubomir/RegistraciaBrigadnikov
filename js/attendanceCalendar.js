@@ -127,7 +127,7 @@ $(document).ready(function () {
                 function (isConfirm) {
                     if (isConfirm) {
                         //CREATE NOTIFICATION
-                        addNotification(event.id, 'odhlasenie');
+                        addNotification(event.id, 'logOut');
 
                         return_response = $.ajax({
                             url: 'process.php',
@@ -273,7 +273,7 @@ $(document).ready(function () {
                             if (isConfirm) {
                                 var newEventID = JSON.parse(return_response.responseText);
 
-                                addNotification(newEventID.eventID, 'prihlasenie');
+                                addNotification(newEventID.eventID, 'logIn');
                                 //background Refresh events
                                 refreshEvents();
                                 //render list of brigadnici

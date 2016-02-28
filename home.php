@@ -198,8 +198,8 @@
                                 <label>Status
                                     <select id="activity">
                                         <option value="all">Vše</option>
-                                        <option value="log in">Přihlášení</option>
-                                        <option value="log out">Odhlášení</option>
+                                        <option value="logIn">Přihlášení</option>
+                                        <option value="logOut">Odhlášení</option>
                                     </select>
                                 </label>
                                 <label>Rok

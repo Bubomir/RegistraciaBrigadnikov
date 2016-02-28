@@ -396,14 +396,8 @@ if($type == 'canDelete'){
     $count = mysqli_num_rows($result);
 
     if($count == 1){
-        $result_2 = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE Start_Date = '$start_date' AND ID != '$eventID' AND p_Email = '$email_brigadnici' AND Logged_In = '0'");
-
-       if(mysqli_num_rows($result_2) == '1'){
-            $count_2 = 0;
-        }
-        else{
-            $count_2 = 1;
-        }
+        $result_2 = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE Start_Date = '$start_date' AND ID != '$eventID'");
+-        $count_2 = mysqli_num_rows($result_2);
     }
     else{
         $count_2 = 0;

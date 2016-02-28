@@ -3,15 +3,8 @@ include_once 'dbconnect.php';
 
      $start_date = $_POST['interval'];
      $activity = $_POST['activity'];
+     $end_date = date('Y-m-d', strtotime($start_date." + 1 Month"));
 
-              //sort by activity and time interval
-              /* if($activity == 'all' && $interval == 'all'){
-                   $result_notification_KTO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KTO ");
-                   $result_notification_KOMU = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOMU ");
-                   $result_notification_KOHO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOHO ");
-               }*/
-
- $end_date = date('Y-m-d', strtotime($start_date." + 1 Month"));
 
 
               if($activity != 'all'){
