@@ -4,23 +4,6 @@
     cursor: pointer;
 }
 
-#morning-change{
-    width: 100%;
-    margin: 0 auto;
-    padding-top: 5px;
-}
-
-
-
-#morning-change .fc-event{
-    background-color: darkorange;
-}
-
-#morning-change .fc-event:hover{
-    box-shadow: inset 0px 0px 0px 1px darkorange;
-    background: white;
-    color: darkorange;
-}
 
 #popup-info{
     height: 88px;
@@ -68,9 +51,11 @@
 
 .night-change{
     width: 100%;
+    margin-bottom: 20px;
 }
-.morning-changel{
+.morning-change{
     width: 100%;
+    margin-bottom: 20px;
 }
 
 #supervizor-event-morning{

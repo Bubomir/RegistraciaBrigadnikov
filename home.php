@@ -193,22 +193,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" style="margin-top: 50px;">Oznámení</button>
-
-                                <label>Status
-                                    <select id="activity">
+                            <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" style="margin-top: 10px; margin-bottom: 25px;">Oznámení</button>
+                            <p style="margin-bottom: 5px;font-size: 14px;"><strong>Filter pro oznámení:</strong></p>
+                                <label>Login Status:
+                                    <select id="activity" class="select-style">
                                         <option value="all">Vše</option>
                                         <option value="logIn">Přihlášení</option>
                                         <option value="logOut">Odhlášení</option>
                                     </select>
                                 </label>
-                                <label>Rok
-                                    <select name="year" id="year">
+                                <label>Rok:
+                                    <select name="year" id="year"  class="select-style">
                                         <option name="01" value="rwerwe">teest</option>
                                     </select>
                                 </label>
-                                <label>Mesiac
-                                    <select id="month">
+                                <label>Měsíc:
+                                    <select id="month"  class="select-style">
                                         <option name="01" value="01">Leden</option>
                                         <option name="02" value="02">Únor</option>
                                         <option name="03" value="03">Březen</option>
