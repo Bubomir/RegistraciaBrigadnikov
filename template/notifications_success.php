@@ -43,7 +43,7 @@
                         </div>
                         <div class="large-11 columns ">
                             <div class="clock-notifications">
-                                Zmena bola vykonaná o tomto čase
+                                 <?php echo $row_notification_KTO['TimeStamp']; ?>
                             </div>
                         </div>
                     </div>

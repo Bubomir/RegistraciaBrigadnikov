@@ -155,6 +155,7 @@ $(document).ready(function () {
                         } else {
                             window.alert('chyba pri zmazavani');
                         }
+
                     }
                 }
 
