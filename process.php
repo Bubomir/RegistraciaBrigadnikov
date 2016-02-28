@@ -193,6 +193,19 @@ if($type == 'change_number_of_logged_in'){
     $click_time = new DateTime($e_start_date);
     $current_time = new DateTime(date('c'));
     $interval_time = $current_time->diff($click_time);
+
+    $result_for_mail = mysqli_query($db,"SELECT p_Email FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date='$e_start_date' AND Permissions='supervizor' AND p_Email != '$email_brigadnici' ");
+    $email_to_Mail = mysqli_fetch_array($result_for_mail);
+
+    $data_for_mail =  mysqli_query($db,"SELECT First_Name, Surname, Email, Mobile_Number FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE p_Email = '$email' ");
+    $data = mysqli_fetch_array($data_for_mail);
+
+    $mail_name = $data['First_Name'].' '.$data['Surname'];
+    $mail_email = $data['Email'];
+    $mail_phone_num =  $data['Mobile_Number'];
+
+    //echo $mail_name.' '.$mail_email.' '.$mail_phone_num;
+
     switch($logIn_logOut){
         case 1:{
             
@@ -204,6 +217,23 @@ if($type == 'change_number_of_logged_in'){
 
                 $insert = mysqli_query($db,"INSERT INTO $table_calendar(p_Email, Start_Date, End_Date, Capacity, Logged_In) VALUES('$email','$e_start_date','$end_date','null','null')");
                 $lastid = mysqli_insert_id($db);
+                //Sending mail
+                if($insert){
+                    //Email content
+                    $to = 'bubomirxxx@gmail.com';   //$email_to_Mail
+                    $subject = 'Přihlášení na pracovní směnu';
+                    $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
+                    $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+                    mail($to, $subject, $message, $headers);
+
+                    $succes = array(
+                         "status"=> "success",
+                         "eventID"=> "$lastid"
+                    );
+                    echo json_encode($succes);
+                }
+
             }
             break;
         }
@@ -215,17 +245,25 @@ if($type == 'change_number_of_logged_in'){
                 $e_logged_in--;
                 $update = mysqli_query($db,"UPDATE $table_calendar SET Logged_In='$e_logged_in' WHERE ID='$event_id'");
                 $delete = mysqli_query($db,"DELETE FROM $table_calendar WHERE ID='$del_id'");
+                //Sending mail
+                if($delete){
+                    //Email content
+                    $to = 'bubomirxxx@gmail.com';   //$email_to_Mail
+                    $subject = 'Přihlášení na pracovní směnu';
+                    $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
+                    $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+                    mail($to, $subject, $message, $headers);
+
+                    $succes = array(
+                        "status"=> "success",
+                        "eventID"=> "$del_id"
+                    );
+                    echo json_encode($succes);
+                }
             }
             break;
         }
-    }
-    
-    if($insert || $delete){
-        $succes = array(
-            "status"=> "success",
-            "eventID"=> "$lastid"
-        );
-        echo json_encode($succes);
     }
 }
 

@@ -76,7 +76,6 @@ $(document).ready(function () {
             }
         });
 
-        console.log(return_response.responseText);
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
@@ -230,7 +229,7 @@ $(document).ready(function () {
                 window.console.log(e.responseText);
             }
         });
-
+        console.log("fdsf", return_response.responseText);
         refreshEvents();
     }
 
