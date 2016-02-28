@@ -113,7 +113,7 @@
                                             Ranní změny
                                             <?php
                                              include 'dbconnect.php';
-                                             $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
+                                             $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY Change_Number ASC");
                                              while ($row = mysqli_fetch_assoc($result)){
                                                  if($row['First_Name']!="Brigádnici"){
                                                      if($userRow['Permissions'] == 'admin'){
@@ -173,7 +173,7 @@
                                             Noční změny
                                             <?php
                                                 include 'dbconnect.php';
-                                                $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY User_ID DESC");
+                                                $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY Change_Number ASC");
                                                 while ($row = mysqli_fetch_assoc($result)){
                                                     if($row['First_Name']!="Brigádnici"){
                                                         if($userRow['Permissions'] == 'admin'){
