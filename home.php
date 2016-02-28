@@ -543,23 +543,12 @@
             //pick current month
             $('option[name="' + currentMonth + '"]').attr('selected', 'selected');
 
-            var activityPick = document.getElementById("activity");
-            var activityPickUser = activity.options[activity.selectedIndex].value;
-
-            var monthPick = document.getElementById("month");
-            var monthPickUser = monthPick.options[monthPick.selectedIndex].value;
-
-            var yearPick = document.getElementById("year");
-            var yearPickUser = yearPick.options[yearPick.selectedIndex].value;
-
-            var interval = yearPickUser + '-' + monthPickUser;
 
 
-
-            function clickNotification(activityPickUser,interval) {
+            function clickNotification(activity, interval) {
                 var notficationData = {
-                    'activity' : activityPickUser,
-                    'interval' : interval
+                    'activity': activity,
+                    'interval': interval
                 }
 
                 notificationResponse = $.ajax({
@@ -574,10 +563,19 @@
                 console.log('sfes', notficationData);
             }
 
-            $(" #norificationForm")
-            $(" #notificationButton").click(function(){
+            $(" #notificationButton").click(function () {
+                var activityPick = document.getElementById("activity");
+                var activityPickUser = activity.options[activity.selectedIndex].value;
+
+                var monthPick = document.getElementById("month");
+                var monthPickUser = monthPick.options[monthPick.selectedIndex].value;
+
+                var yearPick = document.getElementById("year");
+                var yearPickUser = yearPick.options[yearPick.selectedIndex].value;
+
+                var interval = yearPickUser + '-' + monthPickUser;
                 clickNotification(activityPickUser, interval);
-            })
+            });
 
 
             var numberOfChange = 0;
