@@ -454,9 +454,8 @@
         </div>
 
         <div class="tiny reveal" id="modal-notifications" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
-            <div id="notifications-box" class="panel notifications box">
-                <div class="panel scroll">
-                    <?php include('notification.php'); ?>
+            <div class="panel notifications box">
+                <div id="notifications-box" class="panel scroll">
                 </div>
             </div>
             <div class="panel notifications box">
@@ -560,12 +559,13 @@
                         return response;
                     }
                 });
-                console.log('sfes', notficationData);
+                console.log('sfes', notificationResponse.responseText);
             }
-            var notificationBox = $('#notifications-box').detach();
+            //var notificationBox = $('#notifications-box').detach();
             //console.log(notificationBox);
             $("#notificationButton").click(function () {
-                $('#modal-notifications').prepend(notificationBox);
+                //$('#modal-notifications').prepend(notificationBox);
+
                 var activityPick = document.getElementById("activity");
                 var activityPickUser = activity.options[activity.selectedIndex].value;
 
@@ -577,6 +577,7 @@
 
                 var interval = yearPickUser + '-' + monthPickUser;
                 clickNotification(activityPickUser, interval);
+                $('#notifications-box').load("notification.php");
             });
 
 
