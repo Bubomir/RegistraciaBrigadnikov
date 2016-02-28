@@ -84,7 +84,7 @@
     }
     if($row_2['Email'] != $email_brigadnici){
         // Instert Brigadnici account
-        if(!mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions) VALUES('$first_name_brigadnici','$surname_brigadnici','$password_brigadnici','$email_brigadnici','$permissions_brigadnici')")){
+        if(!mysqli_query($db,"INSERT INTO $table_employees(First_Name,Surname,Password,Email,Permissions,Change_Number) VALUES('$first_name_brigadnici','$surname_brigadnici','$password_brigadnici','$email_brigadnici','$permissions_brigadnici','9999')")){
                 echo 'Issue while creating Brigadnici account';
         }
     }
