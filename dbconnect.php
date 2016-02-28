@@ -56,7 +56,7 @@
         Surname VARCHAR(255) NOT NULL,
         Password VARCHAR(255) NOT NULL,
         Email VARCHAR(255) NOT NULL,
-        Permissions VARCHAR(10) NOT NULL,
+        Permissions VARCHAR(255) NOT NULL,
         Mobile_Number VARCHAR(255) NOT NULL,
         Change_Number VARCHAR(255),
         Reset_Password VARCHAR(50) NOT NULL DEFAULT 0,

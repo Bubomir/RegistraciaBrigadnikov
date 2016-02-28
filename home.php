@@ -336,7 +336,7 @@
                         <div class="column">
                             <p>Správca</p>
                             <div class="switch small">
-                                <input class="switch-input" id="exampleSwitch" type="radio" name="permissions" value="admin" required>
+                                <input class="switch-input" id="exampleSwitch" type="radio" name="permissions" value="non-admin" required>
                                 <label class="switch-paddle" for="exampleSwitch">
                                     <span class="show-for-sr">Správca</span>
                                 </label>
@@ -345,7 +345,7 @@
                         <div class="column">
                             <p>Supervízor</p>
                             <div class="switch small">
-                                <input class="switch-input" id="exampleSwitch2" type="radio" name="permissions" value="supervizor" required>
+                                <input class="switch-input" id="exampleSwitch2" type="radio" name="permissions" value="non-supervizor" required>
                                 <label class="switch-paddle" for="exampleSwitch2">
                                     <span class="show-for-sr">Supervízor</span>
                                 </label>
@@ -354,7 +354,7 @@
                         <div class="columns">
                             <p>Brigádnik</p>
                             <div class="switch small">
-                                <input class="switch-input" id="exampleSwitch3" type="radio" name="permissions" value="brigadnik" required>
+                                <input class="switch-input" id="exampleSwitch3" type="radio" name="permissions" value="non-brigadnik" required>
                                 <label class="switch-paddle" for="exampleSwitch3">
                                     <span class="show-for-sr">Brigádnik</span>
                                 </label>
