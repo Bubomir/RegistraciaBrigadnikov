@@ -308,7 +308,7 @@ if($type == 'fetch'){
             }
         }
      
-        $e['start'] = date('c',strtotime($fetch['Start_Date']));
+        $e['start'] = $fetch['Start_Date'];
         $e['color'] = $fetch['Color'];
        array_push($events, $e);
 	}   

@@ -76,7 +76,7 @@ $(document).ready(function () {
             }
         });
 
-
+        console.log(return_response.responseText);
         $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
     }
     /*************************************************/
