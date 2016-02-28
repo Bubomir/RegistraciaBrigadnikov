@@ -454,7 +454,7 @@
         </div>
 
         <div class="tiny reveal" id="modal-notifications" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
-            <div class="panel notifications box">
+            <div id="notifications-box" class="panel notifications box">
                 <div class="panel scroll">
                     <?php include('notification.php'); ?>
                 </div>
@@ -562,8 +562,10 @@
                 });
                 console.log('sfes', notficationData);
             }
-
-            $(" #notificationButton").click(function () {
+            var notificationBox = $('#notifications-box').detach();
+            //console.log(notificationBox);
+            $("#notificationButton").click(function () {
+                $('#modal-notifications').prepend(notificationBox);
                 var activityPick = document.getElementById("activity");
                 var activityPickUser = activity.options[activity.selectedIndex].value;
 
