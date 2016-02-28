@@ -16,7 +16,7 @@
     $alertRegFail = 3;
     $alertChange_Num = 4;
 
-    if($permission == 'non-supervizor'){
+    if($permission == 'non-supervizor' || $permission == 'non-admin' || $permission == 'non-brigadnik'){
         $result_change_num = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Change_Number = '$change_number' ");
         if(mysqli_num_rows($result_change_num) == 0){
 
