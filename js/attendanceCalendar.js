@@ -235,11 +235,9 @@ $(document).ready(function () {
     /**********************************************/
 
     function brigadniciClickLogIn(divObject) {
-        var i;
-        for (i = 0; i < divObject.length; i++) {
+        for (var i = 0; i < divObject.length; i++) {
             divObject[i].addEventListener('click', (function (i) {
                 return function () {
-
                     var emailHash = divObject[i].dataset.description,
                         eventId = divObject[i].dataset.event_id,
                         eventStartDate = divObject[i].dataset.start,
@@ -256,18 +254,39 @@ $(document).ready(function () {
                             error: function (e) {
                                 window.console.log(e.responseText);
                             }
-
-
                         });
-                    newEventID = JSON.parse(return_response.responseText).eventID;
 
-
-                    addNotification(newEventID, 'prihlasenie');
-                    //background Refresh events
-                    refreshEvents();
-                    //render list of brigadnici
-                    brigadniciListRender(eventId, eventStartDate);
-
+                        swal({
+                            title: "Are you sure?",
+                            text: "You will not be able to recover this imaginary file!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel plx!",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        },
+                             function(isConfirm){
+                            if (isConfirm) {
+                                addNotification(newEventID, 'prihlasenie');
+                                //background Refresh events
+                                refreshEvents();
+                                //render list of brigadnici
+                                swal({
+                                    title: "success",
+                                    text: "nieco",
+                                    type: "success",
+                                    confirButtonColor: "#DD6B55",
+                                    closeOnConfirm: false
+                                },
+                                function(){
+                                    brigadniciListRender(eventId, eventStartDate);
+                                });
+                            } else {
+                                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                            }
+                        });
                 };
             })(i), false);
         }
@@ -285,16 +304,16 @@ $(document).ready(function () {
                     return response;
                 }
             });
+            swal({
+                title: "Seznam brigádníků<br><small>na přihlášení</small>",
+                text: '<div style="height: 400px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
+                html: true
+            });
 
-        swal({
-            title: "HTML <small>Title</small>!",
-            text: '<div class="testing" style="height: 400px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
-            html: true
-        });
+            //feed new elements for log in on event
+            elements = document.getElementsByClassName('brigLogIn2');
+            brigadniciClickLogIn(elements);
 
-        //feed new elements for log in on event
-        elements = document.getElementsByClassName('brigLogIn2');
-        brigadniciClickLogIn(elements);
     }
 
 
@@ -652,7 +671,6 @@ $(document).ready(function () {
 
                     if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
                         brigadniciListRender(event.id, event.start.format());
-
 
                         // UPOZORNENIE !!!
                         //sluzi na nastavovanie kapacity brigadnikov na smeny nepouzite pretoze firma si neziadala tuto funkcionalitu

@@ -658,7 +658,7 @@ a.fc-more:hover {
 }
 
 .fc-content:hover{
-    box-shadow: 4px 4px 10px #333;
+    box-shadow: 4px 4px 5px #333;
 }
 
 .fc-basic-view tbody .fc-row {

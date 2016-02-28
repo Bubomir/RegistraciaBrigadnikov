@@ -107,7 +107,7 @@
                                     </div>
 
                                     <div class="large-12 medium-12 small-12 columns text-center">
-                                        <div id="morning-change">
+                                        <div class="morning-change">
                                             Ranní změny
                                             <?php
                                              include 'dbconnect.php';
@@ -116,11 +116,11 @@
                                                  if($row['First_Name']!="Brigádnici"){
                                                      if($userRow['Permissions'] == 'admin'){
                                                       $meno = $row['Change_Number'].' '.$row['Surname'].' '.$row['First_Name'];
-                                                     echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'darkorange'>$meno</div>";
+                                                     echo "<div id='supervizor-event-morning' class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'darkorange'>$meno</div>";
                                                      }
                                                  }
                                                  else{
-                                                    echo "<div class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'green' style='background-color: green;'>".$row['First_Name']." R</div>";
+                                                    echo "<div id='brig-button' class='fc-event' data-start='06:00:00' data-description='".md5($row['Email'])."' data-color = 'green'>".$row['First_Name']." R</div>";
                                                  }
                                              }
 
@@ -167,7 +167,7 @@
                                     </div>
 
                                     <div class="large-12 medium-12 small-12 columns text-center">
-                                        <div id="night-change">
+                                        <div class="night-change">
                                             Noční změny
                                             <?php
                                                 include 'dbconnect.php';
@@ -176,11 +176,11 @@
                                                     if($row['First_Name']!="Brigádnici"){
                                                         if($userRow['Permissions'] == 'admin'){
                                                         $meno =  $row['Change_Number'].' '.$row['Surname'].' '.$row['First_Name'];
-                                                        echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'black'>$meno</div>";
+                                                        echo "<div id='supervizor-event-night' class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'black'>$meno</div>";
                                                         }
                                                     }
                                                     else{
-                                                        echo "<div class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'green' style='background-color: green;'>".$row['First_Name']." N</div>";
+                                                        echo "<div id='brig-button' class='fc-event' data-start='18:00:00' data-description='".md5($row['Email'])."' data-color = 'green'>".$row['First_Name']." N</div>";
 
                                                     }
 
