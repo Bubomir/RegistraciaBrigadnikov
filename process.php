@@ -392,10 +392,6 @@ if($type == 'canDelete'){
     $start_date = $_POST['start_date'];
     $eventID = $_POST['event_id'];
 
-   // $result_3 = mysqli_query($db, "SELECT ID FROM $table_calendar WHERE Start_Date = '$start_date' AND p_Email = '$email_brigadnici' AND Logged_In = '0' ");
-   // $count_3 = mysqli_num_rows($result_3);
-
-
     $result = mysqli_query($db, "SELECT ID FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE ID = '$eventID' AND p_Email != '$email_brigadnici' AND Permissions = 'supervizor' ");
     $count = mysqli_num_rows($result);
 

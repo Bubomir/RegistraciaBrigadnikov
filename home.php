@@ -563,6 +563,7 @@
                         return response;
                     }
                 });
+                console.log('fds',notificationResponse.responseText);
                 document.getElementById("notifications-box").innerHTML = notificationResponse.responseText;
 
             }
