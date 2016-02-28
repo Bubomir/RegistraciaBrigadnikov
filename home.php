@@ -194,7 +194,7 @@
                                 </div>
                             </div>
                             <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" style="margin-top: 50px;">Oznámení</button>
-                            <form method="get" id="norificationForm">
+
                                 <label>Status
                                     <select id="activity">
                                         <option value="all">Vše</option>
@@ -226,7 +226,7 @@
 
                         </div>
                     </div>
-                    </form>
+
                     <?php }?>
                         <?php if($userRow['Permissions'] == 'supervizor' || $userRow['Permissions'] == 'admin'){?>
                             <div class="large-10 medium-10 small-12 columns">
@@ -647,6 +647,10 @@
                         document.getElementById('alert-message').innerHTML = "Uživatel s tímto e-mailem již existuje!!";
                     } else if ($isRegistered == 3) {
                         $('.alert').hide().slideDown(500);
+                    }
+                    else if ($isRegistered == 4) {
+                        $('.alert').hide().slideDown(500);
+                         document.getElementById('alert-message').innerHTML = "Uživatel s touto smenou již existuje!!";
                     }
                     // stop the form from submitting the normal way and refreshing the page
                     event.preventDefault();
