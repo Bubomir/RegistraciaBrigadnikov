@@ -70,11 +70,9 @@
             });
 
             $(document).ready(function () {
-
                 $('#registration_form').submit(function (event) {
                     $('.alert-success').hide();
                     $('.alert').hide();
-
 
                     var formData = {
                         'first_name': $('input[name=first_name]').val(),
@@ -87,7 +85,7 @@
 
                     //console.log('test',formData);
 
-                    // process the form
+                    // rocess the form
                     $isRegistered = $.ajax({
                         type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
                         url: 'registration.php', // the url where we want to POST
