@@ -191,7 +191,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" type="button" form="norificationForm" style="margin-top: 50px;">Oznámení</button>
+                            <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" style="margin-top: 50px;">Oznámení</button>
                             <form method="get" id="norificationForm">
                                 <label>Status
                                     <select id="activity">
@@ -456,36 +456,7 @@
         <div class="tiny reveal" id="modal-notifications" data-reveal data-close-on-click="false" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
             <div class="panel notifications box">
                 <div class="panel scroll">
-                    <?php
-                    $activity = 'all';
-                    $interval = 'all';
-                    //sort by activity and time interval
-                     if($activity == 'all' && $interval == 'all'){
-                         $result_notification_KTO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KTO ");
-                         $result_notification_KOMU = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOMU ");
-                         $result_notification_KOHO = mysqli_query($db, "SELECT * FROM $table_notification INNER JOIN $table_employees ON $table_employees.Email = $table_notification.p_Email_KOHO ");
-                     }
-                    if($activity != 'all' && $interval == 'all'){
-                        $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE Activity='$activity' ");
-                    }
-                    if($activity != 'all' && $interval != 'all'){
-                        $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE Activity='$activity' AND TimeStamp = '$interval'");
-                    }
-                    if($activity == 'all' && $interval != 'all'){
-                        $result_notification = mysqli_query($db, "SELECT * FROM $table_notification WHERE TimeStamp = '$interval'");
-                    }
-
-                  while ($row_notification_KTO = mysqli_fetch_assoc($result_notification_KTO)){
-                      $row_notification_KOHO = mysqli_fetch_assoc($result_notification_KOHO);
-                      $row_notification_KOMU = mysqli_fetch_assoc($result_notification_KOMU);
-                       if ($row_notification_KTO['Activity'] == 'prihlasenie'){
-                            include('template/notifications_success.php');
-                       }
-                       else{
-                           include('template/notifications_alert.php');
-                       }
-                   }
-                ?>
+                    <?php include('notification.php'); ?>
                 </div>
             </div>
             <div class="panel notifications box">
@@ -568,6 +539,7 @@
             for (var year = end; year >= start; year--) {
                 options += "<option value='" + year + "'>" + year + "</option>";
             }
+            document.getElementById("year").innerHTML = options;
             //pick current month
             $('option[name="' + currentMonth + '"]').attr('selected', 'selected');
 
@@ -580,12 +552,32 @@
             var yearPick = document.getElementById("year");
             var yearPickUser = yearPick.options[yearPick.selectedIndex].value;
 
-                //PRIPRAVENE PRE AJAX
-            console.log('parsing ', yearPickUser);
+            var interval = yearPickUser + '-' + monthPickUser;
 
 
-            document.getElementById("year").innerHTML = options;
 
+            function clickNotification(activityPickUser,interval) {
+                var notficationData = {
+                    'activity' : activityPickUser,
+                    'interval' : interval
+                }
+
+                notificationResponse = $.ajax({
+                    type: 'POST', // Send post data
+                    url: 'notification.php',
+                    data: notficationData,
+                    async: false,
+                    done: function (response) {
+                        return response;
+                    }
+                });
+                console.log('sfes', notficationData);
+            }
+
+            $(" #norificationForm")
+            $(" #notificationButton").click(function(){
+                clickNotification(activityPickUser, interval);
+            })
 
 
             var numberOfChange = 0;
