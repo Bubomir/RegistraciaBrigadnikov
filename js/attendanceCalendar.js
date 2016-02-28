@@ -242,7 +242,6 @@ $(document).ready(function () {
                     var emailHash = divObject[i].dataset.description,
                         eventId = divObject[i].dataset.event_id,
                         eventStartDate = divObject[i].dataset.start,
-                        newEventID,
                         return_response = $.ajax({
                             url: 'process.php',
                             data: 'type=change_number_of_logged_in&email=' + emailHash + '&logIn_logOut=' + 'emailhash' + '&event_id=' + eventId,
@@ -270,7 +269,9 @@ $(document).ready(function () {
                         },
                              function(isConfirm){
                             if (isConfirm) {
-                                addNotification(newEventID, 'prihlasenie');
+                                var newEventID = JSON.parse(return_response.responseText);
+
+                                addNotification(newEventID.eventID, 'prihlasenie');
                                 //background Refresh events
                                 refreshEvents();
                                 //render list of brigadnici

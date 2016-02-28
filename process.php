@@ -362,8 +362,6 @@ if($type == 'addNotification'){
     $eventID = $_POST['eventID'];
     $activity = $_POST['activity'];
 
-
-
     $query = mysqli_query($db, "SELECT * FROM $table_calendar WHERE ID = '$eventID'");
     $fetch=mysqli_fetch_array($query);
 

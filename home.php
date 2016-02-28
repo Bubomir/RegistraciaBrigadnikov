@@ -27,7 +27,9 @@
         <link rel='stylesheet' href='css/fullcalendar.print.css' media='print' />
         <link href="css/style.css" rel='stylesheet' />
         <link href="css/sweetalert.css" rel="stylesheet" />
+
         <script src="js/modernizr.js"></script>
+
     </head>
 
     <body>
@@ -526,11 +528,12 @@
                 </div>
             </div>
         </footer>
-        <script src="js/jquery.js"></script>
+         <script src="js/jquery.js"></script>
         <script src="js/foundation.js"></script>
         <script src="js/app.js"></script>
         <script src="js/clearForm.js"></script>
         <script>
+
             var start = 2010;
             var end = new Date().getFullYear();
             var currentMonth = ("0" + (new Date().getMonth() + 1));
@@ -554,29 +557,17 @@
                     type: 'POST', // Send post data
                     url: 'notification.php',
                     data: notficationData,
+                    dataType: 'json',
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 });
-<<<<<<< HEAD
+                 document.getElementById("notifications-box").innerHTML = notificationResponse.responseText;
+                console.log('test ',notificationResponse.responseText);
 
-                console.log('sfes', notificationResponse.responseText);
-                $('#modal-notifications').prepend(notificationBox);
             }
-
-            var notificationBox = $('#notifications-box').detach();
-            //console.log(notificationBox);
             $("#notificationButton").click(function () {
-
-=======
-                console.log('sfes', notificationResponse.responseText);
-            }
-            //var notificationBox = $('#notifications-box').detach();
-            //console.log(notificationBox);
-            $("#notificationButton").click(function () {
-                //$('#modal-notifications').prepend(notificationBox);
->>>>>>> origin/master
 
                 var activityPick = document.getElementById("activity");
                 var activityPickUser = activity.options[activity.selectedIndex].value;
@@ -588,13 +579,9 @@
                 var yearPickUser = yearPick.options[yearPick.selectedIndex].value;
 
                 var interval = yearPickUser + '-' + monthPickUser;
-                clickNotification(activityPickUser, interval);
-<<<<<<< HEAD
-
-
-=======
-                $('#notifications-box').load("notification.php");
->>>>>>> origin/master
+                clickNotification('all', 'all');
+                //clickNotification(activityPickUser, interval);
+               // $('#notifications-box').load("notification.php");
             });
 
 
