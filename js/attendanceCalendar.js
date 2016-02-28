@@ -389,7 +389,6 @@ $(document).ready(function () {
         },
         eventLimit: true,
         droppable: true,
-        allDaySlot: false,
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
         //Remove time from event
