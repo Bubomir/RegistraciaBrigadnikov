@@ -1,13 +1,30 @@
+
+
 var $;
 var start = 2015;
 var end = new Date().getFullYear();
 var currentMonth = ("0" + (new Date().getMonth() + 1));
 var options = "";
 var year;
+
+//zistenie práve lognutého užívateľa
+var loggedPermissions = $.ajax({
+    type: 'POST',
+    url: 'process.php',
+    data: 'type=get_loggedPermissions',
+    async: false,
+    done: function (response) {
+        "use strict";
+        return response;
+    }
+});
+
 for (year = end; year >= start; year--) {
     options += "<option value='" + year + "'>" + year + "</option>";
 }
-document.getElementById("year").innerHTML = options;
+if(loggedPermissions.responseText != 'brigadnik'){
+    document.getElementById("year").innerHTML = options;
+}
 //pick current month
 $('option[name="' + currentMonth + '"]').attr('selected', 'selected');
 
@@ -73,17 +90,6 @@ $("input[type=radio]").click(function () {
     }
 });
 
-//zistenie práve lognutého užívateľa
-var loggedPermissions = $.ajax({
-    type: 'POST',
-    url: 'process.php',
-    data: 'type=get_loggedPermissions',
-    async: false,
-    done: function (response) {
-        "use strict";
-        return response;
-    }
-});
 //Ak je supervízor schovať možnosti zvolenia práv defaulnte brigadnicke práve
 if (loggedPermissions.responseText == 'supervizor') {
     $('#permissionPicker').remove();
