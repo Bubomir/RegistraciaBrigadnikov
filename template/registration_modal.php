@@ -74,7 +74,7 @@
                         </span>
                 </div>
                 <div class="small-10 medium-10 large-10 columns">
-                    <input type="text" onblur="if (this.placeholder == '') {this.placeholder = 'Telefonní číslo';}" onfocus="this.placeholder = '';" placeholder="Telefonní číslo" name="mobile_number" required/>
+                    <input type="text" onblur="if (this.placeholder == '') {this.placeholder = 'Telefonní číslo';}" onfocus="this.placeholder = '';" placeholder="Telefonní číslo" name="mobile_number" pattern="[0-9+]+" required/>
                 </div>
                 <div class="small-2 medium-2 large-2 columns">
                     <span class="postfix custom">
