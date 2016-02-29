@@ -8,7 +8,7 @@ var loggedEmail = $.ajax({
     url: 'process.php',
     data: 'type=get_loggedEmail',
     async: false,
-    done: function (response) {
+    success: function (response) {
         "use strict";
         return response;
     }
@@ -19,7 +19,7 @@ var loggedPermissions = $.ajax({
     url: 'process.php',
     data: 'type=get_loggedPermissions',
     async: false,
-    done: function (response) {
+    success: function (response) {
         "use strict";
         return response;
     }
@@ -40,7 +40,7 @@ $(document).ready(function () {
             type: 'POST',
             data: 'type=addNotification&email_KTO=' + loggedEmail.responseText + '&eventID=' + eventID + '&activity=' + activity,
             async: false,
-            done: function (data) {
+            success: function (data) {
                 return data;
             }
         });
@@ -64,7 +64,7 @@ $(document).ready(function () {
             type: 'POST', // Send post data
             data: 'type=fetch&start_month=' + start_month + '&end_month=' + end_month,
             async: false,
-            done: function (s) {
+            success: function (s) {
                 return s;
             }
         });
@@ -95,7 +95,7 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             async: false,
-            done: function (response) {
+            success: function (response) {
                 return response;
             },
             error: function (e) {
@@ -128,7 +128,7 @@ $(document).ready(function () {
                             type: 'POST',
                             dataType: 'json',
                             async: false,
-                            done: function (response) {
+                            success: function (response) {
                                 return response;
                             },
                             error: function (e) {
@@ -176,7 +176,7 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             async: false,
-            done: function (response) {
+            success: function (response) {
                 return response;
             },
             error: function (e) {
@@ -191,7 +191,7 @@ $(document).ready(function () {
                 type: 'POST',
                 dataType: 'json',
                 async: false,
-                done: function (response) {
+                success: function (response) {
                     return response;
                 },
                 error: function (e) {
@@ -224,7 +224,7 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             async: false,
-            done: function (response) {
+            success: function (response) {
                 return response;
             },
             error: function (e) {
@@ -265,7 +265,7 @@ $(document).ready(function () {
                                     type: 'POST',
                                     dataType: 'json',
                                     async: false,
-                                    done: function (response) {
+                                    success: function (response) {
                                         return response;
                                     },
                                     error: function (e) {
@@ -306,7 +306,7 @@ $(document).ready(function () {
                 url: 'process.php',
                 data: 'type=brigadnici_list&eventID=' + eventID + '&start_date=' + eventStartDate,
                 async: false,
-                done: function (response) {
+                success: function (response) {
                     return response;
                 }
             });
@@ -342,7 +342,7 @@ $(document).ready(function () {
                                     type: 'POST',
                                     data: 'type=changeCapacity&eventID=' + eventID + '&capacity=' + 0,
                                     async: false,
-                                    done: function (msg) {
+                                    success: function (msg) {
                                         refreshEvents();
                                         swal({
                                             title: "Smazáno!",
@@ -388,7 +388,7 @@ $(document).ready(function () {
             type: 'POST',
             data: 'type=session_check',
             async: false,
-            done: function (data) {
+            success: function (data) {
                 return data;
             }
         });
@@ -469,7 +469,7 @@ $(document).ready(function () {
                     data: 'type=mouseOver&eventID=' + event.id,
                     dataType: 'json',
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 }),
@@ -527,7 +527,7 @@ $(document).ready(function () {
                     type: 'POST',
                     data: 'type=duplicity_ceck&startDate=' + event.start.format() + '&emailHash=' + event.description,
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 });
@@ -628,7 +628,7 @@ $(document).ready(function () {
                     url: 'process.php',
                     data: 'type=get_loggedPermissions',
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 }).responseText;
@@ -638,7 +638,7 @@ $(document).ready(function () {
                     url: 'process.php',
                     data: 'type=get_loggedEmail',
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 }).responseText;
@@ -648,7 +648,7 @@ $(document).ready(function () {
                     url: 'process.php',
                     data: 'type=check_log_in_log_out&event_id=' + event.id + '&email=' + email,
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 });
@@ -658,7 +658,7 @@ $(document).ready(function () {
                     url: 'process.php',
                     data: 'type=check_interval_time&event_id=' + event.id,
                     async: false,
-                    done: function (response) {
+                    success: function (response) {
                         return response;
                     }
                 });
@@ -833,7 +833,7 @@ $(document).ready(function () {
                                 data: 'type=checkingForDelete&eventID=' + event.id,
                                 dataType: 'json',
                                 async: false,
-                                done: function (response) {
+                                success: function (response) {
                                     return response;
                                 }
                             });
