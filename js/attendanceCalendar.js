@@ -155,7 +155,7 @@ $(document).ready(function () {
         } else {
             swal({
                 title: "Chyba...",
-                text: "Je potrebné odhlásiť všetkych brigádnikov a vymazať brigádnicky event!",
+                text: "Pred zmazaním zmeny le potrebné odhlásiť všetkych brigádnikov a vymazať brigádnicky event!",
                 type: "error",
                 confirmButtonColor: "#d62633"
             });
