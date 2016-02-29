@@ -44,6 +44,7 @@ $(document).ready(function () {
                 return data;
             }
         });
+
     }
 
     /**********************************************/
@@ -195,7 +196,7 @@ $(document).ready(function () {
                     return response;
                 },
                 error: function (e) {
-                    window.console.log(e.responseText);
+                  // window.console.log(e.responseText);
                 }
 
             });
@@ -483,23 +484,21 @@ $(document).ready(function () {
 
             //var tooltip = document.getElementById('popup-info');
             //var tooltip = $('#phantom-popup').load('template/popup_info.php');
-            if(loggedPermissions.responseText === 'admin' || loggedPermissions.responseText === 'supervizor'){
-                if (permission === 'brigadnik') {
-                    $("body").prepend(tooltip);
-                    document.getElementById('popup-name').innerHTML = name;
-                    document.getElementById('popup-email').innerHTML = email;
-                    document.getElementById('popup-number').innerHTML = phone_num;
+            if (permission === 'brigadnik') {
+                $("body").prepend(tooltip);
+                document.getElementById('popup-name').innerHTML = name;
+                document.getElementById('popup-email').innerHTML = email;
+                document.getElementById('popup-number').innerHTML = phone_num;
 
-                    $(this).mouseover(function (e) {
-                        $(this).css('z-index', 10000);
-                        $('#popup-info').fadeIn('500');
-                        $('#popup-info').fadeTo('10', 1.9);
-                    }).mousemove(function (e) {
+                $(this).mouseover(function (e) {
+                    $(this).css('z-index', 10000);
+                    $('#popup-info').fadeIn('500');
+                    $('#popup-info').fadeTo('10', 1.9);
+                }).mousemove(function (e) {
 
-                        $('#popup-info').css('top', e.pageY - 110);
-                        $('#popup-info').css('left', e.pageX + 20);
-                    });
-                }
+                    $('#popup-info').css('top', e.pageY - 110);
+                    $('#popup-info').css('left', e.pageX + 20);
+                });
             }
         },
 

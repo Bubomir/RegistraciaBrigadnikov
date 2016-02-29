@@ -223,7 +223,6 @@ if($type == 'change_number_of_logged_in'){
                     //Email content
 
                     $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email']; - tento mail sa posiela supervizorom na ich zmene
-
                     $subject = 'Přihlášení na pracovní směnu';
                     $message = "Brigádník: <strong>".$mail_name.'</strong> bol prihlašení na pracovní směnu dňa: <strong>'.$e_start_date.'</strong><br><br>
                     Kontaktní údaje brigádnika: <br>
@@ -255,18 +254,17 @@ if($type == 'change_number_of_logged_in'){
                 if($delete){
                     //Email content
 
-                    echo $email_to_Mail['p_Email'];
                     $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email'] - tento mail sa posiela supervizorom na ich zmene
                     $subject = 'Odhlášení s pracovní směny';
                     $message = "Brigádník: <strong>".$mail_name.'</strong> bol odhlášní s pracovní směny dňa: <strong>'.$e_start_date.'</strong><br><br>
                     Kontaktní údaje brigádnika: <br>
                     Email: '.$mail_email.' <br>
-                    tel.č: '.$mail_phone_num;
+                    tel.č: '.$mail_phone_num.'<br><br>
+                    Tento email bol poslaný zo stránky www.vtstudentplanner.cz';
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                    echo $message;
-                   // mail($to, $subject, $message, $headers);
 
+                    mail($to, $subject, $message, $headers);
 
                     $succes = array(
                         "status"=> "success",
@@ -431,7 +429,50 @@ if($type == 'addNotification'){
 
     $insert = mysqli_query($db,"INSERT INTO $table_notification (p_Email_KTO, p_Email_KOMU, p_Email_KOHO, Activity, Start_Date, TimeStamp) VALUES('$emailKTO','$emailKOMU','$emailKOHO','$activity','$startDate','$timeStamp')");
 
+
+    $result_mail_brig = mysqli_query($db, "SELECT First_Name, Surname, Change_Number FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date = '$startDate' AND Email = '$emailKOMU' ");
+    $fetch_mail_brig = mysqli_fetch_array($result_mail_brig,MYSQLI_ASSOC);
+    $master_name = $fetch_mail_brig['Change_Number'].' '.$fetch_mail_brig['Surname'].' '.$fetch_mail_brig['First_Name'];
+
+    $result_mail_master = mysqli_query($db, "SELECT First_Name, Surname, Mobile_Number FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date = '$startDate' AND Email = '$emailKOHO' ");
+    $fetch_mail_master = mysqli_fetch_array($result_mail_master,MYSQLI_ASSOC);
+
+    $brig_name = $fetch_mail_master['Surname'].' '.$fetch_mail_master['First_Name'];
+
     if ($insert){
+        if($activity == 'logIn'){
+            $to = $emailKOHO;   // tento mail sa posiela brigadnikom pri ich prihlaseni majstrom
+            $subject = 'Přihlášení na pracovní směnu';
+            $message = "Byli jse přihlášní na pracovní směnu <strong>'$master_name'</strong> dňa <strong>'$startDate'</strong><br><br>
+            Tento email bol poslaný zo stránky www.vtstudentplanner.cz";
+                        $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+
+            mail($to, $subject, $message, $headers);
+        }
+        if($activity == 'logOut'){
+            //SEND BRIGADNIK MAIL
+            $to = $emailKOHO;   // tento mail sa posiela brigadnikom pri ich prihlaseni majstrom
+            $subject = 'Odhlášení s pracovní směny';
+            $message = "Byli jse odhlášení s pracovní směny <strong>'$master_name'</strong> dňa <strong>'$startDate'</strong><br><br>
+            Tento email bol poslaný zo stránky www.vtstudentplanner.cz";
+            $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+            mail($to, $subject, $message, $headers);
+
+            //SEND MASTER MAIL
+            $to_2 = $emailKOMU;   //$email_to_Mail['p_Email']; - tento mail sa posiela supervizorom na ich zmene
+            $subject_2 = 'Odhlášení s pracovní směny';
+            $message_2 = "Brigádník: <strong>".$brig_name.'</strong> bol odhlšen s pracovní směny dňa: <strong>'.$startDate.'</strong><br><br>
+            Kontaktní údaje brigádnika: <br>
+            Email: '.$emailKOHO.' <br>
+            tel.č: '.$fetch_mail_master['Mobile_Number'].'<br><br>
+            Tento email bol poslaný zo stránky www.vtstudentplanner.cz';
+            $headers_2 = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+            mail($to_2, $subject_2, $message_2, $headers_2);
+        }
+
         echo 'success';
     }
     else{
