@@ -27,7 +27,8 @@ var loggedPermissions = $.ajax({
 
 $(document).ready(function () {
     "use strict";
-
+     //Define variables
+     var return_response;
     /**********************************************/
     /*************** ADD NOTIFICATIONS **************/
     /**********************************************/
@@ -39,27 +40,20 @@ $(document).ready(function () {
             type: 'POST',
             data: 'type=addNotification&email_KTO=' + loggedEmail.responseText + '&eventID=' + eventID + '&activity=' + activity,
             async: false,
-            success: function (data) {
+            done: function (data) {
                 return data;
-
             }
         });
-
     }
-
-
 
     /**********************************************/
     /*************** RENDER EVENTS*****************/
     /**********************************************/
 
-    //Define variables
-    var return_response;
 
     function getFreshEvents() {
 
-        var freshevents,
-            start_month,
+        var start_month,
             end_month;
 
         start_month = moment($('#calendar').fullCalendar('getView').start._d).format('YYYY-MM-DD HH:mm:ss');
@@ -70,17 +64,17 @@ $(document).ready(function () {
             type: 'POST', // Send post data
             data: 'type=fetch&start_month=' + start_month + '&end_month=' + end_month,
             async: false,
-            success: function (s) {
-                freshevents = s;
+            done: function (s) {
                 return s;
             }
         });
-
-        $('#calendar').fullCalendar('addEventSource', JSON.parse(freshevents));
+        $('#calendar').fullCalendar('addEventSource', JSON.parse(return_response.responseText));
     }
+
     /*************************************************/
     /***************REFRESH EVENTS *******************/
     /*************************************************/
+
     function refreshEvents() {
         $('#calendar').fullCalendar('removeEvents');
         getFreshEvents();
@@ -101,7 +95,7 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             async: false,
-            success: function (response) {
+            done: function (response) {
                 return response;
             },
             error: function (e) {
@@ -109,20 +103,20 @@ $(document).ready(function () {
             }
         });
 
-    //console.log('dsads', return_response.responseText);
+        //console.log('dsads', return_response.responseText);
 
         if (return_response.responseText == 0) {
 
             swal({
-                title: "Smazat?",
-                text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "orange",
-                confirmButtonText: "Smazat",
-                cancelButtonText: "Zrušit",
-                closeOnConfirm: false
-            },
+                    title: "Smazat?",
+                    text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "orange",
+                    confirmButtonText: "Smazat",
+                    cancelButtonText: "Zrušit",
+                    closeOnConfirm: false
+                },
                 function (isConfirm) {
                     if (isConfirm) {
                         //CREATE NOTIFICATION
@@ -134,14 +128,13 @@ $(document).ready(function () {
                             type: 'POST',
                             dataType: 'json',
                             async: false,
-                            success: function (response) {
+                            done: function (response) {
                                 return response;
                             },
                             error: function (e) {
                                 window.console.log(e.responseText);
                             }
                         });
-
 
                         if ('success' === return_response.responseText) {
                             swal({
@@ -156,11 +149,9 @@ $(document).ready(function () {
                         } else {
                             window.alert('chyba pri zmazavani');
                         }
-
                     }
                 }
-
-                );
+            );
         } else {
             swal({
                 title: "Chyba...",
@@ -171,6 +162,7 @@ $(document).ready(function () {
             refreshEvents();
         }
     }
+
     /**********************************************/
     /*************** ADD EVENTS********************/
     /**********************************************/
@@ -184,7 +176,7 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             async: false,
-            success: function (response) {
+            done: function (response) {
                 return response;
             },
             error: function (e) {
@@ -199,7 +191,7 @@ $(document).ready(function () {
                 type: 'POST',
                 dataType: 'json',
                 async: false,
-                success: function (response) {
+                done: function (response) {
                     return response;
                 },
                 error: function (e) {
@@ -207,8 +199,8 @@ $(document).ready(function () {
                 }
 
             });
-
             refreshEvents();
+
         } else {
             refreshEvents();
             swal({
@@ -220,10 +212,10 @@ $(document).ready(function () {
         }
     }
 
+    /**********************************************/
+    /*********** Log In Log Out EVENTS ************/
+    /**********************************************/
 
-    /**********************************************/
-    /*********** Log In Log Out EVENTS *************/
-    /**********************************************/
     function loggedInUpdate(event, email, logIn_logOut) {
         var return_response;
         return_response = $.ajax({
@@ -232,14 +224,13 @@ $(document).ready(function () {
             type: 'POST',
             dataType: 'json',
             async: false,
-            success: function (response) {
+            done: function (response) {
                 return response;
             },
             error: function (e) {
                 window.console.log(e.responseText);
             }
         });
-
         refreshEvents();
     }
 
@@ -255,8 +246,7 @@ $(document).ready(function () {
                     var eventId = divObject[i].dataset.event_id;
                     var eventStartDate = divObject[i].dataset.start;
 
-                        //console.log(divObject);
-                        swal({
+                    swal({
                             title: "Přihlásit?",
                             text: "Zvolený brigádník bude přihlášen na tuto změnu.",
                             type: "warning",
@@ -267,7 +257,7 @@ $(document).ready(function () {
                             closeOnConfirm: false,
                             closeOnCancel: false
                         },
-                        function(isConfirm){
+                        function (isConfirm) {
                             if (isConfirm) {
                                 var return_response = $.ajax({
                                     url: 'process.php',
@@ -275,7 +265,7 @@ $(document).ready(function () {
                                     type: 'POST',
                                     dataType: 'json',
                                     async: false,
-                                    success: function (response) {
+                                    done: function (response) {
                                         return response;
                                     },
                                     error: function (e) {
@@ -289,15 +279,15 @@ $(document).ready(function () {
                                 refreshEvents();
                                 //render list of brigadnici
                                 swal({
-                                    title: "Přihlášen!",
-                                    text: "Brigádník byl přihlášen na tuto změnu.",
-                                    type: "success",
-                                    confirmButtonColor: "#005200",
-                                    closeOnConfirm: false
-                                },
-                                function(){
-                                   brigadniciListRender(eventId, eventStartDate);
-                                });
+                                        title: "Přihlášen!",
+                                        text: "Brigádník byl přihlášen na tuto změnu.",
+                                        type: "success",
+                                        confirmButtonColor: "#005200",
+                                        closeOnConfirm: false
+                                    },
+                                    function () {
+                                        brigadniciListRender(eventId, eventStartDate);
+                                    });
 
                             } else {
                                 brigadniciListRender(eventId, eventStartDate);
@@ -320,7 +310,7 @@ $(document).ready(function () {
                     return response;
                 }
             });
-            swal({
+        swal({
                 title: "Seznam brigádníků<br><small>na přihlášení</small>",
                 text: '<div style="height: 250px; overflow-y:scroll;">' + brigadniciListResponse.responseText + '</div>',
                 html: true,
@@ -330,76 +320,76 @@ $(document).ready(function () {
                 cancelButtonText: "Smazat",
                 closeOnCancel: false
             },
-            function(isConfirm){
-                if(isConfirm){
+            function (isConfirm) {
+                if (isConfirm) {
 
                 } else {
                     swal({
-                        title: "Smazat?",
-                        text: "Opravdu chcete smazat tento brigádně event?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "orange",
-                        confirmButtonText: "Smazat",
-                        cancelButtonText: "Zrušit",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                         function(isConfirm){
-                        if (isConfirm) {
-                            $.ajax({
-                             url: 'process.php',
-                             type: 'POST',
-                             data: 'type=changeCapacity&eventID=' + eventID + '&capacity=' + 0,
-                             async: false,
-                             success: function (msg) {
-                                refreshEvents();
-                                swal({
-                                     title: "Smazáno!",
-                                     text: "Brigádně event z této změny byl smazán.",
-                                     type: "success",
-                                     confirmButtonColor: "#005200"
-                                 });
-                             },
-                             error: function (obj, text, error) {
-                                 swal({
-                                     title: "Nelze smazat!",
-                                     text: "Nejprve je třeba odhlásit všech brigádníků!!",
-                                     type: "error",
-                                     confirmButtonColor: "#d62633",
-                                     closeOnConfirm: false
-                                 },
-                                 function(){
-                                    brigadniciListRender(eventID, eventStartDate);
-                                 });
-                             }
-                         });
-                        } else {
-                            brigadniciListRender(eventID, eventStartDate);
-                        }
-                    });
+                            title: "Smazat?",
+                            text: "Opravdu chcete smazat tento brigádně event?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "orange",
+                            confirmButtonText: "Smazat",
+                            cancelButtonText: "Zrušit",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    url: 'process.php',
+                                    type: 'POST',
+                                    data: 'type=changeCapacity&eventID=' + eventID + '&capacity=' + 0,
+                                    async: false,
+                                    done: function (msg) {
+                                        refreshEvents();
+                                        swal({
+                                            title: "Smazáno!",
+                                            text: "Brigádně event z této změny byl smazán.",
+                                            type: "success",
+                                            confirmButtonColor: "#005200"
+                                        });
+                                    },
+                                    error: function (obj, text, error) {
+                                        swal({
+                                                title: "Nelze smazat!",
+                                                text: "Nejprve je třeba odhlásit všech brigádníků!!",
+                                                type: "error",
+                                                confirmButtonColor: "#d62633",
+                                                closeOnConfirm: false
+                                            },
+                                            function () {
+                                                brigadniciListRender(eventID, eventStartDate);
+                                            });
+                                    }
+                                });
+                            } else {
+                                brigadniciListRender(eventID, eventStartDate);
+                            }
+                        });
                 }
             });
 
-            //feed new elements for log in on event
-            elements = document.getElementsByClassName('brigLogIn2');
-            brigadniciClickLogIn(elements);
+        //feed new elements for log in on event
+        elements = document.getElementsByClassName('brigLogIn2');
+        brigadniciClickLogIn(elements);
 
     }
-
 
     /***********************************************************************/
     /********************* Checking multiple Log In ************************/
     /***********************************************************************/
+
     function ajaxCall() {
+
         var returndata = $.ajax({
             url: 'process.php',
             type: 'POST',
             data: 'type=session_check',
             async: false,
-            success: function (data) {
+            done: function (data) {
                 return data;
-
             }
         });
 
@@ -419,12 +409,8 @@ $(document).ready(function () {
             });
             */
             window.location.replace("index.php");
-
         }
-
     }
-
-
 
     /* initialize the external events */
     $('#external-events .fc-event ').each(function () {
@@ -443,8 +429,12 @@ $(document).ready(function () {
             revertDuration: 0 //  original position after the drag
         });
     });
-    /* initialize the calendar
-    -----------------------------------------------------------------*/
+
+    /*---------------------------------------------------------------------*/
+    /***********************************************************************/
+    /********************* initialize the calendar ************************/
+    /***********************************************************************/
+    /*---------------------------------------------------------------------*/
 
     $('#calendar').fullCalendar({
         utc: true,
@@ -457,7 +447,7 @@ $(document).ready(function () {
         droppable: true,
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
-        //Remove time from event
+        //Remove time from events
         eventRender: function (event, element) {
             $(element).find(".fc-time").remove();
         },
@@ -480,7 +470,6 @@ $(document).ready(function () {
                     dataType: 'json',
                     async: false,
                     done: function (response) {
-
                         return response;
                     }
                 }),
@@ -506,19 +495,16 @@ $(document).ready(function () {
                     $('#popup-info').fadeTo('10', 1.9);
                 }).mousemove(function (e) {
 
-                    $('#popup-info').css('top', e.pageY -110);
-
+                    $('#popup-info').css('top', e.pageY - 110);
                     $('#popup-info').css('left', e.pageX + 20);
                 });
             }
         },
 
-
         eventMouseout: function () {
             $(this).css('z-index', 8);
             $('#popup-info').detach();
         },
-
 
         /**********************************************/
         /*************** ADD EVENTS********************/
@@ -550,7 +536,7 @@ $(document).ready(function () {
                     if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
                         if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
 
-                            eventAdd(event, '9999');
+                            eventAdd(event, '9999');    //capacity 9999
 
                             // UPOZORNENIE !!!
                             //sluz na nastavovanie kapacity brigadnikov na smeny nepouzite pretoze firma si neziadala tuto funkcionalitu
@@ -600,7 +586,6 @@ $(document).ready(function () {
                             eventAdd(event, null);
                         }
                     } else {
-
                         swal({
                             title: "Chyba...",
                             text: "Změnu nelze přidat!",
@@ -610,7 +595,6 @@ $(document).ready(function () {
                         refreshEvents();
                     }
                 } else {
-
                     swal({
                         title: "Chyba...",
                         text: "Duplicitní zápis!",
@@ -622,9 +606,9 @@ $(document).ready(function () {
             }
         },
 
-        /**********************************************/
-        /*************** CLICK EVENTS******************/
-        /**********************************************/
+        /****************************************************/
+        /****************** CLICK EVENTS*********************/
+        /****************************************************/
 
         eventClick: function (event, jsEvent, view) {
 
@@ -648,7 +632,6 @@ $(document).ready(function () {
                         return response;
                     }
                 }).responseText;
-
 
                 email = $.ajax({
                     type: 'POST',
@@ -839,11 +822,9 @@ $(document).ready(function () {
 
                     } else {
 
-
                         if (permissions === 'admin') {
 
                             deleteEvent(event, permissions);
-
 
                         } else {
                             checkingForDelete = $.ajax({
@@ -865,11 +846,8 @@ $(document).ready(function () {
                                 });
                             } else {
                                 deleteEvent(event, permissions);
-
                             }
-
                         }
-
                     }
                 }
             }
