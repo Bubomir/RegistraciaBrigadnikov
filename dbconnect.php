@@ -2,9 +2,9 @@
        
     //Database login parameters
     $dbhost = 'localhost';
-    $dbuser = 'db_visko';
-    $dbpass = 'oKQo7AhGi3';
-    $dbname = 'db_visko';
+    $dbuser = 'root';
+    $dbpass = '';
+    $dbname = 'bubo';
 
     //Create connection
     $db = mysqli_connect($dbhost,$dbuser,$dbpass);
