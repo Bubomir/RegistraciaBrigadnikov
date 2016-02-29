@@ -125,9 +125,7 @@
                                     </select>
                                 </label>
                                 <label>Rok:
-                                    <select name="year" id="year"  class="select-style">
-                                        <option name="01" value="rwerwe">teest</option>
-                                    </select>
+                                    <select id="year"  class="select-style"></select>
                                 </label>
                                 <label>Měsíc:
                                     <select id="month"  class="select-style">

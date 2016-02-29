@@ -322,7 +322,6 @@ $(document).ready(function () {
             },
             function (isConfirm) {
                 if (isConfirm) {
-
                 } else {
                     swal({
                             title: "Smazat?",
