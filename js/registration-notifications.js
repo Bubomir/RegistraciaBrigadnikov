@@ -1,7 +1,7 @@
 
 
 var $;
-var start = 2015;
+var start = 2016;
 var end = new Date().getFullYear();
 var currentMonth = ("0" + (new Date().getMonth() + 1));
 var options = "";
@@ -144,14 +144,19 @@ $(document).ready(function () {
             $('#numberOfChange').slideUp(500, function () {
                 $('#numberOfChange').hide();
             });
+            numberOfChange = 0;
         } else if ($isRegistered == 2) {
             $('.alert').hide().slideDown(500);
             document.getElementById('alert-message').innerHTML = "Uživatel s tímto e-mailem již existuje!!";
+            numberOfChange = 0;
         } else if ($isRegistered == 3) {
             $('.alert').hide().slideDown(500);
+             document.getElementById('alert-message').innerHTML = "Nastala chyba pri registraci!!";
+            numberOfChange = 0;
         } else if ($isRegistered == 4) {
             $('.alert').hide().slideDown(500);
             document.getElementById('alert-message').innerHTML = "Uživatel s touto smenou již existuje!!";
+            numberOfChange = 0;
         }
         // stop the form from submitting the normal way and refreshing the page
         event.preventDefault();

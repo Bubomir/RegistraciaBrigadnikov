@@ -221,8 +221,12 @@ if($type == 'change_number_of_logged_in'){
                 //Sending mail
                 if($insert){
                     //Email content
+<<<<<<< HEAD
 
                     $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email']; - tento mail sa posiela supervizorom na ich zmene
+=======
+                    $to = $email_to_Mail;   //$email_to_Mail - tento mail sa posiela supervizorom na ich zmene
+>>>>>>> origin/master
                     $subject = 'Přihlášení na pracovní směnu';
                     $message = "Brigádník: <strong>".$mail_name.'</strong> bol prihlašení na pracovní směnu dňa: <strong>'.$e_start_date.'</strong><br><br>
                     Kontaktní údaje brigádnika: <br>
@@ -253,6 +257,7 @@ if($type == 'change_number_of_logged_in'){
                 //Sending mail
                 if($delete){
                     //Email content
+<<<<<<< HEAD
                     echo $email_to_Mail['p_Email'];
                     $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email'] - tento mail sa posiela supervizorom na ich zmene
                     $subject = 'Odhlášení s pracovní směny';
@@ -264,6 +269,14 @@ if($type == 'change_number_of_logged_in'){
 
                     echo $message;
                    // mail($to, $subject, $message, $headers);
+=======
+                    $to = $email_to_Mail;   //$email_to_Mail - tento mail sa posiela supervizorom na ich zmene
+                    $subject = 'Přihlášení na pracovní směnu';
+                    $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
+                    $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+
+                    mail($to, $subject, $message, $headers);
+>>>>>>> origin/master
 
                     $succes = array(
                         "status"=> "success",
