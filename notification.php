@@ -1,9 +1,13 @@
 <?php
 include_once 'dbconnect.php';
 
-     $start_date = $_POST['interval'];
-     $activity = $_POST['activity'];
-     $end_date = date('Y-m-d', strtotime($start_date." + 1 Month"));
+    $start_date = $_POST['interval'];
+    $activity = $_POST['activity'];
+
+    $start_date = date('Y-m-d', strtotime($start_date));
+    $end_date = date('Y-m-d', strtotime($start_date." + 1 Month"));
+
+echo $start_date.' '.$end_date;
 
 
 
