@@ -18,8 +18,8 @@
 <script src='js/calendar/jquery-ui.custom.min.js'></script>
 <script src='js/calendar/fullcalendar.min.js'></script>
 <script src='../js/calendar/lang/cs.js'></script>
-<script src="js/attendanceCalendar.js"></script>
-<script src="js/stickyFooter.js"></script>
+<script src="js/attendancecalendar.js"></script>
+<script src="js/stickyfooter.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </body>
 
