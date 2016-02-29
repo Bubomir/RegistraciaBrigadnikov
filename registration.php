@@ -16,7 +16,7 @@
     $alertRegFail = 3;
     $alertChange_Num = 4;
 
-    if($permission == 'non-supervizor' || $permission == 'non-admin' || $permission == 'non-brigadnik'){
+    if($permission == 'non-supervizor'){
         $result_change_num = mysqli_query($db,"SELECT User_ID FROM $table_employees WHERE Change_Number = '$change_number' ");
         if(mysqli_num_rows($result_change_num) == 0){
 
@@ -32,7 +32,7 @@
                     $subject = 'Vytvoření hesla pro váš účet';
                     $message = "Přihlašovací e-mail: $email <br><br>
                     Zde klikněte nebo vložte tento link do vašeho prohlížeč pro vytvoření vašeho hesla a dokončení vaší registrace: <br>
-                    http://vtstudentplanner.cz/createPass.php?tempPass=$tempPass&email=$email";
+                    http://vtstudentplanner.cz/create_pass.php?tempPass=$tempPass&email=$email";
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
                     mail($to, $subject, $message, $headers);
@@ -63,7 +63,7 @@
                     $message = "Byl vám vytvořen účet na stránke www.vtstudentplanner.cz, pro vytvoření hesla a aktivaci účtu je potrebné kliknout na link<br><br>
                     Přihlašovací e-mail: $email <br><br>
                     Zde klikněte nebo vložte tento link do vašeho prohlížeč pro vytvoření vašeho hesla a dokončení vaší registrace: <br>
-                    http://vtstudentplanner.cz/createPass.php?tempPass=$tempPass&email=$email";
+                    http://vtstudentplanner.cz/create_pass.php?tempPass=$tempPass&email=$email";
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
                     mail($to, $subject, $message, $headers);
