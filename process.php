@@ -220,12 +220,12 @@ if($type == 'change_number_of_logged_in'){
                 //Sending mail
                 if($insert){
                     //Email content
-                    $to = 'bubomirxxx@gmail.com';   //$email_to_Mail
+                    $to = $email_to_Mail;   //$email_to_Mail - tento mail sa posiela supervizorom na ich zmene
                     $subject = 'Přihlášení na pracovní směnu';
                     $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                    //mail($to, $subject, $message, $headers);
+                    mail($to, $subject, $message, $headers);
 
                     $succes = array(
                          "status"=> "success",
@@ -248,12 +248,12 @@ if($type == 'change_number_of_logged_in'){
                 //Sending mail
                 if($delete){
                     //Email content
-                    $to = 'bubomirxxx@gmail.com';   //$email_to_Mail
+                    $to = $email_to_Mail;   //$email_to_Mail - tento mail sa posiela supervizorom na ich zmene
                     $subject = 'Přihlášení na pracovní směnu';
                     $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                    //mail($to, $subject, $message, $headers);
+                    mail($to, $subject, $message, $headers);
 
                     $succes = array(
                         "status"=> "success",
