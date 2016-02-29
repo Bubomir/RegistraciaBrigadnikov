@@ -506,11 +506,9 @@ $(document).ready(function () {
                     $('#popup-info').fadeIn('500');
                     $('#popup-info').fadeTo('10', 1.9);
                 }).mousemove(function (e) {
-<<<<<<< HEAD
-                    $('#popup-info').css('top', e.pageY - 100);
-=======
+
                     $('#popup-info').css('top', e.pageY -110);
->>>>>>> origin/master
+
                     $('#popup-info').css('left', e.pageX + 20);
                 });
             }
