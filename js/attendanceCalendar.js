@@ -44,7 +44,7 @@ $(document).ready(function () {
 
             }
         });
-        console.log('vdsvdv', returndata.responseText);
+
     }
 
 
@@ -114,15 +114,15 @@ $(document).ready(function () {
         if (return_response.responseText == 0) {
 
             swal({
-                    title: "Smazat?",
-                    text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "orange",
-                    confirmButtonText: "Smazat",
-                    cancelButtonText: "Zrušit",
-                    closeOnConfirm: false
-                },
+                title: "Smazat?",
+                text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "orange",
+                confirmButtonText: "Smazat",
+                cancelButtonText: "Zrušit",
+                closeOnConfirm: false
+            },
                 function (isConfirm) {
                     if (isConfirm) {
                         //CREATE NOTIFICATION
@@ -160,7 +160,7 @@ $(document).ready(function () {
                     }
                 }
 
-            );
+                );
         } else {
             swal({
                 title: "Chyba...",
@@ -176,9 +176,9 @@ $(document).ready(function () {
     /**********************************************/
 
     function eventAdd(event, capacity) {
-
+        var return_response;
         /*check if can be add brig event*/
-        var return_response = $.ajax({
+        return_response = $.ajax({
             url: 'process.php',
             data: 'type=canAdd&start_date=' + event.start.format() + '&emailHash=' + event.description,
             type: 'POST',
@@ -193,7 +193,7 @@ $(document).ready(function () {
         });
 
         if (return_response.responseText == 1) {
-            var return_response = $.ajax({
+            return_response = $.ajax({
                 url: 'process.php',
                 data: 'type=new&email=' + event.description + '&start_date=' + event.start.format() + '&capacity=' + capacity + '&logged_in=' + '0' + '&color=' + event.color,
                 type: 'POST',
@@ -209,8 +209,7 @@ $(document).ready(function () {
             });
 
             refreshEvents();
-        }
-        else{
+        } else {
             refreshEvents();
             swal({
                 title: "Chyba...",
@@ -240,7 +239,7 @@ $(document).ready(function () {
                 window.console.log(e.responseText);
             }
         });
-        console.log("fdsf", return_response.responseText);
+
         refreshEvents();
     }
 
