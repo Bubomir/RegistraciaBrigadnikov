@@ -211,7 +211,13 @@ $(document).ready(function () {
             refreshEvents();
         }
         else{
-            window.alert("najprv pridaj majstra");
+            refreshEvents();
+            swal({
+                title: "Chyba...",
+                text: "Aby bylo možné přidat brigádníky je zapotřebí vytvořena změna!",
+                type: "error",
+                confirmButtonColor: "#d62633"
+            });
         }
     }
 
@@ -500,7 +506,11 @@ $(document).ready(function () {
                     $('#popup-info').fadeIn('500');
                     $('#popup-info').fadeTo('10', 1.9);
                 }).mousemove(function (e) {
+<<<<<<< HEAD
                     $('#popup-info').css('top', e.pageY - 100);
+=======
+                    $('#popup-info').css('top', e.pageY -110);
+>>>>>>> origin/master
                     $('#popup-info').css('left', e.pageX + 20);
                 });
             }
@@ -850,7 +860,12 @@ $(document).ready(function () {
                                 }
                             });
                             if (checkingForDelete.responseText === 'supervizor') {
-                                window.alert('nemas prava na vymazamnioe');
+                                swal({
+                                    title: "Chyba...",
+                                    text: "Pouze správce může změnit nebo vymazat změny!",
+                                    type: "error",
+                                    confirmButtonColor: "#d62633"
+                                });
                             } else {
                                 deleteEvent(event, permissions);
 
