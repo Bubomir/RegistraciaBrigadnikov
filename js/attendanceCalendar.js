@@ -99,7 +99,7 @@ $(document).ready(function () {
                 return response;
             },
             error: function (e) {
-                window.console.log(e.responseText);
+                //window.console.log(e.responseText);
             }
         });
 
@@ -132,7 +132,7 @@ $(document).ready(function () {
                                 return response;
                             },
                             error: function (e) {
-                                window.console.log(e.responseText);
+                                //window.console.log(e.responseText);
                             }
                         });
 
@@ -155,7 +155,7 @@ $(document).ready(function () {
         } else {
             swal({
                 title: "Chyba...",
-                text: "Je potrebné odhlásiť všetkych brigádnikov a vymazať brigádnicky event!",
+                text: "Pred zmazaním zmeny le potrebné odhlásiť všetkych brigádnikov a vymazať brigádnicky event!",
                 type: "error",
                 confirmButtonColor: "#d62633"
             });
@@ -180,7 +180,7 @@ $(document).ready(function () {
                 return response;
             },
             error: function (e) {
-                window.console.log(e.responseText);
+               // window.console.log(e.responseText);
             }
         });
 
@@ -228,9 +228,10 @@ $(document).ready(function () {
                 return response;
             },
             error: function (e) {
-                window.console.log(e.responseText);
+               // window.console.log(e.responseText);
             }
         });
+
         refreshEvents();
     }
 
@@ -269,7 +270,7 @@ $(document).ready(function () {
                                         return response;
                                     },
                                     error: function (e) {
-                                        window.console.log(e.responseText);
+                                       // window.console.log(e.responseText);
                                     }
                                 });
                                 var newEventID = JSON.parse(return_response.responseText);

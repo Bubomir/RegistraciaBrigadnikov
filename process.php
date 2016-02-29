@@ -204,6 +204,7 @@ if($type == 'change_number_of_logged_in'){
     $mail_email = $data['Email'];
     $mail_phone_num =  $data['Mobile_Number'];
 
+
     //echo $mail_name.' '.$mail_email.' '.$mail_phone_num;
 
     switch($logIn_logOut){
@@ -220,12 +221,16 @@ if($type == 'change_number_of_logged_in'){
                 //Sending mail
                 if($insert){
                     //Email content
-                    $to = 'bubomirxxx@gmail.com';   //$email_to_Mail
+
+                    $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email']; - tento mail sa posiela supervizorom na ich zmene
                     $subject = 'Přihlášení na pracovní směnu';
-                    $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
+                    $message = "Brigádník: <strong>".$mail_name.'</strong> bol prihlašení na pracovní směnu dňa: <strong>'.$e_start_date.'</strong><br><br>
+                    Kontaktní údaje brigádnika: <br>
+                    Email: '.$mail_email.' <br>
+                    tel.č: '.$mail_phone_num;
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                    //mail($to, $subject, $message, $headers);
+                    mail($to, $subject, $message, $headers);
 
                     $succes = array(
                          "status"=> "success",
@@ -248,12 +253,17 @@ if($type == 'change_number_of_logged_in'){
                 //Sending mail
                 if($delete){
                     //Email content
-                    $to = 'bubomirxxx@gmail.com';   //$email_to_Mail
-                    $subject = 'Přihlášení na pracovní směnu';
-                    $message = "Brigadnik ".$mail_name.' kontaktne udaje: Email: '.$mail_email.' tel.c: '.$mail_phone_num;
+                    echo $email_to_Mail['p_Email'];
+                    $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email'] - tento mail sa posiela supervizorom na ich zmene
+                    $subject = 'Odhlášení s pracovní směny';
+                    $message = "Brigádník: <strong>".$mail_name.'</strong> bol odhlášní s pracovní směny dňa: <strong>'.$e_start_date.'</strong><br><br>
+                    Kontaktní údaje brigádnika: <br>
+                    Email: '.$mail_email.' <br>
+                    tel.č: '.$mail_phone_num;
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                    //mail($to, $subject, $message, $headers);
+                    echo $message;
+                   // mail($to, $subject, $message, $headers);
 
                     $succes = array(
                         "status"=> "success",
