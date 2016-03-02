@@ -1,8 +1,8 @@
 var $,
     moment,
-    swal;
+    swal,
+    mouseOverData;
 var tooltip = $('#popup-info').detach();
-
 
 var loggedAjaxData = $.ajax({
     type: 'POST',
@@ -64,6 +64,8 @@ $(document).ready(function () {
             }
         });
         $('#calendar').fullCalendar('addEventSource', JSON.parse(return_response.responseText));
+
+        return JSON.parse(return_response.responseText);
     }
 
     /*************************************************/
@@ -72,10 +74,10 @@ $(document).ready(function () {
 
     function refreshEvents() {
         $('#calendar').fullCalendar('removeEvents');
-        getFreshEvents();
+       var data = getFreshEvents();
         $('#calendar').fullCalendar('updateEvents');
         $('#calendar').fullCalendar('rerenderEvents');
-
+        return data;
     }
     /**********************************************/
     /*************** DELETE EVENTS*****************/
@@ -406,6 +408,14 @@ $(document).ready(function () {
         }
     }
 
+    function setMouseOverData(data) {
+        mouseOverData = data;
+    }
+
+    function getMouseOverData() {
+        return mouseOverData;
+    }
+
     /* initialize the external events */
     $('#external-events .fc-event ').each(function () {
         // store data so the calendar knows to render an event upon drop
@@ -452,29 +462,25 @@ $(document).ready(function () {
 
         events: function () {
             if (ajaxCall() !== 'success') {
-                refreshEvents();
+                var mOverData = refreshEvents();
+                setMouseOverData(mOverData);
             }
         },
 
         eventMouseover: function (event) {
 
             if (loggedData.permission !== 'brigadnik') {
-                var mouseOverResponse = $.ajax({
-                        type: 'POST',
-                        url: 'process.php',
-                        data: 'type=mouseOver&eventID=' + event.id,
-                        dataType: 'json',
-                        async: false,
-                        success: function (response) {
-                            return response;
-                        }
-                    }),
 
-                    mouseOver = JSON.parse(mouseOverResponse.responseText),
-                    name = mouseOver[0].Name,
-                    email = mouseOver[0].Email,
-                    phone_num = mouseOver[0].Phone_num,
-                    permission = mouseOver[0].Permissions;
+                var mouseData = getMouseOverData();
+
+                for (var i = 0; i < mouseData.length; i++) {
+                    if (mouseData[i].id == event.id) {
+                        var name = mouseData[i].Name;
+                        var email = mouseData[i].Email;
+                        var phone_num = mouseData[i].Phone_num;
+                        var permission = mouseData[i].Permissions;
+                    }
+                }
 
 
                 //var tooltip = document.getElementById('popup-info');

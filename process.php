@@ -328,7 +328,7 @@ if($type == 'fetch'){
     $start_month = $_POST['start_month'];
     $end_month = $_POST['end_month'];
 	$events = array();
-	$query = mysqli_query($db, "SELECT ID, Permissions, p_Email, First_Name, Surname, Change_Number, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date BETWEEN '$start_month' AND '$end_month' ");
+	$query = mysqli_query($db, "SELECT ID, Email, Mobile_Number, Permissions, p_Email, First_Name, Surname, Change_Number, Logged_In, Capacity, Start_Date, Color FROM $table_calendar INNER JOIN $table_employees ON $table_employees.Email = $table_calendar.p_Email WHERE Start_Date BETWEEN '$start_month' AND '$end_month' ");
 
         while($fetch = mysqli_fetch_array($query,MYSQLI_ASSOC)){
 
@@ -367,6 +367,12 @@ if($type == 'fetch'){
      
         $e['start'] = $fetch['Start_Date'];
         $e['color'] = $fetch['Color'];
+
+        $e['Name'] = $fetch['Surname'].' '.$fetch['First_Name'];
+        $e['Permissions'] = $fetch['Permissions'];
+        $e['Email'] = $fetch['Email'];
+        $e['Phone_num'] = $fetch['Mobile_Number'];
+
        array_push($events, $e);
 	}   
     
@@ -391,22 +397,6 @@ if($type == 'get_loggedData'){
 }
 
 
-if($type == 'mouseOver'){
-    $mouse_over_id = $_POST['eventID'];
-    $query = mysqli_query($db, "SELECT First_Name, Surname, Permissions, Email, Mobile_Number FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$mouse_over_id'");
-    $fetch = mysqli_fetch_array($query);
-
-    $e = array();
-    $event_array = array();
-    $e['Name'] = $fetch['Surname'].' '.$fetch['First_Name'];
-    $e['Permissions'] = $fetch['Permissions'];
-    $e['Email'] = $fetch['Email'];
-    $e['Phone_num'] = $fetch['Mobile_Number'];
-
-
-    array_push($event_array, $e);
-    echo json_encode($event_array);
-}
 if($type == 'checkingForDelete'){
     $eventID = $_POST['eventID'];
     $query = mysqli_query($db, "SELECT * FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$eventID'");
