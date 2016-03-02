@@ -12,13 +12,12 @@
 <script src="js/jquery.js"></script>
 <script src="js/foundation.js"></script>
 <script src="js/app.js"></script>
-<!-- <script src="js/registration-notifications.js"></script> -->
 <script src='js/calendar/moment.min.js'></script>
 <script src='js/jquery.min.js'></script>
 <script src='js/calendar/jquery-ui.custom.min.js'></script>
 <script src='js/calendar/fullcalendar.min.js'></script>
 <script src='../js/calendar/lang/cs.js'></script>
-<script src="js/attendancecalendar.js"></script>
+<script src="js/attendance_calendar.js"></script>
 <script src="js/stickyfooter.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </body>
