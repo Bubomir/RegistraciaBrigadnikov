@@ -1,4 +1,4 @@
-
+/*
 
 var $;
 var start = 2016;
@@ -172,3 +172,4 @@ $('button[name=btn-close]').click(function () {
     $('.alert').hide();
     $('#numberOfChange').hide();
 });
+*/

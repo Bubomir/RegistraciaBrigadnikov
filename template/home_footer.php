@@ -12,7 +12,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/foundation.js"></script>
 <script src="js/app.js"></script>
-<script src="js/registration-notifications.js"></script>
+<!-- <script src="js/registration-notifications.js"></script> -->
 <script src='js/calendar/moment.min.js'></script>
 <script src='js/jquery.min.js'></script>
 <script src='js/calendar/jquery-ui.custom.min.js'></script>
