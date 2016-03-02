@@ -133,29 +133,37 @@ if($type == 'changeCapacity')
         }
     }
 }
-if($type == 'check_log_in_log_out'){
+if($type == 'check_data'){
     $event_id = $_POST['event_id'];
     $email = $_POST['email'];
-    $query = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE ID='$event_id'");
-    $fetch = mysqli_fetch_array($query);
-    $e_start_date = $fetch['Start_Date'];
 
-    $result = mysqli_query($db,"SELECT ID FROM $table_calendar WHERE Start_Date='$e_start_date' AND p_Email='$email'");
-    $count = mysqli_num_rows($result);
+    $query_check_logIN_logOUT = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE ID='$event_id'");
+    $fetch_check_logIN_logOUT = mysqli_fetch_array($query_check_logIN_logOUT);
+    $e_start_date = $fetch_check_logIN_logOUT['Start_Date'];
 
-    echo $count;
-}
-if($type == 'check_interval_time'){
-    $event_id = $_POST['event_id'];
-    $query = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE ID='$event_id'");
-    $fetch = mysqli_fetch_array($query);
-    $e_start_date = $fetch['Start_Date'];
+    $result_check_logIN_logOUT = mysqli_query($db,"SELECT ID FROM $table_calendar WHERE Start_Date='$e_start_date' AND p_Email='$email'");
+    $count_check_logIN_logOUT = mysqli_num_rows($result_check_logIN_logOUT);
+
+
+    $query_interval_time = mysqli_query($db, "SELECT Start_Date FROM $table_calendar WHERE ID='$event_id'");
+    $fetch_interval_time = mysqli_fetch_array($query_interval_time);
+    $e_start_date = $fetch_interval_time['Start_Date'];
 
     $click_time = new DateTime($e_start_date);
     $current_time = new DateTime(date('c'));
     $interval_time = $current_time->diff($click_time);
-    echo ((int)($interval_time->format('%a')));
+
+    $final_interval= ((int)($interval_time->format('%a')));
+
+     $check_data = array(
+         "logIN_logOUT"=> "$count_check_logIN_logOUT",
+         "interval"=> "$final_interval"
+     );
+    echo json_encode($check_data);
+
+
 }
+
 
 if($type == 'change_number_of_logged_in'){
 	$event_id = $_POST['event_id'];
@@ -364,22 +372,25 @@ if($type == 'fetch'){
     
 	echo json_encode($events);
 }
-
-if($type == 'get_loggedEmail'){
+if($type == 'get_loggedData'){
     session_start();
 
-    $result=mysqli_query($db,"SELECT Email FROM $table_employees WHERE User_ID=".$_SESSION['user']);
-    $userRow=mysqli_fetch_array($result);
-    echo $userRow['Email'];
+    $result_permission = mysqli_query($db,"SELECT Permissions FROM $table_employees WHERE User_ID=".$_SESSION['user']);
+    $fetch_permission = mysqli_fetch_array($result_permission);
+
+    $result_email = mysqli_query($db,"SELECT Email FROM $table_employees WHERE User_ID=".$_SESSION['user']);
+    $fetch_email = mysqli_fetch_array($result_email);
+
+    $email = $fetch_email['Email'];
+    $permission = $fetch_permission['Permissions'];
+    $date = array(
+        "email"=> "$email",
+        "permission"=> "$permission"
+    );
+    echo json_encode($date);
 }
 
-if($type == 'get_loggedPermissions'){
-    session_start();
 
-    $result=mysqli_query($db,"SELECT Permissions FROM $table_employees WHERE User_ID=".$_SESSION['user']);
-    $userRow=mysqli_fetch_array($result);
-    echo $userRow['Permissions'];
-}
 if($type == 'mouseOver'){
     $mouse_over_id = $_POST['eventID'];
     $query = mysqli_query($db, "SELECT First_Name, Surname, Permissions, Email, Mobile_Number FROM $table_employees INNER JOIN $table_calendar ON $table_calendar.p_Email = $table_employees.Email  WHERE ID = '$mouse_over_id'");

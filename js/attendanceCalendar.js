@@ -3,10 +3,11 @@ var $,
     swal;
 var tooltip = $('#popup-info').detach();
 
-var loggedEmail = $.ajax({
+
+var loggedAjaxData = $.ajax({
     type: 'POST',
     url: 'process.php',
-    data: 'type=get_loggedEmail',
+    data: 'type=get_loggedData',
     async: false,
     success: function (response) {
         "use strict";
@@ -14,16 +15,9 @@ var loggedEmail = $.ajax({
     }
 });
 
-var loggedPermissions = $.ajax({
-    type: 'POST',
-    url: 'process.php',
-    data: 'type=get_loggedPermissions',
-    async: false,
-    success: function (response) {
-        "use strict";
-        return response;
-    }
-});
+var loggedData = JSON.parse(loggedAjaxData.responseText);
+
+
 
 $(document).ready(function () {
     "use strict";
@@ -38,7 +32,7 @@ $(document).ready(function () {
         var returndata = $.ajax({
             url: 'process.php',
             type: 'POST',
-            data: 'type=addNotification&email_KTO=' + loggedEmail.responseText + '&eventID=' + eventID + '&activity=' + activity,
+            data: 'type=addNotification&email_KTO=' + loggedData.email + '&eventID=' + eventID + '&activity=' + activity,
             async: false,
             success: function (data) {
                 return data;
@@ -617,58 +611,30 @@ $(document).ready(function () {
 
             if (ajaxCall() !== 'success') {
                 //Define variables
-                var permissions,
-                    email,
-                    check_logIn_logOut,
+                var check_logIn_logOut,
                     check_interval_time,
                     confirmDialog,
                     varning_resposne,
                     worker_capacity,
                     checkingForDelete;
 
-                permissions = $.ajax({
-                    type: 'POST',
-                    url: 'process.php',
-                    data: 'type=get_loggedPermissions',
-                    async: false,
-                    success: function (response) {
-                        return response;
-                    }
-                }).responseText;
 
-                email = $.ajax({
-                    type: 'POST',
-                    url: 'process.php',
-                    data: 'type=get_loggedEmail',
-                    async: false,
-                    success: function (response) {
-                        return response;
-                    }
-                }).responseText;
-
-                check_logIn_logOut = $.ajax({
+               var check_ajax_data = $.ajax({
                     type: 'POST', // Send post data
                     url: 'process.php',
-                    data: 'type=check_log_in_log_out&event_id=' + event.id + '&email=' + email,
+                    data: 'type=check_data&event_id=' + event.id + '&email=' + loggedData.email,
                     async: false,
                     success: function (response) {
                         return response;
                     }
                 });
+                var check_data = JSON.parse(check_ajax_data.responseText);
 
-                check_interval_time = $.ajax({
-                    type: 'POST', // Send post data
-                    url: 'process.php',
-                    data: 'type=check_interval_time&event_id=' + event.id,
-                    async: false,
-                    success: function (response) {
-                        return response;
-                    }
-                });
 
-                if (permissions === 'brigadnik') {
-                    if ((check_logIn_logOut.responseText !== '0' && event.title.search(" R Brigádnici:") === 0) || (check_logIn_logOut.responseText !== '0' && event.title.search(" N Brigádnici:") === 0)) {
-                        if (check_interval_time.responseText > 5) {
+
+                if (loggedData.permission === 'brigadnik') {
+                    if ((check_data.logIN_logOUT !== '0' && event.title.search(" R Brigádnici:") === 0) || (check_data.logIN_logOUT !== '0' && event.title.search(" N Brigádnici:") === 0)) {
+                        if (check_data.interval > 5) {
 
                             swal({
                                     title: "Odhlásit?",
@@ -724,7 +690,7 @@ $(document).ready(function () {
                         }
                     }
                 }
-                if (permissions === 'admin' || permissions === 'supervizor') {
+                if (loggedData.permission === 'admin' || loggedData.permission === 'supervizor') {
 
                     if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
                         brigadniciListRender(event.id, event.start.format());
@@ -825,9 +791,9 @@ $(document).ready(function () {
 
                     } else {
 
-                        if (permissions === 'admin') {
+                        if (loggedData.permission === 'admin') {
 
-                            deleteEvent(event, permissions);
+                            deleteEvent(event, loggedData.permission);
 
                         } else {
                             checkingForDelete = $.ajax({
@@ -848,7 +814,7 @@ $(document).ready(function () {
                                     confirmButtonColor: "#d62633"
                                 });
                             } else {
-                                deleteEvent(event, permissions);
+                                deleteEvent(event, loggedData.permission);
                             }
                         }
                     }
