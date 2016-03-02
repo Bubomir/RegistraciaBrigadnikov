@@ -21,8 +21,8 @@ var loggedData = JSON.parse(loggedAjaxData.responseText);
 
 $(document).ready(function () {
     "use strict";
-     //Define variables
-     var return_response;
+    //Define variables
+    var return_response;
     /**********************************************/
     /*************** ADD NOTIFICATIONS **************/
     /**********************************************/
@@ -175,7 +175,7 @@ $(document).ready(function () {
                 return response;
             },
             error: function (e) {
-               // window.console.log(e.responseText);
+                // window.console.log(e.responseText);
             }
         });
 
@@ -190,7 +190,7 @@ $(document).ready(function () {
                     return response;
                 },
                 error: function (e) {
-                  // window.console.log(e.responseText);
+                    // window.console.log(e.responseText);
                 }
 
             });
@@ -223,7 +223,7 @@ $(document).ready(function () {
                 return response;
             },
             error: function (e) {
-               // window.console.log(e.responseText);
+                // window.console.log(e.responseText);
             }
         });
 
@@ -265,7 +265,7 @@ $(document).ready(function () {
                                         return response;
                                     },
                                     error: function (e) {
-                                       // window.console.log(e.responseText);
+                                        // window.console.log(e.responseText);
                                     }
                                 });
                                 var newEventID = JSON.parse(return_response.responseText);
@@ -317,8 +317,7 @@ $(document).ready(function () {
                 closeOnCancel: false
             },
             function (isConfirm) {
-                if (isConfirm) {
-                } else {
+                if (isConfirm) {} else {
                     swal({
                             title: "Smazat?",
                             text: "Opravdu chcete smazat tento brigádně event?",
@@ -459,42 +458,43 @@ $(document).ready(function () {
 
         eventMouseover: function (event) {
 
-        if (permission === 'brigadnik') {
-            var mouseOverResponse = $.ajax({
-                    type: 'POST',
-                    url: 'process.php',
-                    data: 'type=mouseOver&eventID=' + event.id,
-                    dataType: 'json',
-                    async: false,
-                    success: function (response) {
-                        return response;
-                    }
-                }),
+            if (loggedData.permission !== 'brigadnik') {
+                var mouseOverResponse = $.ajax({
+                        type: 'POST',
+                        url: 'process.php',
+                        data: 'type=mouseOver&eventID=' + event.id,
+                        dataType: 'json',
+                        async: false,
+                        success: function (response) {
+                            return response;
+                        }
+                    }),
 
-                mouseOver = JSON.parse(mouseOverResponse.responseText),
-                name = mouseOver[0].Name,
-                email = mouseOver[0].Email,
-                phone_num = mouseOver[0].Phone_num,
-                permission = mouseOver[0].Permissions;
+                    mouseOver = JSON.parse(mouseOverResponse.responseText),
+                    name = mouseOver[0].Name,
+                    email = mouseOver[0].Email,
+                    phone_num = mouseOver[0].Phone_num,
+                    permission = mouseOver[0].Permissions;
 
 
-            //var tooltip = document.getElementById('popup-info');
-            //var tooltip = $('#phantom-popup').load('template/popup_info.php');
+                //var tooltip = document.getElementById('popup-info');
+                //var tooltip = $('#phantom-popup').load('template/popup_info.php');
+                if (permission === 'brigadnik') {
+                    $("body").prepend(tooltip);
+                    document.getElementById('popup-name').innerHTML = name;
+                    document.getElementById('popup-email').innerHTML = email;
+                    document.getElementById('popup-number').innerHTML = phone_num;
 
-                $("body").prepend(tooltip);
-                document.getElementById('popup-name').innerHTML = name;
-                document.getElementById('popup-email').innerHTML = email;
-                document.getElementById('popup-number').innerHTML = phone_num;
+                    $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $('#popup-info').fadeIn('500');
+                        $('#popup-info').fadeTo('10', 1.9);
+                    }).mousemove(function (e) {
 
-                $(this).mouseover(function (e) {
-                    $(this).css('z-index', 10000);
-                    $('#popup-info').fadeIn('500');
-                    $('#popup-info').fadeTo('10', 1.9);
-                }).mousemove(function (e) {
-
-                    $('#popup-info').css('top', e.pageY - 110);
-                    $('#popup-info').css('left', e.pageX + 20);
-                });
+                        $('#popup-info').css('top', e.pageY - 110);
+                        $('#popup-info').css('left', e.pageX + 20);
+                    });
+                }
             }
         },
 
@@ -533,7 +533,7 @@ $(document).ready(function () {
                     if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
                         if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
 
-                            eventAdd(event, '9999');    //capacity 9999
+                            eventAdd(event, '9999'); //capacity 9999
 
                             // UPOZORNENIE !!!
                             //sluz na nastavovanie kapacity brigadnikov na smeny nepouzite pretoze firma si neziadala tuto funkcionalitu
@@ -619,7 +619,7 @@ $(document).ready(function () {
                     checkingForDelete;
 
 
-               var check_ajax_data = $.ajax({
+                var check_ajax_data = $.ajax({
                     type: 'POST', // Send post data
                     url: 'process.php',
                     data: 'type=check_data&event_id=' + event.id + '&email=' + loggedData.email,
@@ -909,7 +909,7 @@ var year;
 for (year = end; year >= start; year--) {
     options += "<option value='" + year + "'>" + year + "</option>";
 }
-if(loggedData.permission != 'brigadnik'){
+if (loggedData.permission != 'brigadnik') {
     document.getElementById("year").innerHTML = options;
 }
 //pick current month
@@ -1038,7 +1038,7 @@ $(document).ready(function () {
             numberOfChange = 0;
         } else if ($isRegistered == 3) {
             $('.alert').hide().slideDown(500);
-             document.getElementById('alert-message').innerHTML = "Nastala chyba pri registraci!!";
+            document.getElementById('alert-message').innerHTML = "Nastala chyba pri registraci!!";
             numberOfChange = 0;
         } else if ($isRegistered == 4) {
             $('.alert').hide().slideDown(500);
