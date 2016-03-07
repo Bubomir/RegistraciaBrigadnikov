@@ -440,8 +440,8 @@ temporary rendered events).
 	position: relative; /* for resize handle and other inner positioning */
 	display: block; /* make the <a> tag block */
 	font-size: .85em;
-	line-height: 1.5;
-
+	line-height: 1.3;
+    font-weight: 400;
 	/*border: 1px solid #3a87ad; *//* default BORDER color */
 	background-color: #3a87ad; /* default BACKGROUND color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
