@@ -451,6 +451,7 @@ $(document).ready(function () {
         droppable: true,
         defaultDate: moment(new Date()).format('YYYY-MM-DD'),
 
+
         //Remove time from events
         eventRender: function (event, element) {
             $(element).find(".fc-time").remove();
@@ -537,7 +538,7 @@ $(document).ready(function () {
 
                 if (duplicity_bool.responseText === 'failed') {
                     if (moment.duration(click_time.diff(now)).asMinutes() > 0) {
-                        if (event.title === 'Brigádnici R' || event.title === 'Brigádnici N') {
+                        if (event.title === '    Brigádnici R' || event.title === '  Brigádnici N') {
 
                             eventAdd(event, '9999'); //capacity 9999
 
@@ -639,7 +640,7 @@ $(document).ready(function () {
 
 
                 if (loggedData.permission === 'brigadnik') {
-                    if ((check_data.logIN_logOUT !== '0' && event.title.search(" R Brigádnici:") === 0) || (check_data.logIN_logOUT !== '0' && event.title.search(" N Brigádnici:") === 0)) {
+                    if ((check_data.logIN_logOUT !== '0' && event.title.search("    R Brigádnici:") === 0) || (check_data.logIN_logOUT !== '0' && event.title.search("  N Brigádnici:") === 0)) {
                         if (check_data.interval > 5) {
 
                             swal({
@@ -672,7 +673,7 @@ $(document).ready(function () {
                             });
                         }
                     } else {
-                        if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
+                        if (event.title.search("    R Brigádnici:") === 0 || event.title.search("  N Brigádnici:") === 0) {
 
                             swal({
                                     title: "Přihlásit?",
@@ -698,7 +699,7 @@ $(document).ready(function () {
                 }
                 if (loggedData.permission === 'admin' || loggedData.permission === 'supervizor') {
 
-                    if (event.title.search(" R Brigádnici:") === 0 || event.title.search(" N Brigádnici:") === 0) {
+                    if (event.title.search("    R Brigádnici:") === 0 || event.title.search("  N Brigádnici:") === 0) {
                         brigadniciListRender(event.id, event.start.format());
 
                         // UPOZORNENIE !!!

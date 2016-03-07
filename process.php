@@ -340,25 +340,25 @@ if($type == 'fetch'){
 
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
                 if($fetch['p_Email'] == $email_brigadnici){
-                    $e['title'] = ' R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
+                    $e['title'] = '    R '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  R/'.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
+                    $e['title'] =  '     R/'.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
                 if($fetch['p_Email'] == $email_brigadnici){
-                    $e['title'] = ' N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
+                    $e['title'] = '  N '.$fetch['First_Name'].': '.$fetch['Logged_In'];
                 }
                 else{
-                    $e['title'] =  '  N/'.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
+                    $e['title'] =  '   N/'.$fetch['Change_Number'].' '.$fetch['Surname'].' '.$fetch['First_Name'];
                 }
             }
 
         }
         else{
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '06:00:00'){
-                $e['title'] = 'R '.$fetch['First_Name'].' '.$fetch['Surname'];
+                $e['title'] = ' R '.$fetch['First_Name'].' '.$fetch['Surname'];
             }
             if(date('H:i:s',strtotime($fetch['Start_Date'])) == '18:00:00'){
                 $e['title'] = 'N '.$fetch['First_Name'].' '.$fetch['Surname'];
