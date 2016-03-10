@@ -661,7 +661,7 @@ $(document).ready(function () {
                                         type: "success",
                                         confirmButtonColor: "#005200"
                                     });
-                                    loggedInUpdate(event, email, -1);
+                                    loggedInUpdate(event, loggedData.email, -1);
                                 });
                         } else {
 
@@ -692,7 +692,7 @@ $(document).ready(function () {
                                         type: "success",
                                         confirmButtonColor: "#005200"
                                     });
-                                    loggedInUpdate(event, email, 1);
+                                    loggedInUpdate(event, loggedData.email, 1);
                                 });
                         }
                     }
