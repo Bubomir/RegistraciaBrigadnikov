@@ -106,7 +106,7 @@ $(document).ready(function () {
 
             swal({
                     title: "Smazat?",
-                    text: "Opravdu chcete smazat tuto změnu nebo odhlásit brigádníka?",
+                    text: "Opravdu chcete smazat tuto směnu, nebo odhlásit brigádníka?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "orange",
@@ -136,7 +136,7 @@ $(document).ready(function () {
                         if ('success' === return_response.responseText) {
                             swal({
                                 title: "Smazáno",
-                                text: "Tato změna byla vymazána.",
+                                text: "Tato směna byla vymazána.",
                                 type: "success",
                                 confirmButtonColor: "#005200"
                             });
@@ -202,7 +202,7 @@ $(document).ready(function () {
             refreshEvents();
             swal({
                 title: "Chyba...",
-                text: "Aby bylo možné přidat brigádníky je zapotřebí vytvořena změna!",
+                text: "Aby bylo možné přidat brigádníky, je zapotřebí vytvořena směna!",
                 type: "error",
                 confirmButtonColor: "#d62633"
             });
@@ -214,6 +214,7 @@ $(document).ready(function () {
     /**********************************************/
 
     function loggedInUpdate(event, email, logIn_logOut) {
+       
         var return_response;
         return_response = $.ajax({
             url: 'process.php',
@@ -246,7 +247,7 @@ $(document).ready(function () {
 
                     swal({
                             title: "Přihlásit?",
-                            text: "Zvolený brigádník bude přihlášen na tuto změnu.",
+                            text: "Zvolený brigádník bude přihlášen na tuto směnu.",
                             type: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "orange",
@@ -278,7 +279,7 @@ $(document).ready(function () {
                                 //render list of brigadnici
                                 swal({
                                         title: "Přihlášen!",
-                                        text: "Brigádník byl přihlášen na tuto změnu.",
+                                        text: "Brigádník byl přihlášen na tuto směnu.",
                                         type: "success",
                                         confirmButtonColor: "#005200",
                                         closeOnConfirm: false
@@ -322,7 +323,7 @@ $(document).ready(function () {
                 if (isConfirm) {} else {
                     swal({
                             title: "Smazat?",
-                            text: "Opravdu chcete smazat tento brigádně event?",
+                            text: "Opravdu chcete smazat brigádníky z této směny?",
                             type: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "orange",
@@ -342,7 +343,7 @@ $(document).ready(function () {
                                         refreshEvents();
                                         swal({
                                             title: "Smazáno!",
-                                            text: "Brigádně event z této změny byl smazán.",
+                                            text: "Brigádníci z této směny byli smazáni.",
                                             type: "success",
                                             confirmButtonColor: "#005200"
                                         });
@@ -350,7 +351,7 @@ $(document).ready(function () {
                                     error: function (obj, text, error) {
                                         swal({
                                                 title: "Nelze smazat!",
-                                                text: "Nejprve je třeba odhlásit všech brigádníků!!",
+                                                text: "Nejprve je třeba odhlásit všechny brigádníky!",
                                                 type: "error",
                                                 confirmButtonColor: "#d62633",
                                                 closeOnConfirm: false
@@ -390,7 +391,7 @@ $(document).ready(function () {
         });
 
         if (returndata.responseText === 'success') {
-            window.alert("boli ste odpojeny");
+            window.alert("Byli jste odpojeni!");
 
             //sweetAlert("Oops...", "Something went wrong!", "error");
 
@@ -569,7 +570,7 @@ $(document).ready(function () {
                                          return false;
                                      }
                                      if (isNaN(worker_capacity)) {
-                                         swal.showInputError("Prosím zadajte číslo!");
+                                         swal.showInputError("Prosím zadejte číslo!");
                                          return false;
                                      }
                                      if (worker_capacity <= 0) {
@@ -578,7 +579,7 @@ $(document).ready(function () {
                                      }
 
                                      swal({
-                                         title: "Brigádníci přidány :)",
+                                         title: "Brigádníci přidáni :)",
                                          text: "Počet brigádníků je: " + worker_capacity,
                                          type: "success",
                                          confirmButtonColor: "#005200"
@@ -592,7 +593,7 @@ $(document).ready(function () {
                     } else {
                         swal({
                             title: "Chyba...",
-                            text: "Změnu nelze přidat!",
+                            text: "Směnu nelze přidat!",
                             type: "error",
                             confirmButtonColor: "#d62633"
                         });
@@ -645,7 +646,7 @@ $(document).ready(function () {
 
                             swal({
                                     title: "Odhlásit?",
-                                    text: "Opravdu se chcete odhlásit z této změny?",
+                                    text: "Opravdu se chcete odhlásit z této směny?",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: "orange",
@@ -657,7 +658,7 @@ $(document).ready(function () {
                                     swal("Deleted!", "Your imaginary file has been deleted.", "success");
                                     swal({
                                         title: "Odhlášen",
-                                        text: "Byly jste odhlášen.",
+                                        text: "Byli jste odhlášeni.",
                                         type: "success",
                                         confirmButtonColor: "#005200"
                                     });
@@ -677,7 +678,7 @@ $(document).ready(function () {
 
                             swal({
                                     title: "Přihlásit?",
-                                    text: "Opravdu se chcete přihlásit na tuto změnu?",
+                                    text: "Opravdu se chcete přihlásit na tuto směnu?",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: "orange",
@@ -688,7 +689,7 @@ $(document).ready(function () {
                                 function () {
                                     swal({
                                         title: "Přihlášen",
-                                        text: "Byly jste přihlášen.",
+                                        text: "Byli jste přihlášeni.",
                                         type: "success",
                                         confirmButtonColor: "#005200"
                                     });
@@ -722,7 +723,7 @@ $(document).ready(function () {
                                        swal({
 
                                                title: "Změnit počet brigádníků",
-                                               text: "Chcete-li zmazat těchto brigádníků zvolte 0 \n Zvolte počet brigádníků:",
+                                               text: "Chcete-li smazat tyto brigádníky, zvolte 0 \n Zvolte počet brigádníků:",
                                                type: "input",
                                                showCancelButton: true,
                                                closeOnConfirm: false,
@@ -745,7 +746,7 @@ $(document).ready(function () {
                                                    return false;
                                                }
                                                if (worker_capacity < 0) {
-                                                   swal.showInputError("Počet brigádníků nesmí být více záporný!");
+                                                   swal.showInputError("Počet brigádníků nesmí být záporný!");
                                                    return false;
                                                }
 
@@ -767,7 +768,7 @@ $(document).ready(function () {
                                                        if (worker_capacity === '0') {
                                                            swal({
                                                                title: "Smazáno",
-                                                               text: "Brigádníci byly smazány",
+                                                               text: "Brigádníci byli smazáni",
                                                                type: "success",
                                                                confirmButtonColor: "#005200"
                                                            });
@@ -816,7 +817,7 @@ $(document).ready(function () {
                             if (checkingForDelete.responseText === 'supervizor') {
                                 swal({
                                     title: "Chyba...",
-                                    text: "Pouze správce může změnit nebo vymazat změny!",
+                                    text: "Pouze správce může změnit nebo vymazat směny!",
                                     type: "error",
                                     confirmButtonColor: "#d62633"
                                 });

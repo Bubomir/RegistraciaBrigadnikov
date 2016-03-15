@@ -15,20 +15,23 @@
         $sql = "SELECT * FROM $table_employees WHERE Email='$email'";
         $query = mysqli_query($db,$sql);
         $numrow = mysqli_num_rows($query);
+        $userRow = mysqli_fetch_array($query);
 
-        if  ($numrow!=0)
+        $ID_NON_ADMIN = 'non-admin';
+        $ID_NON_BRIGADNIK = 'non-brigadnik';
+        $ID_NON_SUPERVIZOR = 'non-supervizor';
+
+        $db_email = $userRow['Email'];
+        if  ($numrow!=0 && $userRow['Permissions'] != $ID_NON_ADMIN && $userRow['Permissions'] != $ID_NON_BRIGADNIK && $userRow['Permissions'] != $ID_NON_SUPERVIZOR)
         {
-            while($row = mysqli_fetch_assoc($query))
-            {
-                $db_email = $row['Email'];
-            }
+           
             if ($email == $db_email)
             {
                 $code = md5(rand(1000, 1000000));
 
                 $to = $db_email;
                 $subject = "Resetování hesla";
-                $body = "Zde kliknite nebo vložte tento link do vášeho prohlížeče pro resetování hesla: <br>
+                $body = "Zde klikněte, nebo vložte tento link do vašeho prohlížeče pro resetování hesla: <br>
                 http://vtstudentplanner.cz/reset_pass.php?code=$code&email=$email";
                 $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
@@ -36,18 +39,18 @@
 
                 mail($to, $subject, $body, $headers);
 
-                $alert_message = 'Link pro resetování hesla byl poslán k vám na e-mail.';
+                $alert_message = 'Link pro resetování hesla byl zaslán na Váš e-mail.';
                 include ('template/alert_message_success.php');
             }
             else
             {
-                $alert_message = 'E-mailová adresa není správna!';
+                $alert_message = 'E-mailová adresa není správná!';
                 include ('template/alert_message.php');
             }
         }
         else
         {
-            $alert_message = 'E-mailová adresa není správna!';
+            $alert_message = 'E-mailová adresa není správna alebo není aktivován účet!';
             include ('template/alert_message.php');
         }
     }

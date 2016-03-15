@@ -117,7 +117,7 @@ if($type == 'changeCapacity')
     $e_logged_in = $fetch['Logged_In'];
     if($capacity<$e_logged_in){
         header('HTTP/1.1 500 Internal Server Error');
-        exit("Nelze zmeniť počet");
+        exit("Nelze změnit počet");
 
     }
     else{
@@ -232,8 +232,8 @@ if($type == 'change_number_of_logged_in'){
 
                     $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email']; - tento mail sa posiela supervizorom na ich zmene
                     $subject = 'Přihlášení na pracovní směnu';
-                    $message = "Brigádník: <strong>".$mail_name.'</strong> bol prihlašení na pracovní směnu dňa: <strong>'.$e_start_date.'</strong><br><br>
-                    Kontaktní údaje brigádnika: <br>
+                    $message = "Brigádník: <strong>".$mail_name.'</strong> byl přihlášen na pracovní směnu dne: <strong>'.$e_start_date.'</strong><br><br>
+                    Kontaktní údaje brigádníka: <br>
                     Email: '.$mail_email.' <br>
                     tel.č: '.$mail_phone_num;
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
@@ -263,8 +263,8 @@ if($type == 'change_number_of_logged_in'){
                     //Email content
 
                     $to = $email_to_Mail['p_Email'];   //$email_to_Mail['p_Email'] - tento mail sa posiela supervizorom na ich zmene
-                    $subject = 'Odhlášení s pracovní směny';
-                    $message = "Brigádník: <strong>".$mail_name.'</strong> bol odhlášní s pracovní směny dňa: <strong>'.$e_start_date.'</strong><br><br>
+                    $subject = 'Odhlášení z pracovní směny';
+                    $message = "Brigádník: <strong>".$mail_name.'</strong> byl odhlášen z pracovní směny dne: <strong>'.$e_start_date.'</strong><br><br>
                     Kontaktní údaje brigádnika: <br>
                     Email: '.$mail_email.' <br>
                     tel.č: '.$mail_phone_num.'<br><br>
@@ -444,7 +444,7 @@ if($type == 'addNotification'){
         if($activity == 'logIn'){
             $to = $emailKOHO;   // tento mail sa posiela brigadnikom pri ich prihlaseni majstrom
             $subject = 'Přihlášení na pracovní směnu';
-            $message = "Byli jse přihlášní na pracovní směnu <strong>'$master_name'</strong> dňa <strong>'$startDate'</strong><br><br>
+            $message = "Byli jse přihlášni na pracovní směnu <strong>'$master_name'</strong> dne <strong>'$startDate'</strong><br><br>
             Tento email bol poslaný zo stránky www.vtstudentplanner.cz";
                         $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
@@ -454,8 +454,8 @@ if($type == 'addNotification'){
         if($activity == 'logOut'){
             //SEND BRIGADNIK MAIL
             $to = $emailKOHO;   // tento mail sa posiela brigadnikom pri ich prihlaseni majstrom
-            $subject = 'Odhlášení s pracovní směny';
-            $message = "Byli jse odhlášení s pracovní směny <strong>'$master_name'</strong> dňa <strong>'$startDate'</strong><br><br>
+            $subject = 'Odhlášení z pracovní směny';
+            $message = "Byli jse odhlášeni s pracovní směny <strong>'$master_name'</strong> dne <strong>'$startDate'</strong><br><br>
             Tento email bol poslaný zo stránky www.vtstudentplanner.cz";
             $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
@@ -463,8 +463,8 @@ if($type == 'addNotification'){
 
             //SEND MASTER MAIL
             $to_2 = $emailKOMU;   //$email_to_Mail['p_Email']; - tento mail sa posiela supervizorom na ich zmene
-            $subject_2 = 'Odhlášení s pracovní směny';
-            $message_2 = "Brigádník: <strong>".$brig_name.'</strong> bol odhlšen s pracovní směny dňa: <strong>'.$startDate.'</strong><br><br>
+            $subject_2 = 'Odhlášení z pracovní směny';
+            $message_2 = "Brigádník: <strong>".$brig_name.'</strong> byl odhlášen z pracovní směny dne: <strong>'.$startDate.'</strong><br><br>
             Kontaktní údaje brigádnika: <br>
             Email: '.$emailKOHO.' <br>
             tel.č: '.$fetch_mail_master['Mobile_Number'].'<br><br>

@@ -202,7 +202,7 @@
                         <button type="submit" name="btn-signup" class="success button register custom">Registrovat</button>
                     </div>
                     <div class="large-6 large-pull-6  medium-12 small-12 columns">
-                        <button class="button custom" data-close name="btn-close">Zavriet</button>
+                        <button class="button custom" data-close name="btn-close">Zavřít</button>
                     </div>
                 </div>
             </div>

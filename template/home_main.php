@@ -32,7 +32,7 @@
 
                             <div class="large-12 medium-12 small-12 columns text-center">
                                 <div class="morning-change">
-                                    Ranní změny
+                                    Ranní směny
                                     <?php
                                              include 'dbconnect.php';
                                              $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY Change_Number ASC");
@@ -91,7 +91,7 @@
 
                             <div class="large-12 medium-12 small-12 columns text-center">
                                 <div class="night-change">
-                                    Noční změny
+                                    Noční směny
                                     <?php
                                         include 'dbconnect.php';
                                         $result=mysqli_query($db,"SELECT * FROM $table_employees WHERE Permissions='supervizor' ORDER BY Change_Number ASC");
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <button id="notificationButton" data-toggle="modal-notifications" class="success button register custom" style="margin-top: 10px; margin-bottom: 25px;">Oznámení</button>
-                    <p style="margin-bottom: 5px;font-size: 14px;"><strong>Filter pro oznámení:</strong></p>
+                    <p style="margin-bottom: 5px;font-size: 14px;"><strong>Filtr pro oznámení:</strong></p>
                     <label>Login Status:
                         <select id="activity" class="select-style">
                             <option value="all">Vše</option>

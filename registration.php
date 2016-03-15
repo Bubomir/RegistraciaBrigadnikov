@@ -29,10 +29,10 @@
 
                     //Email content
                     $to = $email;
-                    $subject = 'Vytvoření hesla pro váš účet';
-                    $message = "Byl vám vytvořen účet na stránke www.vtstudentplanner.cz, pro vytvoření hesla a aktivaci účtu je potrebné kliknout na link<br><br>
+                    $subject = 'Vytvoření hesla pro Váš účet';
+                    $message = "Byl Vám vytvořen účet na stránce www.vtstudentplanner.cz, pro vytvoření hesla a aktivaci účtu je potřeba kliknout na link<br><br>
                     Přihlašovací e-mail: $email <br><br>
-                    Zde klikněte nebo vložte tento link do vašeho prohlížeč pro vytvoření vašeho hesla a dokončení vaší registrace: <br>
+                    Zde klikněte, nebo vložte tento link do prohlížeče pro vytvoření Vašeho hesla a dokončení Vaší registrace: <br>
                     http://vtstudentplanner.cz/create_pass.php?tempPass=$tempPass&email=$email";
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
@@ -60,10 +60,10 @@
 
                     //Email content
                     $to = $email;
-                    $subject = 'Vytvoření hesla pro váš účet';
-                    $message = "Byl vám vytvořen účet na stránke www.vtstudentplanner.cz, pro vytvoření hesla a aktivaci účtu je potrebné kliknout na link<br><br>
+                    $subject = 'Vytvoření hesla pro Váš účet';
+                    $message = "Byl Vám vytvořen účet na stránce www.vtstudentplanner.cz, pro vytvoření hesla a aktivaci účtu je potřeba kliknout na link<br><br>
                     Přihlašovací e-mail: $email <br><br>
-                    Zde klikněte nebo vložte tento link do vašeho prohlížeč pro vytvoření vašeho hesla a dokončení vaší registrace: <br>
+                    Zde klikněte, nebo vložte tento link do prohlížeče pro vytvoření Vašeho hesla a dokončení Vaší registrace: <br>
                     http://vtstudentplanner.cz/create_pass.php?tempPass=$tempPass&email=$email";
                     $headers = 'From: noreply@vtstudentplanner.cz'."\r\n" . 'Content-type:text/html;charset=UTF-8' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 

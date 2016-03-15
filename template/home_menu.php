@@ -14,7 +14,7 @@
                                     <?php if ($userRow['Permissions'] == 'admin'){ ?>
                                         Správce
                                         <?php }elseif($userRow['Permissions'] == 'supervizor'){?>
-                                            Supervízor
+                                            Supervizor
                                             <?php }elseif($userRow['Permissions'] == 'brigadnik'){?>
                                                 Brigádník
                                                 <?php }?>
